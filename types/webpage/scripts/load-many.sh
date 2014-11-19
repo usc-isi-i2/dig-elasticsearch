@@ -2,10 +2,10 @@
 
 # Get objects that we want to load.
 #
-curl -XGET "http://karma-dig-service.cloudapp.net:55310/swebpages/swebpage/_search?pretty=true" -d'
+curl -XGET "http://karma-dig-service.cloudapp.net:55310/dig/page/_search?pretty=true" -d'
 {   
     "query": {"match_all": {}},
-    "size":  100
+    "size":  10
 }' > files-to-load.json
 
 # Clear the local elastic search
