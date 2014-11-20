@@ -12,7 +12,8 @@
             "index" : "not_analyzed"
           },
           "dateCreated" : {
-            "type" : "string"
+            "type": "date",
+                              "format": "dateOptionalTime"
           },
           "hasBodyPart" : {
             "properties" : {
