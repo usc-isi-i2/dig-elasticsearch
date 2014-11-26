@@ -1,0 +1,38 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_folding": {
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ]
+        },
+        "shingle_2_4_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "stop",
+            "asciifolding",
+            "filter_stemmer",
+            "shingle_filter_2_4"
+          ]
+        }
+      },
+      "filter": {
+        "filter_stemmer": {
+          "type": "porter_stem",
+          "language": "English"
+        },
+        "shingle_filter_2_4": {
+          "type": "shingle",
+          "min_shingle_size": 2,
+          "max_shingle_size": 4,
+          "output_unigrams": false
+        }
+      }
+    }
+  }
+}
