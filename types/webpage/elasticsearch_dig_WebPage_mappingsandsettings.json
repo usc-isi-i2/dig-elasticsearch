@@ -29,9 +29,13 @@ PUT /dig
                               "type": "string",
                               "analyzer": "english"
                            },
-                           "shingle_2": {
+                           "shingle_2_4": {
                               "type": "string",
                               "analyzer": "shingle_2_4_analyzer"
+                           },
+                           "shingle_4": {
+                              "type": "string",
+                              "analyzer": "shingle_4_analyzer"
                            }
                         }
                      }
@@ -1890,6 +1894,17 @@ PUT /dig
             "filter_stemmer",
             "shingle_filter_2_4"
           ]
+        },
+        "shingle_4_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "stop",
+            "asciifolding",
+            "filter_stemmer",
+            "shingle_filter_4"
+          ]
         }
       },
       "filter": {
@@ -1900,6 +1915,12 @@ PUT /dig
         "shingle_filter_2_4": {
           "type": "shingle",
           "min_shingle_size": 2,
+          "max_shingle_size": 4,
+          "output_unigrams": false
+        },
+        "shingle_filter_4": {
+          "type": "shingle",
+          "min_shingle_size": 4,
           "max_shingle_size": 4,
           "output_unigrams": false
         }
