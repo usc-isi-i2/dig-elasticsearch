@@ -11,8 +11,9 @@ from sys import stderr
 import sys
 import argparse
 
-def loadDatainES(hostname, port,filename, index, doctype):
+def loadDatainES(filename, index, doctype,hostname="localhost",port=9200):
     try:
+        print "Connecting to " + hostname + " at port:" + str(port) 
         es = Elasticsearch([{'host': hostname, 'port': port}])
         with open(filename) as f:
             d = json.load(f)
@@ -26,16 +27,17 @@ def loadDatainES(hostname, port,filename, index, doctype):
 if __name__ == '__main__':
     
     argp = argparse.ArgumentParser()
-    argp.add_argument("hostname",help="Elastic Search Server hostname")
-    argp.add_argument("port",type=int, help="Elastic Search Server port")
+    argp.add_argument("-hostname",help="Elastic Search Server hostname, defaults to 'localhost'",default="localhost")
+    argp.add_argument("-port",type=int, help="Elastic Search Server port,defaults to 9200",default=9200)
     argp.add_argument("filepath",help="json file to be loaded in ElasticSearch")
     argp.add_argument("indexname",help="desired name of the index in ElasticSearch")
     argp.add_argument("doctype",help="type of the document to be indexed")
     
     arguments = argp.parse_args()
     
+    if arguments.hostname and arguments.port:
+        loadDatainES(arguments.filepath, arguments.indexname, arguments.doctype,arguments.hostname, arguments.port)
+    else:
+        loadDatainES(arguments.filepath, arguments.indexname, arguments.doctype)
     
-    loadDatainES(arguments.hostname, arguments.port, arguments.filepath, arguments.indexname, arguments.doctype)
-
-
-    print "Done!"
+    print "Thats all folks!"
