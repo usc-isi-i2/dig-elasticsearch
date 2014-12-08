@@ -26,7 +26,7 @@ dig-elasticsearch
    a. Change directory to ```<DIG-ES>/types/webpage/scripts```
    
    b. Type ```python loadDataElasticSearch.py -h```. This will provide help for the script as below
-  ```
+    ```
     usage: loadDataElasticSearch.py [-h] [-hostname HOSTNAME] [-port PORT] filepath indexname doctype
           positional arguments:
             filepath            json file to be loaded in ElasticSearch
@@ -37,8 +37,12 @@ dig-elasticsearch
             -h, --help          show this help message and exit
             -hostname HOSTNAME  Elastic Search Server hostname, defaults to 'localhost'
             -port PORT          Elastic Search Server port,defaults to 9200
-    ```        
-    Example run case - ```python loadDataElasticSearch.py $FilePath/100kWebPages.json dig WebPage```
+    ```       
+  
+    Execute:
+    ```
+    python loadDataElasticSearch.py $FilePath/100kWebPages.json dig WebPage
+    ```
   
     Please note that $FilePath is the path where the json file is stored locally, downloaded in step 1.
     'dig' and 'WebPage' is the name of index and document type as created in the step 2.
