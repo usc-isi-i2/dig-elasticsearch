@@ -4,7 +4,8 @@ Steps to load data into Elastic Search locally.
 
   1. Download the 100kWebPages.json file from the Hue -             http://karma-dig-service.cloudapp.net:55320/filebrowser/#/user/worker/data-ElasticSearch/100kWebPages.json
 
-  2.In the sense extension of chrome (or elastic search, if you have the Marvel plugin installed locally)
+2.In the sense extension of chrome (or elastic search, if you have the Marvel plugin installed locally)
+   
    a. In the server field - http://localhost:9200/
    b. Copy the contents of the file at the location -           https://github.com/usc-isi-i2/dig-elasticsearch/blob/master/types/webpage/elasticsearch_dig_WebPage_mappingsandsettings.json
   
