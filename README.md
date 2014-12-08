@@ -5,6 +5,7 @@ dig-elasticsearch
 * Clone this repository. Let ```<DIG-ES>``` be the directory that clones this repository
 * Install the elasticsearch python package
  ```sudo pip install elasticsearch```
+* Install the Sense extension of chrome: https://chrome.google.com/webstore/detail/sense-beta/lhjgkmllcaadmopgmanpapmpjgmfcfig?utm_source=gmail
 
 <b>Steps to load data into Elastic Search locally.</b>
 
