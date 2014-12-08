@@ -1,6 +1,9 @@
 dig-elasticsearch
 =================
-Steps to load data into Elastic Search locally.
+<b>Prerequisites</b>:
+* Install Elastic search locally: http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_installing_elasticsearch.html
+
+<b>Steps to load data into Elastic Search locally.</b>
 
   1. Download the 100kWebPages.json file from the Hue -             http://karma-dig-service.cloudapp.net:55320/filebrowser/#/user/worker/data-ElasticSearch/100kWebPages.json
 
