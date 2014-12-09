@@ -1379,10 +1379,12 @@ PUT /dig
                                                 "index": "not_analyzed"
                                              },
                                              "addressLocality": {
-                                                "type": "string"
+                                                "type": "string",
+                                                "index": "not_analyzed"
                                              },
                                              "addressRegion": {
-                                                "type": "string"
+                                                "type": "string",
+                                                "index": "not_analyzed"
                                              },
                                              "uri": {
                                                 "type": "string",
@@ -1403,12 +1405,14 @@ PUT /dig
                                                 "type": "string"
                                              },
                                              "uri": {
-                                                "type": "string"
+                                                "type": "string",
+                                                "index": "not_analyzed"
                                              }
                                           }
                                        },
                                        "label": {
-                                          "type": "string"
+                                          "type": "string",
+                                          "index": "not_analyzed"
                                        },
                                        "uri": {
                                           "type": "string",
@@ -1487,7 +1491,8 @@ PUT /dig
                                           "index": "not_analyzed"
                                        },
                                        "label": {
-                                          "type": "string"
+                                          "type": "string",
+                                          "index": "not_analyzed"
                                        },
                                        "uri": {
                                           "type": "string",
@@ -1496,10 +1501,12 @@ PUT /dig
                                     }
                                  },
                                  "addressLocality": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "index": "not_analyzed"
                                  },
                                  "addressRegion": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "index": "not_analyzed"
                                  },
                                  "uri": {
                                     "type": "string",
@@ -1631,10 +1638,12 @@ PUT /dig
                                     }
                                  },
                                  "addressLocality": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "index": "not_analyzed"
                                  },
                                  "addressRegion": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "index": "not_analyzed"
                                  },
                                  "uri": {
                                     "type": "string",
