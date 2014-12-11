@@ -1,4 +1,4 @@
-PUT /dig-istr100k-release03
+PUT /dig
 {
  "mappings": {
          "WebPage": {
