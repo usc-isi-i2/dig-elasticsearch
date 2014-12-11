@@ -1,4 +1,4 @@
-PUT /dig-istr100k-release02
+PUT /dig-istr100k-release03
 {
  "mappings": {
          "WebPage": {
@@ -14,12 +14,38 @@ PUT /dig-istr100k-release02
                "body_uri": {
                   "type": "string",
                   "index": "not_analyzed"
+
                },
                "clean_body": {
-                  "type": "string"
+                  "type": "string",
+                  "fields": {
+                           "english": {
+                              "type": "string",
+                              "analyzer": "english"
+                           },
+                           "shingle_2_4": {
+                              "type": "string",
+                              "analyzer": "shingle_2_4_analyzer"
+                           },
+                           "shingle_4": {
+                              "type": "string",
+                              "analyzer": "shingle_4_analyzer"
+                           }
+                        }
+
                },
                "clean_title": {
-                  "type": "string"
+                  "type": "string",
+                  "fields": {
+                           "english": {
+                              "type": "string",
+                              "analyzer": "english"
+                           },
+                           "shingle_2": {
+                              "type": "string",
+                              "analyzer": "shingle_2_4_analyzer"
+                           }
+                        }
                },
                "dateCreated": {
                   "type": "date",
@@ -1868,8 +1894,6 @@ PUT /dig-istr100k-release02
                   }
                },
                "hasTitlePart": {
-                  "type": "nested",
-                  "include_in_root": true,
                   "properties": {
                      "a": {
                         "type": "string",
