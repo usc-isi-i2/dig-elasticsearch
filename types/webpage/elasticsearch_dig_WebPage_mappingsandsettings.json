@@ -1,5 +1,4 @@
-
-PUT /dig
+PUT /dig-istr100k-release02
 {
  "mappings": {
          "WebPage": {
@@ -12,9 +11,23 @@ PUT /dig
                   "type": "string",
                   "index": "not_analyzed"
                },
+               "body_uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+               },
+               "clean_body": {
+                  "type": "string"
+               },
+               "clean_title": {
+                  "type": "string"
+               },
                "dateCreated": {
                   "type": "date",
                   "format": "dateOptionalTime"
+               },
+               "gentime": {
+                  "type": "string",
+                  "index": "not_analyzed"
                },
                "hasBodyPart": {
                   "properties": {
@@ -38,6 +51,10 @@ PUT /dig
                               "analyzer": "shingle_4_analyzer"
                            }
                         }
+                     },
+                     "uri": {
+                        "type": "string",
+                        "index": "not_analyzed"
                      }
                   }
                },
@@ -48,8 +65,8 @@ PUT /dig
                         "index": "not_analyzed"
                      },
                      "creditcardaccepted_feature": {
-                       "type":"nested",
-                       "include_in_root":true,
+                        "type": "nested",
+                        "include_in_root": true,
                         "properties": {
                            "a": {
                               "type": "string",
@@ -76,8 +93,8 @@ PUT /dig
                               "index": "not_analyzed"
                            },
                            "wasGeneratedBy": {
-                             "type":"nested",
-                             "include_in_root":true,
+                              "type": "nested",
+                              "include_in_root": true,
                               "properties": {
                                  "a": {
                                     "type": "string",
@@ -1508,6 +1525,9 @@ PUT /dig
                                     "type": "string",
                                     "index": "not_analyzed"
                                  },
+                                 "label": {
+                                    "type": "string"
+                                 },
                                  "uri": {
                                     "type": "string",
                                     "index": "not_analyzed"
@@ -1848,6 +1868,8 @@ PUT /dig
                   }
                },
                "hasTitlePart": {
+                  "type": "nested",
+                  "include_in_root": true,
                   "properties": {
                      "a": {
                         "type": "string",
@@ -1865,12 +1887,31 @@ PUT /dig
                               "analyzer": "shingle_2_4_analyzer"
                            }
                         }
+                     },
+                     "uri": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                     }
+                  }
+               },
+               "provider": {
+                  "properties": {
+                     "a": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                     },
+                     "uri": {
+                        "type": "string",
+                        "index": "not_analyzed"
                      }
                   }
                },
                "snapshotUri": {
                   "type": "string",
                   "index": "not_analyzed"
+               },
+               "title_uri": {
+                  "type": "string"
                },
                "uri": {
                   "type": "string",
@@ -1937,4 +1978,4 @@ PUT /dig
     }
   
 }
-  }
+}
