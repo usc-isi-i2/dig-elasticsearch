@@ -1,0 +1,268 @@
+POST swebpage/_search
+{
+   "filter": {
+      "term": {
+         "databaseId": "77697"
+      }
+   }
+}
+POST swebpage/_search
+{
+   "query": {
+      "filtered": {
+         "query": {
+            "match_all": {}
+         },
+         "filter": {
+            "term": {
+               "databaseId": "77697"
+            }
+         }
+      }
+   }
+}
+
+POST swebpage/_search
+{
+   "query": {
+      "match": {
+         "databaseId": "77697"
+      }
+   }
+}
+
+GET swebpage/qb5tQWoWT76qKDPbuZsbew
+
+POST swebpage/qb5tQWoWT76qKDPbuZsbew/_explain
+{
+   "query": {
+      "match": {
+         "databaseId": 77697
+      }
+   }
+}
+POST swebpage/qb5tQWoWT76qKDPbuZsbew/_explain
+{
+   "query": {
+      "match": {
+         "hasFeatureCollection.person_age_feature.wasGeneratedBy.databaseId": 77697
+      }
+   }
+}
+
+POST swebpage/_search
+{
+   "query": {
+      "match": {
+         "_all": "77697"
+      }
+   }
+}
+
+POST swebpage/_search
+{
+   "query": {
+      "match": {
+         "hasFeatureCollection.person_age_feature.wasGeneratedBy.databaseId": "77697"
+      }
+   }
+}
+
+POST swebpage/_search
+{
+   "filter": {
+      "term": {
+         "hasFeatureCollection.person_age_feature.wasGeneratedBy.databaseId": 77697
+      }
+   }
+}
+
+POST swebpage/_search
+{
+   "query": {
+      "nested": {
+         "path": "hasFeatureCollection.person_age_feature.wasGeneratedBy",
+         "score_mode": "avg",
+         "query": {
+            "bool": {
+               "must": [
+                  {
+                     "match": {
+                        "hasFeatureCollection.person_age_feature.wasGeneratedBy.databaseId": "77697"
+                     }
+                  }
+               ]
+            }
+         }
+      }
+   }
+}
+}
+
+POST swebpage/_search
+{
+   "filter": {
+      "term": {
+         "person_age": 20
+      }
+   }
+}
+
+POST _search
+{
+   "query": {
+      "match": {
+         "person_age": 20
+      }
+   }
+}
+
+POST _search
+{
+   "query": {
+      "range": {
+         "person_age": {
+            "lte": 30,
+            "gte": 20
+         }
+      }
+   }
+}
+
+POST _search
+{
+   "query": {
+      "match": {
+         "featureName": "phonenumber"
+      }
+   }
+}
+
+POST _search
+{
+   "query": {
+      "match": {
+         "person_age": 20
+      }
+   }
+}
+
+POST _search
+{
+    "query": {
+    "simple_query_string" : {
+        "query": "person_age",
+        "fields": ["_all"],
+        "default_operator": "and"
+    }
+}}
+
+POST _search
+{
+    "query": {
+    "simple_query_string" : {
+        "query": "queens, ny",
+        "fields": ["_all"],
+        "default_operator": "and"
+    }
+}}
+
+
+
+POST _search
+{
+    "query":
+  {"bool": {
+    "must": [
+      { "match": { "featureName": "phonenumber" }},
+      { "match": { "featureValue": "+14152608840" }},
+      { "match": { "featureName": "person_height" }},
+      { "match": { "featureValue": "180" }}
+      ]
+  }
+}
+}
+
+
+POST _search?search_type=count
+{
+  "aggregations": {
+    "my_agg": {
+      "terms": {
+        "field": "person_age"
+      }
+    }
+  }
+}
+
+
+GET /_count
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+GET /swebpage/_search
+
+GET /swebpage/_search?q=person_age:23
+
+GET /swebpage/_search?q=databaseId:10
+
+GET /swebpage/_search
+{
+    "query" : {
+        "filtered" : {
+            "filter" : {
+                "range" : {
+                    "person_age" : { "gt" : 20 } 
+                }
+            },
+            "query" : {
+                "match_phrase" : {
+                    "addressLocality": "St. Thomas" 
+                }
+            }
+        }
+    }
+}
+
+GET /swebpage/_search?search_type=count
+{
+  "query": {
+    "match": {
+      "text": "incall"
+    }
+  },
+  "aggs": {
+    "all_ages": {
+      "terms": { "field": "person_age" }
+    }
+  }
+}
+
+GET /swebpage/_search?search_type=count
+{
+  "aggs": {
+    "all_ages": {
+      "terms": { "field": "person_age" }
+    }
+  }
+}
+
+GET /swebpage/_search?search_type=count
+{
+    "aggs" : {
+        "all_localities" : {
+            "terms" : { "field" : "addressLocality" },
+            "aggs" : {
+                "avg_age" : {
+                    "avg" : { "field" : "person_age" }
+                }
+            }
+        }
+    }
+}
+
+GET /swebpage/_mapping
+

@@ -1,0 +1,437 @@
+GET _search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+
+GET _search
+{
+  "query": {
+    "match_all": {}
+  },
+  "fields": [
+    "hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality","hasFeatureCollection.place_postalAddress_feature.featureObject.addressRegion", "hasFeatureCollection.place_postalAddress_feature.featureObject.addressCountry.label","uri"
+  ],
+  "size": 200
+}
+
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "distinct_phones": {
+      "cardinality": {
+        "field": "hasFeatureCollection.phonenumber_feature.phonenumber"
+      }
+    }
+  }
+}
+
+GET _search
+{
+  "query": {
+    "query_string": {
+      "query": "los angeles"
+    }
+  },
+  "fields": ["hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality"],
+  "size": 2000
+}
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "localities": {
+      "terms": {
+        "field": "hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality",
+        "size": 50000
+      }
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "regions": {
+      "terms": {
+        "field": "hasFeatureCollection.place_postalAddress_feature.featureObject.addressRegion",
+        "size": 5000
+      }
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "countries": {
+      "terms": {
+        "field": "hasFeatureCollection.place_postalAddress_feature.featureObject.addressCountry.label",
+        "size": 5000
+      }
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "phone_localities": {
+      "terms": {
+        "field": "hasFeatureCollection.phonenumber_feature.featureObject.location.address.addressLocality",
+        "size": 5000
+      }
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "phone_regions": {
+      "terms": {
+        "field": "hasFeatureCollection.phonenumber_feature.featureObject.location.address.addressRegion",
+        "size": 5000
+      }
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "popular_phones": {
+      "terms": {
+        "field": "hasFeatureCollection.phonenumber_feature.phonenumber",
+        "size": 200
+      }
+    }
+  }
+}
+
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "popular_phones": {
+      "terms": {
+        "field": "hasFeatureCollection.phonenumber_feature.phonenumber",
+        "size": 200
+      },
+      "aggs": {
+        "top_tag_hits": {
+          "top_hits": {
+            "_source": {
+              "include": [
+                "hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality",
+                "hasFeatureCollection.place_postalAddress_feature.featureObject.addressRegion",
+                "dateCreated"
+              ]
+            },
+            "size": 3
+          }
+        }
+      }
+    }
+  }
+}
+  
+GET _search
+{
+  "query": {
+    "more_like_this_field": {
+      "hasBodyPart.text.shingle_4": {
+        "like_text": "â˜†Hi Were Michelle & Roxy <br>\nWe Are blessed with a sexy,exotic body's and gorgeous faces,<br>\nCoMe baby and enjoy our Specials techniques of pleasure !!<br>\nBreak away from the same old regular routine & indulge yourself in <br>\nsomething exceptional. <br>\nWe enjoy the art of sensual touching and good conversation.<br>\n<br>\n100 % REAL & independent<br>\nno drama//games<br>\n<br>\n<b>Michelle & Roxy</b>\n<u><b>702*410-..80-76</b></u>",
+        "min_term_freq": 1,
+        "max_query_terms": 20
+      }
+    }
+  },
+  "fields": ["hasTitlePart.text", "hasBodyPart.text", "dateCreated"]
+}
+
+
+
+GET _search
+{
+  "filter": {
+    "missing": {
+      "field": "hasFeatureCollection.*_feature.featureName"
+    }
+  }
+}
+
+GET _search
+{
+  "query": {
+    "query_string": {
+      "query": "los angeles"
+    }
+  }
+}
+
+GET _search
+{
+  "filter": {
+    "script": {
+      "script": "doc['fieldname'].values.length > 10"
+    }
+  }
+}
+
+GET _search
+{
+  "filter": {
+    "term": {
+      "phonenumber": "8582055224"
+    }
+  }
+}
+
+GET _search
+{
+  "filter": {
+    "term": {
+      "hasFeatureCollection.phonenumber_feature.phonenumber": "+1-3475957427"
+    }
+  }
+}
+
+GET _search
+{
+  "query": {
+    "match": {
+      "memex:hasFeatureCollection.memex:person_age_feature.memex:featureName": "person_age"
+    }
+  }
+}
+
+GET _search
+{
+  "query": {
+    "ids": {
+      "values": [
+        "aeGB-wf3RZSsXQNQFFLcFg"
+      ]
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "social": {
+      "date_histogram": {
+        "field": "dateCreated",
+        "interval": "week"
+      }
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "query": {
+    "constant_score": {
+      "filter": {
+        "exists": {
+          "field": "hasFeatureCollection.phonenumber_feature.uri"
+        }
+      }
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "images": {
+      "terms": {
+        "field": "hasImagePart.url",
+        "size": 2000
+      }
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "popular_phones": {
+      "terms": {
+        "field": "hasFeatureCollection.phonenumber_feature.phonenumber",
+        "size": 200
+      },
+      "aggs": {
+        "by_date": {
+          "date_histogram": {
+            "field": "dateCreated",
+            "format": "yyyy-MM-dd",
+            "interval": "week"
+          },
+          "aggs": {
+            "top_tag_hits": {
+              "top_hits": {
+                "_source": {
+                  "include": [
+                    "hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality",
+                    "hasFeatureCollection.place_postalAddress_feature.featureObject.addressRegion",
+                    "dateCreated",
+                    "hasTitlePart.text",
+                    "hasBodyPart.text"
+                  ]
+                },
+                "size": 3
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+GET _search?search_type=count
+{
+  "query": {
+    "range": {
+      "dateCreated": {
+        "from": "2012-01-02"
+      }
+    }
+  },
+  "aggs": {
+    "social": {
+      "date_histogram": {
+        "field": "dateCreated",
+        "format": "yyyy-MM-dd",
+        "interval": "week"
+      },
+      "aggs": {
+        "phone": {
+          "terms": {
+            "field": "hasFeatureCollection.phonenumber_feature.phonenumber"
+          },
+          "aggs": {
+            "top_tag_hits": {
+              "top_hits": {
+                "_source": {
+                  "include": [
+                    "url",
+                    "hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality",
+                    "hasFeatureCollection.place_postalAddress_feature.featureObject.addressRegion",
+                    "hasFeatureCollection.person_age_feature.featureValue",
+                    "dateCreated",
+                    "hasTitlePart.text",
+                    "hasBodyPart.text"
+                  ]
+                },
+                "size": 30
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+GET _search
+{
+  "fields": ["hasTitlePart.text"]
+}
+
+GET /5DOISu6NTG2wJTG3TuMZOA
+
+GET /5DOISu6NTG2wJTG3TuMZOA/_mlt
+{
+  "fields": ["hasTitlePart.text", "hasBodyPart.text"]
+}
+
+GET _search
+{
+  "query": {
+    "more_like_this_field": {
+      "hasBodyPart.text": {
+        "like_text": "Gentlemen<br>\nA little about me I'm sexy & sweet & oh so freaky. check out my pics my body is curvy in al the right places . i love what I do & promise to make our time together unforgettable. I aim to please but am only available for a short time<br>\n<br>\nReviews available<br>\nYes pictures are me  <br>\nAvailable for in or outcall<br>\nwont be discussing service <br>\nCall me luv 425 615 4389 {no texting OR blocked cALLS}",
+        "min_term_freq": 1,
+        "max_query_terms": 20
+      }
+    }
+  },
+  "fields": ["hasTitlePart.text", "hasBodyPart.text", "dateCreated"]
+}
+
+GET _search
+{
+  "query": {
+    "more_like_this_field": {
+      "hasBodyPart.text.shingle_4": {
+        "like_text": "â˜†Hi Were Michelle & Roxy <br>\nWe Are blessed with a sexy,exotic body's and gorgeous faces,<br>\nCoMe baby and enjoy our Specials techniques of pleasure !!<br>\nBreak away from the same old regular routine & indulge yourself in <br>\nsomething exceptional. <br>\nWe enjoy the art of sensual touching and good conversation.<br>\n<br>\n100 % REAL & independent<br>\nno drama//games<br>\n<br>\n<b>Michelle & Roxy</b>\n<u><b>702*410-..80-76</b></u>",
+        "min_term_freq": 1,
+        "max_query_terms": 20
+      }
+    }
+  },
+  "fields": ["hasTitlePart.text", "hasBodyPart.text", "dateCreated"]
+}
+
+GET _search
+{
+  "query": {
+    "more_like_this_field": {
+      "hasBodyPart.text.shingle_4": {
+        "like_text": "Break away from the same old regular routine & indulge yourself in something exceptional.\nâ˜…Five-Star Experience That will leave you Satisfiedâ˜…\nHOT SEXY services for a pleasurable experience. Top selection \nWARNING something this SWEET & can be EXTREMELY ADDICTIVE!\nApril Rain 2249990151",
+        "min_term_freq": 1,
+        "max_query_terms": 20
+      }
+    }
+  },
+    "fields": ["hasTitlePart.text", "hasBodyPart.text", "dateCreated"]
+}
+
+
+GET _search
+{
+  "filter": {
+    "term": {
+      "hasFeatureCollection.phonenumber_feature.wasGeneratedBy.databaseId": "177722562"
+    }
+  }
+}
+
+GET /_search
+{
+  "query": {
+    "multi_match": {
+      "type": "most_fields",
+      "query": "happy relaxed fun",
+      "fields": [
+        "hasBodyPart.text",
+        "hasBodyPart.text.english"
+      ]
+    }
+  }
+}
+
+GET _search
+{
+  "query": {
+      "query_string": {
+        "default_field": "_all",
+        "query": " http"
+      }
+  }
+}
+
+GET _mapping
+
+
+
+
+
+
