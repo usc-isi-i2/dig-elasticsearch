@@ -1,6 +1,6 @@
-PUT /dig
 {
- "mappings": {
+   "dig-istr100k-tuesday07": {
+      "mappings": {
          "WebPage": {
             "properties": {
                "@context": {
@@ -14,38 +14,36 @@ PUT /dig
                "body_uri": {
                   "type": "string",
                   "index": "not_analyzed"
-
                },
                "clean_body": {
                   "type": "string",
                   "fields": {
-                           "english": {
-                              "type": "string",
-                              "analyzer": "english"
-                           },
-                           "shingle_2_4": {
-                              "type": "string",
-                              "analyzer": "shingle_2_4_analyzer"
-                           },
-                           "shingle_4": {
-                              "type": "string",
-                              "analyzer": "shingle_4_analyzer"
-                           }
-                        }
-
+                     "english": {
+                        "type": "string",
+                        "analyzer": "english"
+                     },
+                     "shingle_2_4": {
+                        "type": "string",
+                        "analyzer": "shingle_2_4_analyzer"
+                     },
+                     "shingle_4": {
+                        "type": "string",
+                        "analyzer": "shingle_4_analyzer"
+                     }
+                  }
                },
                "clean_title": {
                   "type": "string",
                   "fields": {
-                           "english": {
-                              "type": "string",
-                              "analyzer": "english"
-                           },
-                           "shingle_2": {
-                              "type": "string",
-                              "analyzer": "shingle_2_4_analyzer"
-                           }
-                        }
+                     "english": {
+                        "type": "string",
+                        "analyzer": "english"
+                     },
+                     "shingle_2": {
+                        "type": "string",
+                        "analyzer": "shingle_2_4_analyzer"
+                     }
+                  }
                },
                "dateCreated": {
                   "type": "date",
@@ -1787,6 +1785,62 @@ PUT /dig
                            }
                         }
                      },
+                     "similar_images_feature": {
+                        "properties": {
+                           "featureName": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureValue": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "similarimageurl": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           }
+                        }
+                     },
+                     "text_title_clean_feature": {
+                        "properties": {
+                           "a": {
+                              "type": "string"
+                           },
+                           "featureName": {
+                              "type": "string"
+                           },
+                           "featureValue": {
+                              "type": "string"
+                           },
+                           "text_title_clean": {
+                              "type": "string"
+                           },
+                           "wasDerivedFrom": {
+                              "properties": {
+                                 "a": {
+                                    "type": "string"
+                                 },
+                                 "uri": {
+                                    "type": "string"
+                                 }
+                              }
+                           },
+                           "wasGeneratedBy": {
+                              "properties": {
+                                 "a": {
+                                    "type": "string"
+                                 },
+                                 "endedAtTime": {
+                                    "type": "date",
+                                    "format": "dateOptionalTime"
+                                 },
+                                 "wasAttributedTo": {
+                                    "type": "string"
+                                 }
+                              }
+                           }
+                        }
+                     },
                      "uri": {
                         "type": "string",
                         "index": "not_analyzed"
@@ -1920,9 +1974,18 @@ PUT /dig
                },
                "provider": {
                   "properties": {
+                     "@context": {
+                        "type": "string"
+                     },
                      "a": {
                         "type": "string",
                         "index": "not_analyzed"
+                     },
+                     "databaseId": {
+                        "type": "string"
+                     },
+                     "legalName": {
+                        "type": "string"
                      },
                      "uri": {
                         "type": "string",
@@ -1948,8 +2011,8 @@ PUT /dig
             }
          }
       }
-,
-"settings": {"analysis": {
+   },
+   "settings": {"analysis": {
       "analyzer": {
         "my_folding": {
           "tokenizer": "standard",
