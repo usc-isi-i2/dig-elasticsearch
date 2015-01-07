@@ -1,5 +1,5 @@
 {
-   "dig-istr100k-tuesday07": {
+   "dig": {
       "mappings": {
          "WebPage": {
             "properties": {
