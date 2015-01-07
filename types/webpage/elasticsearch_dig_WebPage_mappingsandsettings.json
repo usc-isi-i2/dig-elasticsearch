@@ -1382,6 +1382,75 @@
                            }
                         }
                      },
+                     "author_feature": {
+                        "type": "nested",
+                        "include_in_root": true,
+                        "properties": {
+                           "a": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureName": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureValue": {
+                              "type": "string"
+                           },
+                           "author": {
+                              "type": "string"
+                           },
+                           "uri": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureObject": {
+                              "properties": {
+                                 "a": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "person_name": {
+                                    "type": "string"
+                                 },
+                                 "uri": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 }
+                              },
+                              "uri": {
+                                 "type": "string",
+                                 "index": "not_analyzed"
+                              }
+                           },
+                           "wasDerivedFrom": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "wasGeneratedBy": {
+                              "type": "nested",
+                              "include_in_root": true,
+                              "properties": {
+                                 "a": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "databaseId": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "endedAtTime": {
+                                    "type": "date",
+                                    "format": "dateOptionalTime"
+                                 },
+                                 "wasAttributedTo": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 }
+                              }
+                           }
+                        }
+                     },
                      "phonenumber_feature": {
                         "type": "nested",
                         "include_in_root": true,
@@ -1948,6 +2017,31 @@
                   }
                },
                "hasTitlePart": {
+                  "properties": {
+                     "a": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                     },
+                     "text": {
+                        "type": "string",
+                        "fields": {
+                           "english": {
+                              "type": "string",
+                              "analyzer": "english"
+                           },
+                           "shingle_2": {
+                              "type": "string",
+                              "analyzer": "shingle_2_4_analyzer"
+                           }
+                        }
+                     },
+                     "uri": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                     }
+                  }
+               },
+               "hasAbstractPart": {
                   "properties": {
                      "a": {
                         "type": "string",
