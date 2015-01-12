@@ -49,6 +49,10 @@
                   "type": "date",
                   "format": "dateOptionalTime"
                },
+               "inLanguage": {
+                  "type": "string",
+                  "index": "not_analyzed"
+               },
                "gentime": {
                   "type": "string",
                   "index": "not_analyzed"
@@ -87,6 +91,110 @@
                      "a": {
                         "type": "string",
                         "index": "not_analyzed"
+                     },
+                     "content_type_feature": {
+                        "type": "nested",
+                        "include_in_root": true,
+                        "properties": {
+                           "a": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "content_type": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureName": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureValue": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "uri": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "wasDerivedFrom": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "wasGeneratedBy": {
+                              "type": "nested",
+                              "include_in_root": true,
+                              "properties": {
+                                 "a": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "databaseId": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "endedAtTime": {
+                                    "type": "date",
+                                    "format": "dateOptionalTime"
+                                 },
+                                 "wasAttributedTo": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 }
+                              }
+                           }
+                        }
+                     },
+                     "content_length_feature": {
+                        "type": "nested",
+                        "include_in_root": true,
+                        "properties": {
+                           "a": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "content_length": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureName": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureValue": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "uri": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "wasDerivedFrom": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "wasGeneratedBy": {
+                              "type": "nested",
+                              "include_in_root": true,
+                              "properties": {
+                                 "a": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "databaseId": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "endedAtTime": {
+                                    "type": "date",
+                                    "format": "dateOptionalTime"
+                                 },
+                                 "wasAttributedTo": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 }
+                              }
+                           }
+                        }
                      },
                      "creditcardaccepted_feature": {
                         "type": "nested",
