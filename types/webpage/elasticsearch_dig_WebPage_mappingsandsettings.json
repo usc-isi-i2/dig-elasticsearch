@@ -153,16 +153,14 @@
                               "index": "not_analyzed"
                            },
                            "content_length": {
-                              "type": "string",
-                              "index": "not_analyzed"
+                              "type": "long"
                            },
                            "featureName": {
                               "type": "string",
                               "index": "not_analyzed"
                            },
                            "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
+                              "type": "long"
                            },
                            "uri": {
                               "type": "string",
