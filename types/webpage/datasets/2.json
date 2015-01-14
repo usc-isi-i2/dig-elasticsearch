@@ -1,0 +1,35 @@
+{
+  "@context": "https:\/\/raw.githubusercontent.com\/usc-isi-i2\/dig-alignment\/development\/datasets\/istr\/context-for-istr-datasets.json",
+  "snapshotUri": "http:\/\/memex.zapto.org\/data\/page\/FCA03868BDB47FC4CD0F7E602A62529403117EFC-copy2\/1396501535000\/raw",
+  "a": "WebPage",
+  "hasBodyPart": {
+    "text": "Copy of Hi guys, I'm  kilia and I'm here just for ur pleasure :). U know u deserve the best so stop setteling for all the rest. Your time with me will be exclusive and UNRUSHED! My pics are really me so you won't be disappointed. Take a little time out ur day to relax with me. You won't be sorry just a little addicted ;)<br>\n In & outs  24 hours<br>\nKilia 619-646-4017",
+    "a": "WebPageElement"
+  },
+  "dateCreated": "1380149880000",
+  "hasFeatureCollection": {
+    "person_age_feature": {
+      "featureName": "person_age",
+      "person_age": 25,
+      "wasGeneratedBy": {
+        "databaseId": "25",
+        "wasAttributedTo": "http:\/\/memex.zapto.org\/data\/software\/extractor\/ist\/version\/unknown",
+        "a": "Activity",
+        "endedAtTime": "1412741857000"
+      },
+      "a": "Feature",
+      "wasDerivedFrom": "http:\/\/memex.zapto.org\/data\/page\/FCA03868BDB47FC4CD0F7E602A62529403117EFC-copy2\/1396501535000\/processed",
+      "uri": "http:\/\/memex.zapto.org\/data\/page\/FCA03868BDB47FC4CD0F7E602A62529403117EFC-copy2\/1396501535000\/processed\/featurecollection\/person_age\/25",
+      "featureValue": "25"
+    },
+    "a": "FeatureCollection",
+    "uri": "http:\/\/memex.zapto.org\/data\/page\/FCA03868BDB47FC4CD0F7E602A62529403117EFC-copy2\/1396501535000\/processed\/featurecollection"
+  },
+  "hasTitlePart": {
+    "text": "beautiful cali blonde - austin escorts - backpage.com",
+    "a": "WebPageElement"
+  },
+  "uri": "http:\/\/memex.zapto.org\/data\/page\/FCA03868BDB47FC4CD0F7E602A62529403117EFC-copy2\/1396501535000\/processed",
+  "url": "http:\/\/austin.backpage.com\/FemaleEscorts\/beautiful-cali-blonde-23-copy2\/7798564",
+  "another-field-with-25" : 25
+}
