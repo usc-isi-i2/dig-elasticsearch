@@ -1,0 +1,90 @@
+{
+  "took": 3,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "failed": 0
+  },
+  "hits": {
+    "total": 100000,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "dig",
+        "_type": "page",
+        "_id": "rf1sUylQToi_0-0-l2WhwA",
+        "_score": 1,
+        "_source": {
+          "@context": "https:\/\/raw.githubusercontent.com\/usc-isi-i2\/dig-alignment\/development\/datasets\/istr\/context-for-istr-datasets.json",
+          "snapshotUri": "http:\/\/memex.zapto.org\/data\/page\/F969E2D33F26772247D5B2CE5D3BC689A409CDB0\/1396505343000\/raw",
+          "a": "WebPage",
+          "hasFeatureCollection": {
+            "person_age_feature": {
+              "featureName": "person_age",
+              "person_age": 28,
+              "wasGeneratedBy": {
+                "databaseId": "104210",
+                "wasAttributedTo": "http:\/\/memex.zapto.org\/data\/software\/extractor\/ist\/version\/unknown",
+                "a": "Activity",
+                "endedAtTime": "2014-10-08T05:17:37"
+              },
+              "a": "Feature",
+              "wasDerivedFrom": "http:\/\/memex.zapto.org\/data\/page\/F969E2D33F26772247D5B2CE5D3BC689A409CDB0\/1396505343000\/processed",
+              "uri": "http:\/\/memex.zapto.org\/data\/page\/F969E2D33F26772247D5B2CE5D3BC689A409CDB0\/1396505343000\/processed\/featurecollection\/person_age\/28",
+              "featureValue": 28
+            },
+            "memex:postalAddress_feature": {
+              "featureObject": {
+                "addressLocality": "Fort McMurray",
+                "addressRegion": "AB",
+                "a": "PostalAddress",
+                "addressCountry": {
+                  "a": "Country",
+                  "label": "Canada",
+                  "uri": "http:\/\/memex.zapto.org\/data\/country\/Canada"
+                },
+                "uri": "http:\/\/memex.zapto.org\/data\/address\/fortmcmurray-ab-canada"
+              },
+              "featureName": "place_postalAddress",
+              "wasGeneratedBy": {
+                "databaseId": "104210",
+                "wasAttributedTo": "http:\/\/memex.zapto.org\/data\/software\/extractor\/ist\/version\/unknown",
+                "a": "Activity",
+                "endedAtTime": "2014-10-08T05:17:37"
+              },
+              "a": "Feature",
+              "place_postalAddress": "fortmcmurray, ab, canada",
+              "wasDerivedFrom": "http:\/\/memex.zapto.org\/data\/page\/F969E2D33F26772247D5B2CE5D3BC689A409CDB0\/1396505343000\/processed",
+              "uri": "http:\/\/memex.zapto.org\/data\/page\/F969E2D33F26772247D5B2CE5D3BC689A409CDB0\/1396505343000\/processed\/featurecollection\/address\/fortmcmurray-ab-canada",
+              "featureValue": "fortmcmurray, ab, canada"
+            },
+            "a": "FeatureCollection",
+            "uri": "http:\/\/memex.zapto.org\/data\/page\/F969E2D33F26772247D5B2CE5D3BC689A409CDB0\/1396505343000\/processed\/featurecollection"
+          },
+          "hasBodyPart": {
+            "text": "Hi Gentlemen, my name is Ashley, I am a beautiful and charming lady. I have silky soft skin and long blonde hair. I am tall, 5'8\", and curvy 36C\/28\/38 and I enjoy wearing sexy lingerie. I am providing a nude full body massage with hot oil. I have a large selection of different body oils. 587 Oil 7 Spa. I am here today and tomorrow. This weekend I will be Visiting Edmonton. I will be Visiting Saskatchewan during the rest of September. I will be back in the Mac in October.",
+            "a": "WebPageElement"
+          },
+          "dateCreated": "2013-09-06T03:07:00",
+          "hasTitlePart": {
+            "text": "** VIP ** Luxury Companion Visiting Fort McMurray September 5th to the 6th 587 645 7772 - ft mcmurray escorts - backpage.com",
+            "a": "WebPageElement"
+          },
+          "hasImagePart": [
+            {
+              "snapshotUri": "http:\/\/memex.zapto.org\/data\/image\/763EAAA9B73F6A2F30C4AAD78312125D42640BB1\/1396505343000\/raw",
+             
+              "a": "ImageObject",
+              "cacheUrl": "https:\/\/s3.amazonaws.com\/roxyimages\/763eaaa9b73f6a2f30c4aad78312125d42640bb1.jpg",
+              "uri": "http:\/\/memex.zapto.org\/data\/image\/763EAAA9B73F6A2F30C4AAD78312125D42640BB1\/1396505343000\/processed",
+              "url": "http:\/\/images3.backpage.com\/imager\/u\/large\/99363329\/__2_anna.jpg"
+            }
+          ],
+          "uri": "http:\/\/memex.zapto.org\/data\/page\/F969E2D33F26772247D5B2CE5D3BC689A409CDB0\/1396505343000\/processed",
+          "url": "http:\/\/ftmcmurray.backpage.com\/FemaleEscorts\/vip-luxury-companion-visiting-fort-mcmurray-september-5th-to-the-6th-587-645-7772-28\/6822266"
+        }
+      }
+    ]
+  }
+}
