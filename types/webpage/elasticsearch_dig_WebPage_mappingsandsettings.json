@@ -194,6 +194,56 @@
                            }
                         }
                      },
+                     "publication_year_feature": {
+                        "type": "nested",
+                        "include_in_root": true,
+                        "properties": {
+                           "a": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "publication_year": {
+                              "type": "long"
+                           },
+                           "featureName": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureValue": {
+                              "type": "long"
+                           },
+                           "uri": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "wasDerivedFrom": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "wasGeneratedBy": {
+                              "type": "nested",
+                              "include_in_root": true,
+                              "properties": {
+                                 "a": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "databaseId": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "endedAtTime": {
+                                    "type": "date",
+                                    "format": "dateOptionalTime"
+                                 },
+                                 "wasAttributedTo": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 }
+                              }
+                           }
+                        }
+                     },
                      "creditcardaccepted_feature": {
                         "type": "nested",
                         "include_in_root": true,
@@ -1501,10 +1551,32 @@
                               "index": "not_analyzed"
                            },
                            "featureValue": {
-                              "type": "string"
+                              "type": "string",
+                              "index": "not_analyzed",
+                              "fields": {
+                                 "english": {
+                                    "type": "string",
+                                    "analyzer": "english"
+                                 },
+                                 "shingle_2": {
+                                    "type": "string",
+                                    "analyzer": "shingle_2_4_analyzer"
+                                 }
+                              }
                            },
                            "author": {
-                              "type": "string"
+                              "type": "string",
+                              "index": "not_analyzed",
+                              "fields": {
+                                 "english": {
+                                    "type": "string",
+                                    "analyzer": "english"
+                                 },
+                                 "shingle_2": {
+                                    "type": "string",
+                                    "analyzer": "shingle_2_4_analyzer"
+                                 }
+                              }
                            },
                            "uri": {
                               "type": "string",
