@@ -1538,6 +1538,102 @@
                            }
                         }
                      },
+                     "affiliation_country_feature": {
+                        "type": "nested",
+                        "include_in_root": true,
+                        "properties": {
+                           "a": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureName": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureValue": {
+                              "type": "string",
+                              "index": "not_analyzed",
+                              "fields": {
+                                 "english": {
+                                    "type": "string",
+                                    "analyzer": "english"
+                                 },
+                                 "shingle_2": {
+                                    "type": "string",
+                                    "analyzer": "shingle_2_4_analyzer"
+                                 }
+                              }
+                           },
+                           "affiliation_country": {
+                              "type": "string",
+                              "index": "not_analyzed",
+                              "fields": {
+                                 "english": {
+                                    "type": "string",
+                                    "analyzer": "english"
+                                 },
+                                 "shingle_2": {
+                                    "type": "string",
+                                    "analyzer": "shingle_2_4_analyzer"
+                                 }
+                              }
+                           },
+                           "uri": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureObject": {
+                              "properties": {
+                                 "a": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "label": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "isoCode": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "uri": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 }
+                              },
+                              "uri": {
+                                 "type": "string",
+                                 "index": "not_analyzed"
+                              }
+                           },
+                           "wasDerivedFrom": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "wasGeneratedBy": {
+                              "type": "nested",
+                              "include_in_root": true,
+                              "properties": {
+                                 "a": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "databaseId": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "endedAtTime": {
+                                    "type": "date",
+                                    "format": "dateOptionalTime"
+                                 },
+                                 "wasAttributedTo": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 }
+                              }
+                           }
+                        }
+                     },
                      "author_feature": {
                         "type": "nested",
                         "include_in_root": true,
@@ -2270,7 +2366,8 @@
                   "index": "not_analyzed"
                },
                "title_uri": {
-                  "type": "string"
+                  "type": "string",
+                  "index": "not_analyzed"
                },
                "uri": {
                   "type": "string",
