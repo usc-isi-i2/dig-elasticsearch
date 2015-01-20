@@ -2298,6 +2298,7 @@
                      },
                      "text": {
                         "type": "string",
+                        "analyzer": "english",
                         "fields": {
                            "english": {
                               "type": "string",
@@ -2323,6 +2324,7 @@
                      },
                      "text": {
                         "type": "string",
+                        "analyzer": "english",
                         "fields": {
                            "english": {
                               "type": "string",
