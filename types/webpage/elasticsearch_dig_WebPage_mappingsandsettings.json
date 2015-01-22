@@ -2148,6 +2148,40 @@
                               "type": "string",
                               "index": "not_analyzed"
                            },
+                           "featureObject": {
+                              "properties": {
+                                 "a": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "label": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "billingIncrement": {
+                                    "type": "long"
+                                 },
+                                 "price": {
+                                    "type": "long"
+                                 },
+                                 "priceCurrency": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "unitCode": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "uri": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 }
+                              },
+                              "uri": {
+                                 "type": "string",
+                                 "index": "not_analyzed"
+                              }
+                           },
                            "uri": {
                               "type": "string",
                               "index": "not_analyzed"
