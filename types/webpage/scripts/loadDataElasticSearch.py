@@ -11,17 +11,32 @@ from sys import stderr
 import sys
 import argparse
 
-def loadDatainES(filename, index, doctype,hostname="localhost",port=9200):
+def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port=9200):
     try:
         print "Connecting to " + hostname + " at port:" + str(port) 
         es = Elasticsearch([{'host': hostname, 'port': port}])
-        with open(filename) as f:
-            d = json.load(f)
-            for wp in d:
-              res = es.index(index=index,doc_type=doctype,body=wp)
-              print "indexing id: " + res["_id"] + " for uri: " + wp["uri"]
+        
+        if dataFileType=="1":
+            with open(filename) as f:
+                d = json.load(f)
+                for wp in d:
+                  res = es.index(index=index,doc_type=doctype,body=wp)
+                  print "indexing id: " + res["_id"] + " for uri: " + wp["uri"]
+        elif dataFileType == "0":
+            with open(filename) as f:
+                lines = f.readlines()
+
+                for line in lines:
+                    if line.strip() != "":
+                        jsonurlobj = json.loads(line.strip())
+                        objkey = jsonurlobj['uri']
+                        res = es.index(index=index,doc_type=doctype,body=line)
+                        print "indexing id: " + res["_id"] + " for uri: " + objkey
+                 
     except Exception, e:
         print >> stderr.write('ERROR: %s\n' % str(e))
+        
+
 
 
 if __name__ == '__main__':
@@ -32,12 +47,12 @@ if __name__ == '__main__':
     argp.add_argument("filepath",help="json file to be loaded in ElasticSearch")
     argp.add_argument("indexname",help="desired name of the index in ElasticSearch")
     argp.add_argument("doctype",help="type of the document to be indexed")
-    
+    argp.add_argument("dataFileType", help="Specify '0' if every line in the data file is different json object  or '1' otherwise")
     arguments = argp.parse_args()
     
     if arguments.hostname and arguments.port:
-        loadDatainES(arguments.filepath, arguments.indexname, arguments.doctype,arguments.hostname, arguments.port)
+        loadDatainES(arguments.filepath, arguments.indexname, arguments.doctype,arguments.dataFileType,arguments.hostname, arguments.port)
     else:
-        loadDatainES(arguments.filepath, arguments.indexname, arguments.doctype)
+        loadDatainES(arguments.filepath, arguments.indexname, arguments.doctype,arguments.dataFileType)
     
     print "Thats all folks!"
