@@ -11,13 +11,19 @@ from sys import stderr
 import sys
 import argparse
 
-def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port=9200):
+def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port=9200,mappingFilePath=None):
     try:
         print "Connecting to " + hostname + " at port:" + str(port) 
         es = Elasticsearch([{'host': hostname, 'port': port}])
         
+        if mappingFilePath:
+            with open(mappingFilePath) as m:
+                mapping = m.read()
+                #print "Mapping file:" + mapping
+                es.indices.create(index=index,  body=mapping,ignore=400)
+                
         if dataFileType=="1":
-            with open(filename) as f:
+            with open(filename) as f:   
                 d = json.load(f)
                 for wp in d:
                   res = es.index(index=index,doc_type=doctype,body=wp)
@@ -44,6 +50,7 @@ if __name__ == '__main__':
     argp = argparse.ArgumentParser()
     argp.add_argument("-hostname",help="Elastic Search Server hostname, defaults to 'localhost'",default="localhost")
     argp.add_argument("-port",type=int, help="Elastic Search Server port,defaults to 9200",default=9200)
+    argp.add_argument("-mappingFilePath", help="mapping/setting file for the index")
     argp.add_argument("filepath",help="json file to be loaded in ElasticSearch")
     argp.add_argument("indexname",help="desired name of the index in ElasticSearch")
     argp.add_argument("doctype",help="type of the document to be indexed")
@@ -51,8 +58,8 @@ if __name__ == '__main__':
     arguments = argp.parse_args()
     
     if arguments.hostname and arguments.port:
-        loadDatainES(arguments.filepath, arguments.indexname, arguments.doctype,arguments.dataFileType,arguments.hostname, arguments.port)
+        loadDatainES(arguments.filepath, arguments.indexname, arguments.doctype,arguments.dataFileType,arguments.hostname, arguments.port,arguments.mappingFilePath)
     else:
-        loadDatainES(arguments.filepath, arguments.indexname, arguments.doctype,arguments.dataFileType)
+        loadDatainES(arguments.filepath, arguments.indexname, arguments.doctype,arguments.dataFileType,mappingFilePath)
     
     print "Thats all folks!"
