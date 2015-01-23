@@ -15,7 +15,7 @@ dig-elasticsearch
 
   a. In the server field - http://localhost:9200/ 
   
-  b. Copy the contents of the file at the location -           https://github.com/usc-isi-i2/dig-elasticsearch/blob/master/types/webpage/elasticsearch_dig_WebPage_mappingsandsettings.json
+  b. Copy the contents of the file at the location -           https://github.com/usc-isi-i2/dig-elasticsearch/blob/master/types/webpage/esMapping-dig-Ads.json
   
     into the editor area of sense and send request.
   
@@ -29,17 +29,21 @@ dig-elasticsearch
    b. Type ```python loadDataElasticSearch.py -h```. This will provide help for the script as below
    ```
    usage: loadDataElasticSearch.py [-h] [-hostname HOSTNAME] [-port PORT]
+                                   [-mappingFilePath MAPPINGFILEPATH] dataFileType
                                 filepath indexname doctype
 
    positional arguments:
       filepath            json file to be loaded in ElasticSearch
       indexname           desired name of the index in ElasticSearch
       doctype             type of the document to be indexed
+      dataFileType        Specify '0' if every line in the data file is
+                          different json object or '1' otherwise
 
    optional arguments:
-      -h, --help          show this help message and exit
-      -hostname HOSTNAME  Elastic Search Server hostname, defaults to 'localhost'
-      -port PORT          Elastic Search Server port,defaults to 9200
+      -h, --help                       show this help message and exit
+      -hostname HOSTNAME               Elastic Search Server hostname, defaults to 'localhost'
+      -port PORT                       Elastic Search Server port,defaults to 9200
+      -mappingFilePath MAPPINGFILEPATH mapping/setting file for the index
    ```
 
   Execute:
