@@ -34,23 +34,25 @@ public class BulkLoadSequenceFile {
 		String index = (String)cl.getOptionValue("index");
 		String type = (String)cl.getOptionValue("type");
 		String hostname = (String)cl.getOptionValue("hostname");
+		String clustername = (String)cl.getOptionValue("clustername");
+		String sleep = (String)cl.getOptionValue("sleep");
+		String bulksize = (String)cl.getOptionValue("bulksize");
 		Settings settings = ImmutableSettings.settingsBuilder()
-		            .put("cluster.name", "dig_isi").build();
+		            .put("cluster.name", clustername).build();
 		SequenceFile.Reader reader = new SequenceFile.Reader(new Configuration(), SequenceFile.Reader.file(new Path(filePath)));
 		BytesWritable key = new BytesWritable();
 		Text val = new Text();
 		Client client = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress(hostname, 9300));
 		BulkRequestBuilder bulkRequest = client.prepareBulk();
-		int counter = 0;
+		long counter = 0;
 		while (reader.next(key, val)) {			
 			bulkRequest.add(client.prepareIndex(index, type).setSource(val.toString()));
 			counter++;
-			if (counter == 1000) {
-				counter = 0;
-				System.out.println("1000 resources processed");
+			if (counter % Integer.parseInt(bulksize) == 0) {
+				System.out.println(counter + " resources processed");
 				bulkRequest.execute().actionGet();
 				bulkRequest = client.prepareBulk();
-				Thread.sleep(100);
+				Thread.sleep(Integer.parseInt(sleep));
 			}	
 		}
 		bulkRequest.execute().actionGet();
@@ -63,6 +65,9 @@ public class BulkLoadSequenceFile {
 				options.addOption(new Option("type", "type", true, "elasticsearch type"));
 				options.addOption(new Option("index", "index", true, "elasticsearch index"));
 				options.addOption(new Option("hostname", "hostname", true, "elasticsearch hostname"));
+				options.addOption(new Option("clustername", "clustername", true, "elasticsearch clustername"));
+				options.addOption(new Option("sleep", "sleep", true, "thread sleep in ms"));
+				options.addOption(new Option("bulksize", "bulksize", true, "bulk size"));
 
 		return options;
 	}
