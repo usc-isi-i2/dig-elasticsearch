@@ -10,6 +10,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -32,7 +33,7 @@ public class BulkLoadSequenceFile {
 		String type = (String)cl.getOptionValue("type");
 		String hostname = (String)cl.getOptionValue("hostname");
 		SequenceFile.Reader reader = new SequenceFile.Reader(new Configuration(), SequenceFile.Reader.file(new Path(filePath)));
-		Text key = new Text();
+		BytesWritable key = new BytesWritable();
 		Text val = new Text();
 		Client client = new TransportClient().addTransportAddress(new InetSocketTransportAddress(hostname, 9300));
 		BulkRequestBuilder bulkRequest = client.prepareBulk();
