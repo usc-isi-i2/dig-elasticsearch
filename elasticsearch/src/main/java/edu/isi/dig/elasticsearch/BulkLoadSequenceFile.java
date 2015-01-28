@@ -10,12 +10,13 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
 
@@ -32,10 +33,12 @@ public class BulkLoadSequenceFile {
 		String index = (String)cl.getOptionValue("index");
 		String type = (String)cl.getOptionValue("type");
 		String hostname = (String)cl.getOptionValue("hostname");
+		Settings settings = ImmutableSettings.settingsBuilder()
+		            .put("cluster.name", "dig_isi").build();
 		SequenceFile.Reader reader = new SequenceFile.Reader(new Configuration(), SequenceFile.Reader.file(new Path(filePath)));
-		BytesWritable key = new BytesWritable();
+		Text key = new Text();
 		Text val = new Text();
-		Client client = new TransportClient().addTransportAddress(new InetSocketTransportAddress(hostname, 9300));
+		Client client = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress(hostname, 9300));
 		BulkRequestBuilder bulkRequest = client.prepareBulk();
 		int counter = 0;
 		while (reader.next(key, val)) {			
