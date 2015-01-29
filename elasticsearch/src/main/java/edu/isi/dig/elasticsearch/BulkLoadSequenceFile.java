@@ -13,6 +13,9 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
@@ -30,6 +33,8 @@ public class BulkLoadSequenceFile {
 		{
 			return;
 		}
+		BasicConfigurator.configure();
+		Logger.getRootLogger().setLevel(Level.TRACE);
 		String filePath = (String)cl.getOptionValue("filepath");
 		String index = (String)cl.getOptionValue("index");
 		String type = (String)cl.getOptionValue("type");
@@ -57,6 +62,7 @@ public class BulkLoadSequenceFile {
 		}
 		bulkRequest.execute().actionGet();
 		reader.close();
+		client.close();
 	}
 	
 	private static Options createCommandLineOptions() {
