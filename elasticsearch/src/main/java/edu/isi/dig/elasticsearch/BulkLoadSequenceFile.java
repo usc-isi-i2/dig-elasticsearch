@@ -41,13 +41,21 @@ public class BulkLoadSequenceFile {
 		String sleep = (String)cl.getOptionValue("sleep");
 		String bulksize = (String)cl.getOptionValue("bulksize");
 		String port = (String)cl.getOptionValue("port");
+		String protocol = (String)cl.getOptionValue("protocol");
 
 
 		SSLContextBuilder builder = new SSLContextBuilder();
 		builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
 		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build());
-		CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
-		HttpPost httpPost = new HttpPost("https://" + hostname + ":" + port + "/" + index + "/_bulk");
+		
+		CloseableHttpClient httpClient = null;
+		
+		if(protocol.equalsIgnoreCase("https"))
+				httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+		else if(protocol.equalsIgnoreCase("http"))
+				httpClient = HttpClients.createDefault();
+		
+		HttpPost httpPost = new HttpPost(protocol+"://" + hostname + ":" + port + "/" + index + "/_bulk");
 		String bulkFormat = "{\"index\":{\"_index\":\"" + index+ "\",\"_type\":\""+ type +"\"}}";
 
 		SequenceFile.Reader reader = new SequenceFile.Reader(new Configuration(), SequenceFile.Reader.file(new Path(filePath)));
@@ -68,8 +76,16 @@ public class BulkLoadSequenceFile {
 				httpClient.execute(httpPost);
 				httpClient.close();
 				System.out.println(counter + " processed");
-				httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
-				httpPost = new HttpPost("https://" + hostname + ":" + port + "/" + index + "/_bulk");
+				
+				httpClient = null;
+				
+				if(protocol.equalsIgnoreCase("https"))
+					httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+				else if(protocol.equalsIgnoreCase("http"))
+					httpClient = HttpClients.createDefault();
+				
+				//httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+				httpPost = new HttpPost(protocol + "://" + hostname + ":" + port + "/" + index + "/_bulk");
 				sb = new StringBuilder();
 				Thread.sleep(Integer.parseInt(sleep));
 			}
@@ -91,6 +107,7 @@ public class BulkLoadSequenceFile {
 		options.addOption(new Option("sleep", "sleep", true, "thread sleep in ms"));
 		options.addOption(new Option("bulksize", "bulksize", true, "bulk size"));
 		options.addOption(new Option("port", "port", true, "es port"));
+		options.addOption(new Option("protocol", "protocol", true, "es handshake protocol"));
 
 		return options;
 	}
