@@ -27,6 +27,7 @@ import org.apache.http.impl.client.HttpClients;
 
 public class BulkLoadSequenceFile {
 
+	private static final int retry = 10;
 	public static void main(String[] args) throws IllegalArgumentException, IOException, InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 		Options options = createCommandLineOptions();
 		CommandLine cl = parse(args, options, BulkLoadSequenceFile.class.getSimpleName());
@@ -47,14 +48,14 @@ public class BulkLoadSequenceFile {
 		SSLContextBuilder builder = new SSLContextBuilder();
 		builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
 		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build());
-		
+
 		CloseableHttpClient httpClient = null;
-		
+
 		if(protocol.equalsIgnoreCase("https"))
-				httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+			httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
 		else if(protocol.equalsIgnoreCase("http"))
-				httpClient = HttpClients.createDefault();
-		
+			httpClient = HttpClients.createDefault();
+
 		HttpPost httpPost = new HttpPost(protocol+"://" + hostname + ":" + port + "/" + index + "/_bulk");
 		String bulkFormat = "{\"index\":{\"_index\":\"" + index+ "\",\"_type\":\""+ type +"\"}}";
 
@@ -70,21 +71,34 @@ public class BulkLoadSequenceFile {
 			sb.append(System.getProperty("line.separator"));
 			counter++;
 			if (counter % Integer.parseInt(bulksize) == 0) {
-				StringEntity entity = new StringEntity(sb.toString(),"UTF-8");
-				entity.setContentType("application/json");
-				httpPost.setEntity(entity);
-				httpClient.execute(httpPost);
-				httpClient.close();
-				System.out.println(counter + " processed");
-				
+				int i = 0;
+				Exception ex = null;
+				while (i < retry) {
+					try {
+						StringEntity entity = new StringEntity(sb.toString(),"UTF-8");
+						entity.setContentType("application/json");
+						httpPost.setEntity(entity);
+						httpClient.execute(httpPost);
+						httpClient.close();
+						System.out.println(counter + " processed");
+						break;
+					}catch(Exception e) {
+						ex = e;
+						i++;
+					}
+				}
+				if (i > 0) {
+					System.out.println("Exception occurred!");
+					ex.printStackTrace();
+					break;
+				}
 				httpClient = null;
-				
+
 				if(protocol.equalsIgnoreCase("https"))
 					httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
 				else if(protocol.equalsIgnoreCase("http"))
 					httpClient = HttpClients.createDefault();
-				
-				//httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+
 				httpPost = new HttpPost(protocol + "://" + hostname + ":" + port + "/" + index + "/_bulk");
 				sb = new StringBuilder();
 				Thread.sleep(Integer.parseInt(sleep));
