@@ -5,6 +5,9 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -56,14 +59,31 @@ public class BulkLoadSequenceFile {
 				httpClient = HttpClients.createDefault();
 		
 		HttpPost httpPost = new HttpPost(protocol+"://" + hostname + ":" + port + "/" + index + "/_bulk");
-		String bulkFormat = "{\"index\":{\"_index\":\"" + index+ "\",\"_type\":\""+ type +"\"}}";
+		String bulkFormat = null;
 
 		SequenceFile.Reader reader = new SequenceFile.Reader(new Configuration(), SequenceFile.Reader.file(new Path(filePath)));
 		BytesWritable key = new BytesWritable();
 		Text val = new Text();
 		StringBuilder sb = new StringBuilder();
 		long counter = 0;
-		while (reader.next(key, val)) {			
+		while (reader.next(key, val)) {	
+			JSONObject jObj = (JSONObject)JSONSerializer.toJSON(val.toString());
+			
+			String id = null;
+			
+			if(jObj.containsKey("uri"))
+			{
+				id = jObj.getString("uri");
+			}
+			
+			if(id != null)
+			{
+				bulkFormat = "{\"index\":{\"_index\":\"" + index+ "\",\"_type\":\""+ type +"\",\"_id\":\""+id+"\"}}";
+			}
+			else
+			{
+				bulkFormat = "{\"index\":{\"_index\":\"" + index+ "\",\"_type\":\""+ type +"\"}}";
+			}
 			sb.append(bulkFormat);
 			sb.append(System.getProperty("line.separator"));
 			sb.append(val.toString());
