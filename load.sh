@@ -38,11 +38,13 @@ ESPORT=9200
 #BUCKET=hadoop
 #FILELOCATION=/user/worker
 #echo $#
+
+
 if [ $# -ne 22 ]; then
 	echo "Usage:"
 	echo "-j|--jarname		 local path to the jar file"
 	echo "-c|--class		 Java class name with namespace"
-	echo "-D|--inputdirectory	 path to directory containing input file"
+	echo "-D|--inputdirectory	 if -b=hadoop, -D should be the absolute path to directory on hdfs. If -b=aws, -D should be the s3 bucket name with trailing '/'. eg : data/files/"
 	echo "-b|--bucket 		 aws or hadoop or oozie"
 	echo "-s|--bulksize		 bulk size"
 	echo "-n|--naptime		 sleep time  for the program"
@@ -50,8 +52,6 @@ if [ $# -ne 22 ]; then
 	echo "-P|--port			 Elasticsearch port, default 9200"
 	echo "-i|--index		 Elasticsearch index name"
 	echo "-h|--host			 Elasticsearch host name"
-	echo "-m|--mappingfile 		 Use Mapping file ? yes or no"
-	#echo "-l|--filelocation"
 	exit
 fi
 
@@ -116,6 +116,8 @@ do
         esac
         shift
 done
+
+#if -m is set to yes, create the index first using the mapping file
 if [ $USEMAPPINGFILE == "yes" ]; then
 	echo
 	echo "curl -k -XDELETE '${ESPROTOCOL}://${ESHOST}:$ESPORT/$ESINDEXNAME' if needed"
@@ -143,32 +145,20 @@ if [ $BUCKET == "hadoop" ]; then
 	do
 		hadoop fs -get $i 
 		fileName=$(echo $i | rev | cut -d'/' -f1 | rev)
+		echo $fileName
 		java -classpath "$JARPATH" $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $fileName
 		rm $fileName 
 	done
+elif [ $BUCKET == "aws" ]; then
+	for i in $(aws s3 ls s3://$INPUTDIRECTORY |  awk '{$2=$2}1'  | cut -d' '  -f4)
+	do
+		 echo $i
+		 wget -q https://s3-us-west-2.amazonaws.com/$INPUTDIRECTORY$i -O $i
+		 java -classpath "$JARPATH" $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $i
+		 rm $i
+	done
 fi
 
-#for ((i=$BEGINFILE;i<=$ENDFILE;i++))
-#do
-#	printf -v filename "%06d" $i
-#	filename=$filename"_0"
-#	echo $filename
-#	if [ $BUCKET == "hadoop" ]; then
-#		hadoop fs -get /user/worker/
-#	elif [ $BUCKET == "aws" ]; then
-#		 wget -q https://s3-us-west-2.amazonaws.com/dig-pilotdocker/c1/$filename -O $filename
-#	fi
-#
-#	#echo java -classpath "$JARPATH" $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $DL/$filename
-#	java -classpath "$JARPATH" $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $DL/$filename
-#	rm $filename
-#	#echo $filename
-#	#break
-#done
 
 echo "Done!"
 
-#echo 000798_0
-#wget -q https://s3-us-west-2.amazonaws.com/dig-pilotdocker/c1/000798_0 -O 000798_0
-#java -classpath "$JARPATH" $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $DL/000798_0
-#rm 000798_0
