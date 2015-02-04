@@ -44,7 +44,7 @@ if [ $# -ne 22 ]; then
 	echo "Usage:"
 	echo "-j|--jarname		 local path to the jar file"
 	echo "-c|--class		 Java class name with namespace"
-	echo "-D|--inputdirectory	 if -b=hadoop, -D should be the absolute path to directory on hdfs. If -b=aws, -D should be the s3 bucket name with trailing '/'. eg : data/files/"
+	echo "-D|--inputdirectory	 if -b=hadoop or oozie, -D should be the absolute path to directory on hdfs. If -b=aws, -D should be the s3 bucket name with trailing '/'. eg : data/files/"
 	echo "-b|--bucket 		 aws or hadoop or oozie"
 	echo "-s|--bulksize		 bulk size"
 	echo "-n|--naptime		 sleep time  for the program"
@@ -102,10 +102,6 @@ do
                         ESHOST="$2"
                         shift
                         ;;
-		# -l|--filelocation)
-                 #       FILELOCATION="$2"
-                 #       shift
-                 #       ;;
 		 -m|--mappingfile)
                         USEMAPPINGFILE="$2"
                         shift
@@ -149,6 +145,18 @@ if [ $BUCKET == "hadoop" ]; then
 		java -classpath "$JARPATH" $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $fileName
 		rm $fileName 
 	done
+elif [ $BUCKET == "oozie" ]; then
+	hadoop fs -get $JARPATH
+        JARFILENAME=$(echo $JARPATH | rev | cut -d'/' -f1 | rev)
+	for i in $(hadoop fs -ls $INPUTDIRECTORY | awk '{$2=$2}1'  | cut -d' '  -f8)
+        do
+		hadoop fs -get $i
+		fileName=$(echo $i | rev | cut -d'/' -f1 | rev)
+		#echo "java -classpath $JARFILENAME $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $fileName"
+                java -classpath $JARFILENAME $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $fileName
+                rm $fileName
+	done
+	 rm $JARFILENAME
 elif [ $BUCKET == "aws" ]; then
 	for i in $(aws s3 ls s3://$INPUTDIRECTORY |  awk '{$2=$2}1'  | cut -d' '  -f4)
 	do
