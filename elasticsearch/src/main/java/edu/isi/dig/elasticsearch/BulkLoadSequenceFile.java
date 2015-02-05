@@ -16,6 +16,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.Writable;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
@@ -28,7 +29,7 @@ import org.apache.http.impl.client.HttpClients;
 public class BulkLoadSequenceFile {
 
 	private static final int retry = 10;
-	public static void main(String[] args) throws IllegalArgumentException, IOException, InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+	public static void main(String[] args) throws IllegalArgumentException, IOException, InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Options options = createCommandLineOptions();
 		CommandLine cl = parse(args, options, BulkLoadSequenceFile.class.getSimpleName());
 		if(cl == null)
@@ -60,7 +61,7 @@ public class BulkLoadSequenceFile {
 		String bulkFormat = "{\"index\":{\"_index\":\"" + index+ "\",\"_type\":\""+ type +"\"}}";
 
 		SequenceFile.Reader reader = new SequenceFile.Reader(new Configuration(), SequenceFile.Reader.file(new Path(filePath)));
-		BytesWritable key = new BytesWritable();
+		Writable key = (Writable) Class.forName(reader.getKeyClass().getCanonicalName()).newInstance();
 		Text val = new Text();
 		StringBuilder sb = new StringBuilder();
 		long counter = 0;
