@@ -52,6 +52,7 @@ if [ $# -ne 22 ]; then
 	echo "-P|--port			 Elasticsearch port, default 9200"
 	echo "-i|--index		 Elasticsearch index name"
 	echo "-h|--host			 Elasticsearch host name"
+	echo "-m|--mappingfile		 Use Mapping file ? Yes or no"
 	exit
 fi
 
@@ -139,11 +140,16 @@ fi
 if [ $BUCKET == "hadoop" ]; then
 	for i in $(hadoop fs -ls $INPUTDIRECTORY | awk '{$2=$2}1'  | cut -d' '  -f8) 
 	do
+		#echo $i
 		hadoop fs -get $i 
 		fileName=$(echo $i | rev | cut -d'/' -f1 | rev)
 		echo $fileName
-		java -classpath "$JARPATH" $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $fileName
-		rm $fileName 
+		fileSize=$(du -k $fileName | awk '{print $1}')
+		#echo $fileSize
+		if [ $fileSize -gt 0 ]; then
+			java -classpath "$JARPATH" $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $fileName
+		fi
+		rm $fileName
 	done
 elif [ $BUCKET == "oozie" ]; then
 	hadoop fs -get $JARPATH
@@ -152,8 +158,11 @@ elif [ $BUCKET == "oozie" ]; then
         do
 		hadoop fs -get $i
 		fileName=$(echo $i | rev | cut -d'/' -f1 | rev)
+		fileSize=$(du -k $fileName | awk '{print $1}')
 		#echo "java -classpath $JARFILENAME $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $fileName"
-                java -classpath $JARFILENAME $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $fileName
+                if [ $fileSize -gt 0 ]; then 
+			java -classpath $JARFILENAME $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $fileName
+		fi
                 rm $fileName
 	done
 	 rm $JARFILENAME
@@ -162,7 +171,12 @@ elif [ $BUCKET == "aws" ]; then
 	do
 		 echo $i
 		 wget -q https://s3-us-west-2.amazonaws.com/$INPUTDIRECTORY$i -O $i
-		 java -classpath "$JARPATH" $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $i
+		 #echo "wget " $?
+		 fileSize=$(du -k $i | awk '{print $1}')
+		 #echo "filesize: " $?
+		 if [ $fileSize -gt 0 ]; then
+		 	java -classpath "$JARPATH" $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $i
+		 fi
 		 rm $i
 	done
 fi
