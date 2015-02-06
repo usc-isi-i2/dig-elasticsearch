@@ -44,8 +44,8 @@ if [ $# -ne 22 ]; then
 	echo "Usage:"
 	echo "-j|--jarname		 local path to the jar file"
 	echo "-c|--class		 Java class name with namespace"
-	echo "-D|--inputdirectory	 if -b=hadoop or oozie, -D should be the absolute path to directory on hdfs. If -b=aws, -D should be the s3 bucket name with trailing '/'. eg : data/files/"
-	echo "-b|--bucket 		 aws or hadoop or oozie"
+	echo "-D|--inputdirectory	 if -b=hadoop or oozie or local, -D should be the absolute path to directory on hdfs. If -b=aws, -D should be the s3 bucket name with trailing '/'. eg : data/files/"
+	echo "-b|--bucket 		 aws or hadoop or oozie or local"
 	echo "-s|--bulksize		 bulk size"
 	echo "-n|--naptime		 sleep time  for the program"
 	echo "-p|--protocol		 http or https"
@@ -179,6 +179,17 @@ elif [ $BUCKET == "aws" ]; then
 		 fi
 		 rm $i
 	done
+elif [ $BUCKET == "local" ]; then
+        for i in $(ls -lrt $INPUTDIRECTORY |  awk '{$2=$2}1'  | cut -d' '  -f4)
+        do
+                 echo $i
+                 #wget -q https://s3-us-west-2.amazonaws.com/$INPUTDIRECTORY$i -O $i
+                 fileSize=$(du -k $i | awk '{print $1}')
+                 if [ $fileSize -gt 0 ]; then
+                        java -classpath "$JARPATH" $LOADERCLS --hostname $ESHOST --index $ESINDEXNAME --type WebPage --protocol $ESPROTOCOL --bulksize $BULKSIZE --sleep $NAPTIME --port $ESPORT --filepath $i
+                 fi
+                 rm $i
+        done
 fi
 
 
