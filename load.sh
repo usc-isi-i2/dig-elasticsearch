@@ -180,7 +180,7 @@ elif [ $BUCKET == "aws" ]; then
 		 rm $i
 	done
 elif [ $BUCKET == "local" ]; then
-        for i in $(ls -lrt $INPUTDIRECTORY |  awk '{$2=$2}1'  | cut -d' '  -f4)
+        for i in $(ls -lrt $INPUTDIRECTORY |  awk '{$2=$2}1'  | cut -d' '  -f9)
         do
                  echo $i
                  #wget -q https://s3-us-west-2.amazonaws.com/$INPUTDIRECTORY$i -O $i
