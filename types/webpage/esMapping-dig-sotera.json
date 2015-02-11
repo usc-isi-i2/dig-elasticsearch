@@ -433,7 +433,6 @@
                            }
                         }
                      },
-                     },
                      "place_location_feature": {
                         "type": "nested",
                         "include_in_root": true,
