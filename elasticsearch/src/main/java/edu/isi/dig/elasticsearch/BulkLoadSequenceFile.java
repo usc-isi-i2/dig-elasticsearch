@@ -100,6 +100,7 @@ public class BulkLoadSequenceFile {
 						httpPost.setEntity(entity);
 						httpClient.execute(httpPost);
 						httpClient.close();
+						Thread.sleep(Integer.parseInt(sleep));
 						System.out.println(counter + " processed");
 						break;
 					}catch(Exception e) {
@@ -121,7 +122,7 @@ public class BulkLoadSequenceFile {
 
 				httpPost = new HttpPost(protocol + "://" + hostname + ":" + port + "/" + index + "/_bulk");
 				sb = new StringBuilder();
-				Thread.sleep(Integer.parseInt(sleep));
+				
 			}
 		}
 		StringEntity entity = new StringEntity(sb.toString(),"UTF-8");
