@@ -48,6 +48,14 @@
                   "type": "date",
                   "format": "dateOptionalTime"
                },
+               "dateCrawled": {
+                  "type": "date",
+                  "format": "dateOptionalTime"
+               },
+               "dateMostLikelyCreated": {
+                  "type": "date",
+                  "format": "dateOptionalTime"
+               },
                "gentime": {
                   "type": "string",
                   "index": "not_analyzed"
