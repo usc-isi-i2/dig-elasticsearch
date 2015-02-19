@@ -48,6 +48,10 @@
                   "type": "date",
                   "format": "dateOptionalTime"
                },
+               "dateModified": {
+                  "type": "date",
+                  "format": "dateOptionalTime"
+               },
                "dateCrawled": {
                   "type": "date",
                   "format": "dateOptionalTime"
