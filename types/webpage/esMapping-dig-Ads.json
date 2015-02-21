@@ -1,6 +1,7 @@
 {
       "mappings": {
          "WebPage": {
+		"_timestamp" : { "enabled" : true,"store" : true },
             "properties": {
                "@context": {
                   "type": "string",
@@ -1548,12 +1549,11 @@
                               }
                            },
                            "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
+                              "type": "string"
                            },
                            "phonenumber": {
-                              "type": "string",
-                              "index": "not_analyzed"
+                              "type": "string"
+
                            },
                            "uri": {
                               "type": "string",
