@@ -1,7 +1,7 @@
 {
       "mappings": {
          "WebPage": {
-		"_timestamp" : { "enabled" : true,"store" : true },
+             "_timestamp" : { "enabled" : true,"store" : true },
             "properties": {
                "@context": {
                   "type": "string",
@@ -65,6 +65,7 @@
                   "type": "string",
                   "index": "not_analyzed"
                },
+
                "hasBodyPart": {
                   "properties": {
                      "a": {
@@ -1550,10 +1551,11 @@
                            },
                            "featureValue": {
                               "type": "string"
+                              
                            },
                            "phonenumber": {
                               "type": "string"
-
+                              
                            },
                            "uri": {
                               "type": "string",
@@ -2117,7 +2119,17 @@
          }
       }
    ,
-   "settings": {"analysis": {
+   "settings": {
+
+      "index":{
+
+         "number_of_shards" : 40,
+            "number_of_replicas" : 1
+
+         },
+
+      "analysis": {
+      
       "analyzer": {
         "my_folding": {
           "tokenizer": "standard",
