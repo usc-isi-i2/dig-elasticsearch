@@ -5,9 +5,6 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -26,6 +23,7 @@ import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.json.JSONObject;
 
 
 public class BulkLoadSequenceFile {
@@ -68,11 +66,11 @@ public class BulkLoadSequenceFile {
 		StringBuilder sb = new StringBuilder();
 		long counter = 0;
 		while (reader.next(key, val)) {	
-			JSONObject jObj = (JSONObject)JSONSerializer.toJSON(val.toString());
+			JSONObject jObj = new JSONObject(val.toString());
 			
 			String id = null;
 			
-			if(jObj.containsKey("uri"))
+			if(jObj.has("uri"))
 			{
 				id = jObj.getString("uri");
 			}
@@ -101,7 +99,7 @@ public class BulkLoadSequenceFile {
 						httpClient.execute(httpPost);
 						httpClient.close();
 						Thread.sleep(Integer.parseInt(sleep));
-						System.out.println(counter + " processed");
+						//System.out.println(counter + " processed");
 						break;
 					}catch(Exception e) {
 						ex = e;
