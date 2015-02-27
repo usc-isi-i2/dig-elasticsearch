@@ -844,7 +844,7 @@
                            }
                         }
                      },
-                     "compound_feature ": {
+                     "compound_feature": {
                         "type": "nested",
                         "include_in_root": true,
                         "properties": {
