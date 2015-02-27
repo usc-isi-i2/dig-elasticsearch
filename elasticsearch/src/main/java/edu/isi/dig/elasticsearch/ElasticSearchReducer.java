@@ -3,6 +3,7 @@ package edu.isi.dig.elasticsearch;
 import java.io.IOException;
 import java.util.Iterator;
 
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -15,7 +16,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ElasticSearchReducer extends Reducer<Text, Text, Text, Text> {
+public class ElasticSearchReducer extends Reducer<Text, Text, NullWritable, NullWritable> {
 	private static Logger LOG = LoggerFactory.getLogger(ElasticSearchReducer.class);
 	private int batchSize = 1000;
 	Client client;
