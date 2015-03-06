@@ -1018,7 +1018,7 @@
                               "type": "string",
                               "index": "not_analyzed"
                            },
-                           "provider_name": {
+                           "featureValue": {
                               "type": "string",
                               "index": "not_analyzed"
                            },
