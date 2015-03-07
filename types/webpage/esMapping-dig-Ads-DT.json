@@ -153,6 +153,50 @@
                            }
                         }
                      },
+                       "provider_name_feature": {
+                        "properties": {
+                           "a": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureName": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "featureValue": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "provider_name": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "uri": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "wasDerivedFrom": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                           },
+                           "wasGeneratedBy": {
+                              "properties": {
+                                 "a": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "databaseId": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                 },
+                                 "endedAtTime": {
+                                    "type": "date",
+                                    "format": "dateOptionalTime"
+                                 }
+                              }
+                           }
+                        }
+                     },
                      "emailaddress_feature": {
                         "type": "nested",
                         "include_in_root": true,
@@ -1880,6 +1924,25 @@
                            "similarimageurl": {
                               "type": "string",
                               "index": "not_analyzed"
+                           },
+                           "featureObject":{
+                              "properties":{
+                                 "imageObjectUriRanks":{
+                                       "properties":{
+                                          "imageObjectUri":{
+                                             "type":"string",
+                                             "index":"not_analyzed"
+                                          },
+                                          "imageRank":{
+                                          "type":"long"
+                                          }
+                                       }
+                                    },
+                                    "imageObjectUris": {
+                                       "type": "string",
+                                       "index":"not_analyzed"
+                                 }
+                              }    
                            }
                         }
                      },
@@ -2082,17 +2145,20 @@
                "provider": {
                   "properties": {
                      "@context": {
-                        "type": "string"
+                        "type": "string",
+                        "index":"not_analyzed"
                      },
                      "a": {
                         "type": "string",
                         "index": "not_analyzed"
                      },
                      "databaseId": {
-                        "type": "string"
+                        "type": "string",
+                        "index":"not_analyzed"
                      },
                      "legalName": {
-                        "type": "string"
+                        "type": "string",
+                        "index":"not_analyzed"
                      },
                      "uri": {
                         "type": "string",
