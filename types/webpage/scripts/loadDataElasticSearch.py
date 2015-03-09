@@ -26,7 +26,7 @@ def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port
             with open(filename) as f:   
                 d = json.load(f)
                 for wp in d:
-                  res = es.index(index=index,doc_type=doctype,body=wp)
+                  res = es.index(index=index,doc_type=doctype,body=wp,id=wp["uri"])
                   print "indexing id: " + res["_id"] + " for uri: " + wp["uri"]
         elif dataFileType == "0":
             with open(filename) as f:
