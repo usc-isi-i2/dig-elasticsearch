@@ -15,6 +15,7 @@ def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port
     try:
         print "Connecting to " + hostname + " at port:" + str(port) 
         es = Elasticsearch([{'host': hostname, 'port': port}])
+         es = Elasticsearch(['https://memex:<password>@'+hostname + ":" + str(port)],show_ssl_warnings=False)
         
         if mappingFilePath:
             with open(mappingFilePath) as m:
@@ -38,6 +39,26 @@ def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port
                         objkey = jsonurlobj['uri']
                         res = es.index(index=index,doc_type=doctype,body=line)
                         print "indexing id: " + res["_id"] + " for uri: " + objkey
+        elif dataFileType=="2":
+            reader = SequenceFile.Reader(filename)
+            key_class = reader.getKeyClass()
+            value_class = reader.getValueClass()
+
+            key = key_class()
+            value = value_class()
+            
+            position = reader.getPosition()
+            
+            while reader.next(key, value):
+                if value.strip() != "":
+                    jsonurlobj = json.loads(value.strip())
+                    objkey = jsonurlobj['uri']
+                    res = es.index(index=index,doc_type=doctype,body=line,id=objkey)
+                    print "indexing id: " + res["_id"] + " for uri: " + objkey
+                position = reader.getPosition()
+
+            reader.close()
+
                  
     except Exception, e:
         print >> stderr.write('ERROR: %s\n' % str(e))
