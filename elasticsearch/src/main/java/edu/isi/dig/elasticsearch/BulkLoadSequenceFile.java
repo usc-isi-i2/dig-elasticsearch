@@ -51,13 +51,7 @@ public class BulkLoadSequenceFile {
 		String username = (String)cl.getOptionValue("username");
 		String password = (String)cl.getOptionValue("password");
 
-		CredentialsProvider credsProvider=null;
-		if(!username.equals("") && !password.equals("")){
-		 credsProvider = new BasicCredentialsProvider();
-        credsProvider.setCredentials(
-                new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
-                new UsernamePasswordCredentials( username, password));
-		}
+		
 
 		SSLContextBuilder builder = new SSLContextBuilder();
 		builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
@@ -65,16 +59,19 @@ public class BulkLoadSequenceFile {
 
 		CloseableHttpClient httpClient = null;
 
-		if(protocol.equalsIgnoreCase("https")){
-			if(credsProvider!=null)
-				httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).setDefaultCredentialsProvider(credsProvider).build();
-			else
-				httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
-		}
+		if(protocol.equalsIgnoreCase("https"))
+			httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
 		else if(protocol.equalsIgnoreCase("http"))
 			httpClient = HttpClients.createDefault();
 
-		HttpPost httpPost = new HttpPost(protocol+"://" + hostname + ":" + port + "/" + index + "/_bulk");
+		
+		HttpPost httpPost = null;
+		if(!username.equals("") && !password.equals("")){
+			httpPost = new HttpPost(protocol+"://"+username + ":" + password + "@" + hostname + ":" + port + "/" + index + "/_bulk");
+		}else
+		{
+			httpPost = new HttpPost(protocol+"://" + hostname + ":" + port + "/" + index + "/_bulk");
+		}
 		String bulkFormat = null;
 
 		SequenceFile.Reader reader = new SequenceFile.Reader(new Configuration(), SequenceFile.Reader.file(new Path(filePath)));
