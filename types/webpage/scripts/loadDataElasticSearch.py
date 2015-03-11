@@ -10,12 +10,13 @@ from elasticsearch import Elasticsearch
 from sys import stderr
 import sys
 import argparse
+from hadoop.io import SequenceFile
 
 def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port=9200,mappingFilePath=None):
     try:
         print "Connecting to " + hostname + " at port:" + str(port) 
         es = Elasticsearch([{'host': hostname, 'port': port}])
-         es = Elasticsearch(['https://memex:<password>@'+hostname + ":" + str(port)],show_ssl_warnings=False)
+        es = Elasticsearch(['https://memex:<password>@'+hostname + ":" + str(port)],show_ssl_warnings=False)
         
         if mappingFilePath:
             with open(mappingFilePath) as m:
