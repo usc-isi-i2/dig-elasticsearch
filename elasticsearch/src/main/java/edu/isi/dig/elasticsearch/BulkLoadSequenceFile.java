@@ -16,11 +16,15 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.json.JSONObject;
@@ -44,7 +48,16 @@ public class BulkLoadSequenceFile {
 		String bulksize = (String)cl.getOptionValue("bulksize");
 		String port = (String)cl.getOptionValue("port");
 		String protocol = (String)cl.getOptionValue("protocol");
+		String username = (String)cl.getOptionValue("username");
+		String password = (String)cl.getOptionValue("password");
 
+		CredentialsProvider credsProvider=null;
+		if(!username.equals("") && !password.equals("")){
+		 credsProvider = new BasicCredentialsProvider();
+        credsProvider.setCredentials(
+                new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
+                new UsernamePasswordCredentials( username, password));
+		}
 
 		SSLContextBuilder builder = new SSLContextBuilder();
 		builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
@@ -52,8 +65,12 @@ public class BulkLoadSequenceFile {
 
 		CloseableHttpClient httpClient = null;
 
-		if(protocol.equalsIgnoreCase("https"))
-			httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+		if(protocol.equalsIgnoreCase("https")){
+			if(credsProvider!=null)
+				httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).setDefaultCredentialsProvider(credsProvider).build();
+			else
+				httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+		}
 		else if(protocol.equalsIgnoreCase("http"))
 			httpClient = HttpClients.createDefault();
 
@@ -141,6 +158,8 @@ public class BulkLoadSequenceFile {
 		options.addOption(new Option("bulksize", "bulksize", true, "bulk size"));
 		options.addOption(new Option("port", "port", true, "es port"));
 		options.addOption(new Option("protocol", "protocol", true, "es handshake protocol"));
+		options.addOption(new Option("username", "username", true, "basic auth username for ES"));
+		options.addOption(new Option("password", "password", true, "basic auth password for ES"));
 
 		return options;
 	}
