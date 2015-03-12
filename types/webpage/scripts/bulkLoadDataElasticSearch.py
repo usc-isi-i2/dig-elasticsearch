@@ -49,21 +49,34 @@ def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port
             value = value_class()
             
             position = reader.getPosition()
-            i=1
+            counter=0
+            
+            bulk_data = []
+            
             while reader.next(key, value):
                 if value.toString().strip() != "":
-		    try:
-                    	jsonurlobj = json.loads(value.toString().strip())
-		    	#print jsonurlobj
-                    	objkey = jsonurlobj['uri']
-                    	res = es.index(index=index,doc_type=doctype,body=value.toString(),id=objkey)
-		    except Exception, e:
-			i=i+1
-			pass
-                    print "indexing id: " + res["_id"] + " for uri: " + objkey
-		    
-                position = reader.getPosition()
+                    data_dict = {}
+                    line = value.toString()
+                    for i in range(len(line)):
+                        data_dict[header[i]] = line[i]
+                        
+                    op_dict = {
+                                "index": {
+                                    "_index": index, 
+                                    "_type": doctype, 
+                                    "_id": data_dict["uri"]
+                                }
+                            }
+                    bulk_data.append(op_dict)
+                    bulk_data.append(data_dict)
+                    
+  #                  //res = es.index(index=index,doc_type=doctype,body=value.toString(),id=objkey)
+                    # bulk index the data
+                    if counter % 10000 == 0:
+                        res = es.bulk(index = index, body = bulk_data, refresh = True)
+                        bulk_data = []
 
+                position = reader.getPosition()
             reader.close()
 
             print "Errors:" + str(i)     
