@@ -1,0 +1,39 @@
+{
+	"id": "a2130cfc-a8df-8d64-476d-a5bcb26eecdc",
+	"name": "geospatial-queries",
+	"description": "",
+	"order": [
+		"1f9e0b0e-9cb7-63ac-0705-7d92e2aa0397"
+	],
+	"folders": [],
+	"timestamp": 1426119665063,
+	"synced": false,
+	"owner": "",
+	"subscribed": false,
+	"remoteLink": "https://www.getpostman.com/collections/9d9af8ac0ddc92ecc4e4",
+	"public": false,
+	"write": true,
+	"requests": [
+		{
+			"id": "1f9e0b0e-9cb7-63ac-0705-7d92e2aa0397",
+			"headers": "Content-Type: application/json\nAuthorization: Basic ZGFycGFtZW1leDpkYXJwYW1lbWV4\n",
+			"url": "https://esc.memexproxy.com/dig-ht-pilot-unfiltered03/WebPage/_search",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1426122340025,
+			"name": "localities",
+			"description": "",
+			"collectionId": "a2130cfc-a8df-8d64-476d-a5bcb26eecdc",
+			"responses": [],
+			"synced": false,
+			"rawModeData": "{\n   \"query\": {\n        \"function_score\" : {\n            \"query\" : { \n                \"constant_score\": {\n                    \"filter\": {\n                        \"exists\": {\n                            \"field\": \"hasFeatureCollection.place_postalAddress_feature.uri\"\n                        }\n                    }\n                }\n            },\n            \"random_score\" : {}\n        }\n    },\n    \"_source\": [\n        \"url\",\n        \"hasTitlePart\",\n        \"hasBodyPart\",\n        \"hasFeatureCollection.place_postalAddress_feature.featureObject\",\n        \"hasFeatureCollection.phonenumber_feature.featureObject\"\n    ],\n    \"size\": 200\n}"
+		}
+	]
+}
