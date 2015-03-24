@@ -11,6 +11,108 @@ GET _search
   "query": {
     "match_all": {}
   },
+  "sort": { "dateCreated": { "order": "desc" }}
+}
+
+GET _search
+{
+  "filter": {
+    "range": {
+      "dateCreated": {
+        "gte": "2015-02-20",
+        "lte": "now"
+      }
+    }
+  }
+}
+
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "recent": {
+      "filter": {
+        "range": {
+          "dateCreated": {
+            "gte": "2015-02-20",
+            "lte": "now"
+          }
+        }
+      },
+      "aggs": {
+        "by_date": {
+          "date_histogram": {
+            "field": "dateCrawled",
+            "min_doc_count": 0,
+            "order": {
+              "_key": "desc"
+            },
+            "format": "yyyy-MM-dd HH:mm zzz",
+            "interval": "hour"
+          }
+        }
+      }
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "recent": {
+      "filter": {
+        "range": {
+          "dateCreated": {
+            "gte": "2015-01-01",
+            "lte": "now"
+          }
+        }
+      },
+      "aggs": {
+        "by_date": {
+          "date_histogram": {
+            "field": "dateCrawled",
+            "min_doc_count": 0,
+            "order": {
+              "_key": "desc"
+            },
+            "format": "yyyy-MM-dd",
+            "interval": "day"
+          }
+        }
+      }
+    }
+  }
+}
+
+
+  
+
+
+
+
+
+GET _search
+{
+  "fields": ["hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality", "hasFeatureCollection.place_postalAddress_feature.featureObject.addressRegion", "hasFeatureCollection.place_postalAddress_feature.featureObject.addressCountry.label", "hasFeatureCollection.place_postalAddress_feature.featureObject.addressCountry.isoCode"]
+}
+
+GET _search
+{
+  "query": {
+    "match_all": {}
+  },
+  "fields": [
+    "uri", "hasAbstractPart.text"
+  ],
+  "size": 200000
+}
+
+GET _search
+{
+  "query": {
+    "match_all": {}
+  },
   "fields": [
     "hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality","hasFeatureCollection.place_postalAddress_feature.featureObject.addressRegion", "hasFeatureCollection.place_postalAddress_feature.featureObject.addressCountry.label","uri"
   ],
@@ -18,7 +120,7 @@ GET _search
 }
 
 
-GET _search?search_type=count
+GET _search
 {
   "aggs": {
     "distinct_phones": {
@@ -37,7 +139,7 @@ GET _search
     }
   },
   "fields": ["hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality"],
-  "size": 2000
+  "size": 200
 }
 
 GET _search?search_type=count
@@ -45,8 +147,8 @@ GET _search?search_type=count
   "aggs": {
     "localities": {
       "terms": {
-        "field": "hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality",
-        "size": 50000
+        "field": "hasFeatureCollection.phonenumber_feature.featureValue",
+        "size": 50
       }
     }
   }
@@ -82,6 +184,30 @@ GET _search?search_type=count
     "phone_localities": {
       "terms": {
         "field": "hasFeatureCollection.phonenumber_feature.featureObject.location.address.addressLocality",
+        "size": 5000
+      }
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "phone_localities": {
+      "terms": {
+        "field": "hasFeatureCollection.person_eyecolor_feature.person_eyecolor",
+        "size": 5000
+      }
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "phone_localities": {
+      "terms": {
+        "field": "hasFeatureCollection.person_haircolor_feature.person_haircolor",
         "size": 5000
       }
     }
@@ -144,15 +270,37 @@ GET _search
   "query": {
     "more_like_this_field": {
       "hasBodyPart.text.shingle_4": {
-        "like_text": "â˜†Hi Were Michelle & Roxy <br>\nWe Are blessed with a sexy,exotic body's and gorgeous faces,<br>\nCoMe baby and enjoy our Specials techniques of pleasure !!<br>\nBreak away from the same old regular routine & indulge yourself in <br>\nsomething exceptional. <br>\nWe enjoy the art of sensual touching and good conversation.<br>\n<br>\n100 % REAL & independent<br>\nno drama//games<br>\n<br>\n<b>Michelle & Roxy</b>\n<u><b>702*410-..80-76</b></u>",
+        "like_text": "XoXo Hello! I am â™¡ NIAâ™¡ XoXo<br> <br> â¤ I know your tired of the same boring routine, so come experience something FUN and DIFFERENT!<br> â¤ I am the girl with the PERFECT tempting CURVES you have been searching for!<br> â¤ Come get lost in my CAPTIVATING eyes & run your fingers across my SOFT SILKY BODY!<br> â¤ I am extremely OPEN MINDED & FETISH FRIENDLY! Let me prove it to you!<br> <br> NO TEXTS! NO BLOCKED CALLS!<br> NO BLACK MEN UNDER",
         "min_term_freq": 1,
         "max_query_terms": 20
       }
     }
   },
-  "fields": ["hasTitlePart.text", "hasBodyPart.text", "dateCreated"]
+  "fields": ["hasTitlePart.text", "hasBodyPart.text", "dateCreated", "hasFeatureCollection.phonenumber_feature.phonenumber"],
+  "size": 30
 }
 
+GET _search
+{
+  "query": {
+    "more_like_this_field": {
+      "hasBodyPart.text.shingle_4": {
+        "like_text": "XoXo Hello! I am â™¡ NIAâ™¡ XoXo<br> <br> â¤ I know your tired of the same boring routine, so come experience something FUN and DIFFERENT!<br> â¤ I am the girl with the PERFECT tempting CURVES you have been searching for!<br> â¤ Come get lost in my CAPTIVATING eyes & run your fingers across my SOFT SILKY BODY!<br> â¤ I am extremely OPEN MINDED & FETISH FRIENDLY! Let me prove it to you!<br> <br> NO TEXTS! NO BLOCKED CALLS!<br> NO BLACK MEN UNDER",
+        "min_term_freq": 1,
+        "max_query_terms": 20
+      }
+    }
+  },
+  "size": 0,
+  "aggs": {
+    "popular_phones": {
+      "terms": {
+        "field": "hasFeatureCollection.phonenumber_feature.phonenumber",
+        "size": 200
+      }
+    }
+  }
+}
 
 
 GET _search
@@ -168,9 +316,11 @@ GET _search
 {
   "query": {
     "query_string": {
-      "query": "los angeles"
+      "query": "delhi"
     }
-  }
+  },
+  "fields": ["dateCreated", "dateModified", "dateMostLikelyCreated"], 
+  "size": 10
 }
 
 GET _search
@@ -204,7 +354,7 @@ GET _search
 {
   "query": {
     "match": {
-      "memex:hasFeatureCollection.memex:person_age_feature.memex:featureName": "person_age"
+      "hasFeatureCollection.person_age_feature.featureName": "person_age"
     }
   }
 }
@@ -226,7 +376,20 @@ GET _search?search_type=count
     "social": {
       "date_histogram": {
         "field": "dateCreated",
-        "interval": "week"
+        "interval": "day"
+      }
+    }
+  }
+}
+xxx
+GET _search?search_type=count
+{
+  "query": {
+    "constant_score": {
+      "filter": {
+        "exists": {
+          "field": "hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality"
+        }
       }
     }
   }
@@ -238,7 +401,34 @@ GET _search?search_type=count
     "constant_score": {
       "filter": {
         "exists": {
-          "field": "hasFeatureCollection.phonenumber_feature.uri"
+          "field": "hasFeatureCollection.person_eyecolor_feature.uri"
+        }
+      }
+    }
+  }
+}
+
+GET _search?search_type=count
+{
+  "query": {
+    "constant_score": {
+      "filter": {
+        "exists": {
+          "field": "hasFeatureCollection.person_haircolor_feature.uri"
+        }
+      }
+    }
+  }
+}
+
+
+GET _search?search_type=count
+{
+  "query": {
+    "constant_score": {
+      "filter": {
+        "exists": {
+          "field": "hasImagePart.uri"
         }
       }
     }
@@ -298,9 +488,13 @@ GET _search?search_type=count
 GET _search?search_type=count
 {
   "query": {
-    "range": {
-      "dateCreated": {
-        "from": "2012-01-02"
+    "filtered": {
+      "filter": {
+        "range": {
+          "dateCreated": {
+            "from": "2012-01-02"
+          }
+        }
       }
     }
   },
@@ -309,7 +503,7 @@ GET _search?search_type=count
       "date_histogram": {
         "field": "dateCreated",
         "format": "yyyy-MM-dd",
-        "interval": "week"
+        "interval": "day"
       },
       "aggs": {
         "phone": {
@@ -344,6 +538,8 @@ GET _search
 {
   "fields": ["hasTitlePart.text"]
 }
+
+
 
 GET /5DOISu6NTG2wJTG3TuMZOA
 
@@ -399,7 +595,17 @@ GET _search
 {
   "filter": {
     "term": {
-      "hasFeatureCollection.phonenumber_feature.wasGeneratedBy.databaseId": "177722562"
+      "hasFeatureCollection.similar_images_feature.featureValue": "https://s3.amazonaws.com/roxyimages/5c3864009c57d1cc61e4d0f3d5a0be59ef9e04a8.jpg"
+    }
+  }
+}
+
+
+GET _search
+{
+  "filter": {
+    "term": {
+      "hasFeatureCollection.similar_images_feature.featureValue": "5c3864009c57d1cc61e4d0f3d5a0be59ef9e04a8"
     }
   }
 }
@@ -409,10 +615,9 @@ GET /_search
   "query": {
     "multi_match": {
       "type": "most_fields",
-      "query": "happy relaxed fun",
+      "query": "biochemical",
       "fields": [
-        "hasBodyPart.text",
-        "hasBodyPart.text.english"
+        "hasAbstractPart.text"
       ]
     }
   }
@@ -423,15 +628,133 @@ GET _search
   "query": {
       "query_string": {
         "default_field": "_all",
-        "query": " http"
+        "query": "3059929556"
       }
   }
 }
 
+
+GET _search
+{
+  "filter": {
+    "exists": {
+      "field": [
+        "hasFeatureCollection.place_postalAddress_feature.featureObject.addressRegion",
+        "hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality"
+      ]
+    }
+  }
+}
+
+GET _search
+{
+  "query": {
+    "filtered": {
+      "filter": {
+        "and": {
+          "filters": [
+            {
+              "exists": {
+                "field": [
+                  "hasFeatureCollection.place_postalAddress_feature.featureObject.addressRegion"
+                ]
+              }
+            },
+            {
+              "exists": {
+                "field": [
+                  "hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality"
+                ]
+              }
+            },
+            {
+              "exists": {
+                "field": [
+                  "hasFeatureCollection.phonenumber_feature.uri"
+                ]
+              }
+            },
+            {
+              "term": {
+                "hasFeatureCollection.phonenumber_feature.wasGeneratedBy.wasAttributedTo": "http://dig.isi.edu/ht/data/software/extractor/stanford/version/1"
+              }
+            },
+            {
+              "range": {
+                "dateCreated": {
+                  "gte": "2013-08-01",
+                  "lte": "2014-07-31"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "aggs": {
+    "popular_phones": {
+      "terms": {
+        "field": "hasFeatureCollection.phonenumber_feature.phonenumber",
+        "size": 2000
+      }
+    }
+  },
+  "size": 0
+}
+
+GET _search
+
+GET _search
+{
+  "filter": {
+    "and": {
+      "filters": [
+        {
+          "exists": {
+            "field": [
+              "hasFeatureCollection.place_postalAddress_feature.featureObject.addressRegion"
+            ]
+          }
+        },
+        {
+          "exists": {
+            "field": [
+              "hasFeatureCollection.place_postalAddress_feature.featureObject.addressLocality"
+            ]
+          }
+        },
+        {
+          "exists": {
+         "field": [
+              "hasFeatureCollection.phonenumber_feature.uri"
+            ]
+          }
+        },
+        {
+          "range": {
+            "dateCreated": {
+              "gte": "2014-08-01",
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+
+GET _search?search_type=count
+{
+  "aggs": {
+    "popular_phones": {
+      "terms": {
+        "field": "hasFeatureCollection.phonenumber_feature.phonenumber",
+        "size": 200
+      }
+    }
+  }
+}
+ 
+ 
 GET _mapping
-
-
-
-
-
-
