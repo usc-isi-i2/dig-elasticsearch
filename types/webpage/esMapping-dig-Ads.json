@@ -1878,6 +1878,25 @@
                            "similarimageurl": {
                               "type": "string",
                               "index": "not_analyzed"
+                           },
+                           "featureObject":{
+                              "properties":{
+                                 "imageObjectUriRanks":{
+                                       "properties":{
+                                          "imageObjectUri":{
+                                             "type":"string",
+                                             "index":"not_analyzed"
+                                          },
+                                          "imageRank":{
+                                          "type":"long"
+                                          }
+                                       }
+                                    },
+                                    "imageObjectUris": {
+                                       "type": "string",
+                                       "index":"not_analyzed"
+                                 }
+                              }    
                            }
                         }
                      },
@@ -2117,7 +2136,15 @@
          }
       }
    ,
-   "settings": {"analysis": {
+   "settings": 
+   {
+      "index":{
+
+         "number_of_shards" : 14,
+            "number_of_replicas" : 1
+
+         },
+      "analysis": {
       "analyzer": {
         "my_folding": {
           "tokenizer": "standard",
