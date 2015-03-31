@@ -38,12 +38,52 @@
                   "type": "string",
                   "index": "not_analyzed"
                },
+               "hasIdentifier":{
+                  "properties":{
+                     "a":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                     },
+                        "hasType":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                     },
+                        "label":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                     },
+                        "uri":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                     }
+                  }
+               },
                "isCitationOf":{
                   "properties":{
                      "a":{
                         "type":"string",
                         "index": "not_analyzed"
                      },
+                     "hasIdentifier":{
+                        "properties":{
+                           "a":{
+                              "type":"string",
+                              "index": "not_analyzed"
+                           },
+                           "hasType":{
+                              "type":"string",
+                              "index": "not_analyzed"
+                           },
+                          "label":{
+                              "type":"string",
+                              "index": "not_analyzed"
+                           },
+                           "uri":{
+                              "type":"string",
+                              "index": "not_analyzed"
+                              }
+                           }
+                        },
                   "uri":{
                      "type":"string",
                      "index": "not_analyzed"
@@ -60,6 +100,26 @@
                         "type":"string",
                         "index": "not_analyzed"
                      },
+                     "hasIdentifier":{
+                        "properties":{
+                           "a":{
+                              "type":"string",
+                              "index": "not_analyzed"
+                              },
+                              "hasType":{
+                              "type":"string",
+                              "index": "not_analyzed"
+                              },
+                              "label":{
+                              "type":"string",
+                              "index": "not_analyzed"
+                              },
+                              "uri":{
+                              "type":"string",
+                              "index": "not_analyzed"
+                              }
+                           }
+                        },
                   "uri":{
                      "type":"string",
                      "index": "not_analyzed"
@@ -1262,7 +1322,14 @@
          }
       }
    ,
-   "settings": {"analysis": {
+   "settings": {
+      "index":{
+
+         "number_of_shards" : 14,
+            "number_of_replicas" : 0
+
+         },
+      "analysis": {
       "analyzer": {
         "my_folding": {
           "tokenizer": "standard",
