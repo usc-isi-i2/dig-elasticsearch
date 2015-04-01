@@ -50,12 +50,13 @@ public class ElasticSearchReducer extends Reducer<Text, Text, NullWritable, Null
 		Iterator<Text> itr = values.iterator();
 		while (itr.hasNext()) {
 			try {
-				JSONObject obj = new JSONObject(itr.next().toString());
+				String tmp = itr.next().toString();
+				JSONObject obj = new JSONObject(tmp);
 				if (obj.has("uri")) {
-					bulkRequest.add(client.prepareIndex(index, type, obj.getString("uri")).setSource(obj.toString()));
+					bulkRequest.add(client.prepareIndex(index, type, obj.getString("uri")).setSource(tmp));
 				}
 				else {
-					bulkRequest.add(client.prepareIndex(index, type).setSource(obj.toString()));
+					bulkRequest.add(client.prepareIndex(index, type).setSource(tmp));
 				}
 				count++;
 				if (count == batchSize) {
@@ -65,6 +66,8 @@ public class ElasticSearchReducer extends Reducer<Text, Text, NullWritable, Null
 				}
 			}catch(Exception e) {
 				LOG.error("something is wrong", e);
+				//bulkRequest = client.prepareBulk();
+				count = 0;
 			}
 		}
 		context.progress();
