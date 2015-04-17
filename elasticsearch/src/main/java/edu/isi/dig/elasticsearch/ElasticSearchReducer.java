@@ -22,7 +22,7 @@ public class ElasticSearchReducer extends Reducer<Text, Text, NullWritable, Null
 	Client client;
 	BulkRequestBuilder bulkRequest;
 	String type;
-	String index;
+	String[] indices;
 	int count = 0;
 	@Override
 	public void setup(Context context) {
@@ -37,7 +37,7 @@ public class ElasticSearchReducer extends Reducer<Text, Text, NullWritable, Null
 		}
 		Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", clusterName).build();
 		type = context.getConfiguration().get("elasticsearch.type");
-		index = context.getConfiguration().get("elasticsearch.index");
+		indices = context.getConfiguration().get("elasticsearch.index").split(",");
 		client = new TransportClient(settings);
 		for (String hostName : hostNames) {
 			((TransportClient) client).addTransportAddress(new InetSocketTransportAddress(hostName, portNumber));
@@ -53,10 +53,14 @@ public class ElasticSearchReducer extends Reducer<Text, Text, NullWritable, Null
 				String tmp = itr.next().toString();
 				JSONObject obj = new JSONObject(tmp);
 				if (obj.has("uri")) {
-					bulkRequest.add(client.prepareIndex(index, type, obj.getString("uri")).setSource(tmp));
+					for (String index : indices) {
+						bulkRequest.add(client.prepareIndex(index, type, obj.getString("uri")).setSource(tmp));
+					}
 				}
 				else {
-					bulkRequest.add(client.prepareIndex(index, type).setSource(tmp));
+					for (String index : indices) {
+						bulkRequest.add(client.prepareIndex(index, type).setSource(tmp));
+					}
 				}
 				count++;
 				if (count == batchSize) {
