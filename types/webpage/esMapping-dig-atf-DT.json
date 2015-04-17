@@ -25,6 +25,61 @@
                      }
                   }
                },
+               "hasIdentifier":{
+                  "properties":{
+                    "a":{
+                    "type":"string",
+                    "index": "not_analyzed"
+                    },
+                    "hasType":{
+                    "type":"string",
+                    "index": "not_analyzed"
+                    },
+                    "label":{
+                    "type":"string",
+                    "index": "not_analyzed"
+                    }
+                  }
+                },
+                "isPartOf":{
+                  "properties":{
+                    "a":{
+                    "type":"string",
+                    "index": "not_analyzed"
+                    },
+                    "hasIdentifier":{
+                      "properties":{
+                      "a":{
+                      "type":"string"
+                      },
+                    "hasType":{
+                      "type":"string",
+                      "index": "not_analyzed"
+                      },
+                    "label":{
+                    "type":"string",
+                    "index": "not_analyzed"
+                    }
+                    }
+                    },
+                    "hasTitlePart":{
+                    "properties":{
+                    "a":{
+                    "type":"string",
+                    "index": "not_analyzed"
+                    },
+                    "text":{
+                    "type":"string",
+                    "index": "not_analyzed"
+                    }
+                    }
+                    },
+                    "url":{
+                    "type":"string",
+                    "index": "not_analyzed"
+                    }
+                  }
+                },
                "hasFeatureCollection":{
                      "properties":{
                         "a":{
@@ -53,6 +108,136 @@
                      }
                   }
                },
+               "person_postCount_feature":{
+                     "type": "nested",
+                     "include_in_root": true,
+                  "properties":{
+                    "a":{
+                      "type":"string",
+                      "index": "not_analyzed"
+                      },
+                      "featureName":{
+                      "type":"string",
+                      "index": "not_analyzed"
+                      },
+                      "featureValue":{
+                      "type":"long"
+                      },
+                      "person_postCount":{
+                      "type":"long"
+                      }
+                    }
+                  },
+                  "pricesMentioned_feature":{
+                    "type": "nested",
+                     "include_in_root": true,
+                    "properties":{
+                      "a":{
+                      "type":"string",
+                      "index": "not_analyzed"
+                      },
+                      "featureName":{
+                      "type":"string",
+                      "index": "not_analyzed"
+                      },
+                      "featureValue":{
+                      "type":"long"
+                      
+                      },
+                      "pricesMentioned":{
+                      "type":"long"
+                      
+                      }
+                    }
+                  },
+                  "provider_name_feature":{
+                    "type": "nested",
+                     "include_in_root": true,
+                        "properties":{
+                          "a":{
+                          "type":"string",
+                          "index": "not_analyzed"
+                          },
+                          "featureName":{
+                          "type":"string",
+                          "index": "not_analyzed"
+                          },
+                          "featureValue":{
+                          "type":"string",
+                          "index": "not_analyzed"
+                          },
+                          "provider_name":{
+                          "type":"string",
+                          "index": "not_analyzed"
+                          }
+                        }
+                      },
+                  "weaponsMentioned_feature":{
+                    "type": "nested",
+                     "include_in_root": true,
+                      "properties":{
+                        "a":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                        },
+                        "featureName":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                        },
+                        "featureValue":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                        },
+                        "weaponsMentioned":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                        }
+                      }
+                    },
+                  "place_postalAddress_feature":{
+                    "type": "nested",
+                     "include_in_root": true,
+                    "properties":{
+                        "a":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                        },
+                        "featureName":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                        },
+                        "featureValue":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                        },
+                        "place_postalAddress":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                        }
+                      }
+                    },
+                    "bitcoinPricesMentioned_feature":{
+                    "type": "nested",
+                     "include_in_root": true,
+                    "properties":{
+                        "a":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                        },
+                        "featureName":{
+                        "type":"string",
+                        "index": "not_analyzed"
+                        },
+                        "featureValue":{
+                        "type":"long"
+                        
+                        },
+                        "bitcoinPricesMentioned":{
+                        "type":"long"
+                      
+                        }
+                      }
+                    },
                "person_username_feature":{
                   "type": "nested",
                   "include_in_root": true,
