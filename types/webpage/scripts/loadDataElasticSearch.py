@@ -10,7 +10,6 @@ from elasticsearch import Elasticsearch
 from sys import stderr
 import sys
 import argparse
-from hadoop.io import SequenceFile
 
 def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port=9200,mappingFilePath=None):
     try:
@@ -40,33 +39,6 @@ def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port
                         objkey = jsonurlobj['uri']
                         res = es.index(index=index,doc_type=doctype,body=line)
                         print "indexing id: " + res["_id"] + " for uri: " + objkey
-        elif dataFileType=="2":
-            reader = SequenceFile.Reader(filename)
-            key_class = reader.getKeyClass()
-            value_class = reader.getValueClass()
-
-            key = key_class()
-            value = value_class()
-            
-            position = reader.getPosition()
-            i=1
-            while reader.next(key, value):
-                if value.toString().strip() != "":
-		    try:
-                    	jsonurlobj = json.loads(value.toString().strip())
-		    	#print jsonurlobj
-                    	objkey = jsonurlobj['uri']
-                    	res = es.index(index=index,doc_type=doctype,body=value.toString(),id=objkey)
-		    except Exception, e:
-			i=i+1
-			pass
-                    print "indexing id: " + res["_id"] + " for uri: " + objkey
-		    
-                position = reader.getPosition()
-
-            reader.close()
-
-            print "Errors:" + str(i)     
     except Exception, e:
         print >> stderr.write('ERROR: %s\n' % str(e))
 	pass
