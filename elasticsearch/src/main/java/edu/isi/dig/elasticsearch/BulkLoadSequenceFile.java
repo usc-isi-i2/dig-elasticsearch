@@ -16,15 +16,11 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.json.JSONObject;
@@ -64,7 +60,6 @@ public class BulkLoadSequenceFile {
 		else if(protocol.equalsIgnoreCase("http"))
 			httpClient = HttpClients.createDefault();
 
-		
 		HttpPost httpPost = null;
 		if(!username.equals("") && !password.equals("")){
 			httpPost = new HttpPost(protocol+"://"+username + ":" + password + "@" + hostname + ":" + port + "/" + index + "/_bulk");

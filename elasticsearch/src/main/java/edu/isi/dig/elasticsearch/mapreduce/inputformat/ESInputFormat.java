@@ -3,6 +3,8 @@ package edu.isi.dig.elasticsearch.mapreduce.inputformat;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.lang.reflect.Field;
+import java.nio.charset.Charset;
 
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Writable;
@@ -20,6 +22,17 @@ public class ESInputFormat extends InputFormat<Writable, Writable>{
 	
 	private static Logger LOG = LoggerFactory.getLogger(ESInputFormat.class);
 	
+	
+	static {
+		try {
+			Field defaultCharsetField = Charset.class.getDeclaredField("defaultCharset");
+			defaultCharsetField.setAccessible(true);
+			defaultCharsetField.set(null, Charset.forName("UTF-8"));
+		} catch (Exception e) {
+			LOG.error("something wrong", e);
+		}
+	}
+		
 	@Override
 	public RecordReader<Writable,Writable> createRecordReader(InputSplit split,
 			TaskAttemptContext context) throws IOException, InterruptedException {
@@ -30,22 +43,6 @@ public class ESInputFormat extends InputFormat<Writable, Writable>{
 	}
 	
 	
-	private class ESInputSplit extends InputSplit{
-
-		@Override
-		public long getLength() throws IOException, InterruptedException {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
-		@Override
-		public String[] getLocations() throws IOException, InterruptedException {
-			String[] locations = new String[1];
-			locations[0] = "localhost";
-			return locations;
-		}
-		
-	}
 	@Override
 	public List<InputSplit> getSplits(JobContext arg0) throws IOException,
 			InterruptedException {

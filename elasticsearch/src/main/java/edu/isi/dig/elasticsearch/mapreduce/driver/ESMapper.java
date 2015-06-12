@@ -2,7 +2,6 @@ package edu.isi.dig.elasticsearch.mapreduce.driver;
 
 import java.io.IOException;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
