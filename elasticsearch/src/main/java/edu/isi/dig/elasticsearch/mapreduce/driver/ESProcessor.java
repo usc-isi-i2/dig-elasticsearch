@@ -2,8 +2,6 @@ package edu.isi.dig.elasticsearch.mapreduce.driver;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URI;
 import java.util.Properties;
 
 import org.apache.hadoop.conf.Configuration;

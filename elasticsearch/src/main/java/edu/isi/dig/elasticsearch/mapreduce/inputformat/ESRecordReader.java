@@ -1,11 +1,13 @@
 package edu.isi.dig.elasticsearch.mapreduce.inputformat;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
@@ -13,12 +15,14 @@ import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -43,7 +47,7 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 	private int totalHits=-1;
 	private int fromIndex=0;
 	CloseableHttpClient httpClient = null;
-	HttpPost httpPost=null;
+	
 	
 	@Override
 	public void close() throws IOException {
@@ -106,7 +110,7 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 			else if(esProtocol.equalsIgnoreCase("http"))
 				httpClient = HttpClients.createDefault();
 			
-			httpPost = new HttpPost(esProtocol+"://" + esUser + ":" + esPassword + "@" + esHost + ":" + esPort + "/" + esIndex + "/_search");
+			
 			
 	}
 
@@ -130,11 +134,7 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 										"}";
 				
 				
-				if(httpPost.getEntity() != null)
-				{
-					httpPost.setEntity(null);
-				}
-				
+				HttpPost httpPost = new HttpPost(esProtocol+"://" + esUser + ":" + esPassword + "@" + esHost + ":" + esPort + "/" + esIndex + "/_search");
 		
 				StringEntity entity = new StringEntity(esQuery,"UTF-8");
 				entity.setContentType("application/json");
@@ -144,7 +144,17 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 				
 				if(httpResp.getStatusLine().getStatusCode() == 200)
 				{
-					String resultEntity = EntityUtils.toString(httpResp.getEntity());
+					//HttpEntity httpEntity = httpResp.getEntity();
+					//LOG.info("Bytes received: " + httpEntity.getContentLength());
+					//String resultEntity = EntityUtils.toString(httpEntity,"UTF-8");
+					//LOG.info("UTF-8 Bytes:" + resultEntity.length());
+					
+					InputStream in = httpResp.getEntity().getContent();
+					String resultEntity = IOUtils.toString(in, "UTF-8");
+					
+					
+					//String resultEntity = new BasicResponseHandler().handleResponse(httpResp);
+					
 					JSONObject termQueryResponse = (JSONObject) JSONSerializer.toJSON(resultEntity);
 					//TODO save off total hits count to see if we need to page
 					if(termQueryResponse.containsKey("hits")) 
@@ -166,6 +176,7 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 				{
 					LOG.error("Unable to complete query: "+ httpResp.getStatusLine().getReasonPhrase());
 				}
+				
 			}
 		}
 		else if(resultsIndex < results.size()-1) {
