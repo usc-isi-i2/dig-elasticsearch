@@ -2,6 +2,10 @@ package edu.isi.dig.elasticsearch.mapreduce.inputformat;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -15,17 +19,14 @@ import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +48,22 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 	private int totalHits=-1;
 	private int fromIndex=0;
 	CloseableHttpClient httpClient = null;
+	
+	
+	
+	public long timestampToEpoch(String timeStamp)
+	{
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+			sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+			Date formattedDate = sdf.parse(timeStamp);
+			return formattedDate.getTime();
+		}
+		catch(ParseException pe){
+			LOG.error("Date Parse Exception:" + pe.getMessage());
+			return -1l;
+		}
+	}
 	
 	
 	@Override
@@ -122,12 +139,18 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 			
 			if(fromIndex <= totalHits || totalHits == -1)
 			{
+				String startTimeEpoch = String.valueOf(timestampToEpoch(startTimestamp));
+				String endTimeEpoch = String.valueOf(timestampToEpoch(endTimeStamp));
+				
+				LOG.info("Start time epoch: " + startTimeEpoch);
+				LOG.info("End time epoch: " + endTimeEpoch);
+				
 				String esQuery = "{ "+
 									"\"query\": {" +
 									"\"range\" : {" +
 									"\"timestamp\" : {" +
-										"\"gte\" :" +  startTimestamp + "," + 
-										"\"lte\" : "+ endTimeStamp + "}}}," +
+										"\"gte\" :" + startTimeEpoch  + "," + 
+										"\"lte\" : "+ endTimeEpoch + "}}}," +
 										"\"size\": " + batchSize + ","+
 										"\"from\": " + String.valueOf(fromIndex) + "," +
 										"\"sort\": [{" + "\"_uid\": {" + "\"order\":" + "\"asc\"}}] " +
@@ -162,12 +185,16 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 						JSONObject jHitsObject = termQueryResponse.getJSONObject("hits");
 						
 						totalHits = Integer.parseInt(jHitsObject.get("total").toString());
-						fromIndex+=Integer.parseInt(batchSize);
-						if(jHitsObject.containsKey("hits")) 
+						
+						if(totalHits > 0)
 						{
-							results = jHitsObject.getJSONArray("hits");
-							resultsIndex = 0;
-							return true;
+							fromIndex+=Integer.parseInt(batchSize);
+							if(jHitsObject.containsKey("hits")) 
+							{
+								results = jHitsObject.getJSONArray("hits");
+								resultsIndex = 0;
+								return true;
+							}
 						}
 						
 					}
