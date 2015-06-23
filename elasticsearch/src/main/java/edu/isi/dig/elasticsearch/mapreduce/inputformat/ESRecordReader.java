@@ -37,6 +37,7 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 	private String esHost=null;
 	private String esPort=null;
 	private String esIndex=null;
+	private String esDocType=null;
 	private String esUser=null;
 	private String esPassword = null;
 	private String startTimestamp=null;
@@ -105,6 +106,7 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 			batchSize = jobConfig.get("elasticsearch.batchsize");
 			esIndex = jobConfig.get("elasticsearch.index");
 			esUser = jobConfig.get("elasticsearch.username");
+			esDocType = jobConfig.get("elasticsearch.doctype");
 			esPassword = jobConfig.get("elasticsearch.password");
 			startTimestamp= jobConfig.get("elasticsearch.starttimestamp");
 			endTimeStamp = jobConfig.get("elasticsearch.endtimestamp");
@@ -142,8 +144,9 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 				String startTimeEpoch = String.valueOf(timestampToEpoch(startTimestamp));
 				String endTimeEpoch = String.valueOf(timestampToEpoch(endTimeStamp));
 				
-				LOG.info("Start time epoch: " + startTimeEpoch);
-				LOG.info("End time epoch: " + endTimeEpoch);
+				//LOG.info("Start time epoch: " + startTimeEpoch);
+				//LOG.info("End time epoch: " + endTimeEpoch);
+				
 				
 				String esQuery = "{ "+
 									"\"query\": {" +
@@ -157,7 +160,7 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 										"}";
 				
 				
-				HttpPost httpPost = new HttpPost(esProtocol+"://" + esUser + ":" + esPassword + "@" + esHost + ":" + esPort + "/" + esIndex + "/_search");
+				HttpPost httpPost = new HttpPost(esProtocol+"://" + esUser + ":" + esPassword + "@" + esHost + ":" + esPort + "/" + esIndex + "/" + esDocType + "/_search");
 		
 				StringEntity entity = new StringEntity(esQuery,"UTF-8");
 				entity.setContentType("application/json");
@@ -167,16 +170,11 @@ public class ESRecordReader extends RecordReader<Writable, Writable>{
 				
 				if(httpResp.getStatusLine().getStatusCode() == 200)
 				{
-					//HttpEntity httpEntity = httpResp.getEntity();
-					//LOG.info("Bytes received: " + httpEntity.getContentLength());
-					//String resultEntity = EntityUtils.toString(httpEntity,"UTF-8");
-					//LOG.info("UTF-8 Bytes:" + resultEntity.length());
-					
+
 					InputStream in = httpResp.getEntity().getContent();
 					String resultEntity = IOUtils.toString(in, "UTF-8");
 					
 					
-					//String resultEntity = new BasicResponseHandler().handleResponse(httpResp);
 					
 					JSONObject termQueryResponse = (JSONObject) JSONSerializer.toJSON(resultEntity);
 					//TODO save off total hits count to see if we need to page
