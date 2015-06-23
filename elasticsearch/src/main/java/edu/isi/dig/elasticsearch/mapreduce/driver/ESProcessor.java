@@ -68,6 +68,11 @@ public class ESProcessor extends Configured implements Tool{
 			conf.setIfUnset("elasticsearch.protocol", p.getProperty("elasticsearch.protocol"));
 		}
 		
+		if(p.getProperty("elasticsearch.doctype") != null)
+		{
+			conf.setIfUnset("elasticsearch.doctype", p.getProperty("elasticsearch.doctype"));
+		}
+		
 		Job job = Job.getInstance(conf);
 		job.setInputFormatClass(ESInputFormat.class);
 		job.setJarByClass(ESProcessor.class);
