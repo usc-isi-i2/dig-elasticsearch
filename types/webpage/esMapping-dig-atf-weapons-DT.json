@@ -1,433 +1,441 @@
 {
-  "mappings": {
-    "WebPage": {
-    	"_timestamp" : { "enabled" : true,"store" : true },
-      "properties": {
-        "@context": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "a": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "author_name_histogram": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "count": {
-              "type": "long"
-            },
-            "name": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "value": {
-              "type": "string",
-              "index": "not_analyzed"
+    "mappings": {
+      "WebPage": {
+      	"_timestamp" : { "enabled" : true,"store" : true },
+        "properties": {
+          "@context": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "a": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "author_name_histogram": {
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "count": {
+                "type": "long"
+              },
+              "name": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "value": {
+                "type": "string",
+                "index": "not_analyzed"
+              }
             }
-          }
-        },
-        "availabilityStarts": {
-          "type": "date",
-          "format": "dateOptionalTime"
-        },
-        "availableAtOrFrom": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "address": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "name": {
-                  "type": "string",
-                  "index": "not_analyzed"
+          },
+          "availabilityStarts": {
+            "type": "date",
+            "format": "dateOptionalTime"
+          },
+          "availableAtOrFrom": {
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "address": {
+                "type": "nested",
+                "include_in_root": true,
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
                 }
               }
             }
-          }
-        },
-        "buyer": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "description": {
-              "type": "string",
-              "fields": {
+          },
+          "buyer": {
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "description": {
+                "type": "string",
+                "fields": {
                    "english": {
                       "type": "string",
                       "analyzer": "english"
                    }
                 }
-            },
-            "memberOf": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "memberOf": {
-                	"type": "nested",
-                	"include_in_root": true,
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "name": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "startDate": {
-                  "type": "date",
-                  "format": "dateOptionalTime"
-                }
-              }
-            }
-          }
-        },
-        "dateCreated_aggregated": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "name": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "value": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "description": {
-          "type": "string",
-           "fields": {
-               "english": {
-                  "type": "string",
-                  "analyzer": "english"
-               }
-            }
-        },
-        "hasPost": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "author": {
-            	"type": "nested",
-            	"include_in_root": true,
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "identifier": {
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "hasType": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "name": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "memberOf": {
-                	"type": "nested",
-                	"include_in_root": true,
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "memberOf": {
-                      "properties": {
-                        "a": {
-                          "type": "string",
-                          "index": "not_analyzed"
-                        },
-                        "name": {
-                          "type": "string",
-                          "index": "not_analyzed"
-                        }
+              },
+              "memberOf": {
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "memberOf": {
+                    "properties": {
+                      "a": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                      },
+                      "name": {
+                        "type": "string",
+                        "index": "not_analyzed"
                       }
-                    },
-                    "startDate": {
-                      "type": "date",
-                      "format": "dateOptionalTime"
                     }
+                  },
+                  "startDate": {
+                    "type": "date",
+                    "format": "dateOptionalTime"
                   }
-                },
-                "name": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "not_analyzed"
                 }
               }
-            },
-            "dateCreated": {
-              "type": "date",
-              "format": "dateOptionalTime"
-            },
-            "hasBodyPart": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "text": {
-                  "type": "string",
-                  "fields": {
-	                   "english": {
-	                      "type": "string",
-	                      "analyzer": "english"
-	                   }
-	                }
-                }
+            }
+          },
+          "dateCreated_aggregated": {
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "name": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "value": {
+                "type": "string",
+                "index": "not_analyzed"
               }
-            },
-            "hasSignaturePart": {
-            	"type": "nested",
-                "include_in_root": true,
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "text": {
-                  "type": "string",
-                  "fields": {
-	                   "english": {
-	                      "type": "string",
-	                      "analyzer": "english"
-	                   }
-	                }
-                }
-              }
-            },
-            "hasTitlePart": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "text": {
-                  "type": "string",
-                  "fields": {
-	                   "english": {
-	                      "type": "string",
-	                      "analyzer": "english"
-	                   }
-	                }
-                }
-              }
-            },
-            "identifier": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "hasType": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "name": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
             }
-          }
-        },
-        "hasTitlePart": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "text": {
-              "type": "string",
-               "fields": {
-	               "english": {
-	                  "type": "string",
-	                  "analyzer": "english"
-	               }
-	            }
-            }
-          }
-        },
-        "identifier": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "hasType": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "name": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "inLanguage": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "itemOffered": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "category": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "image": {
-            	"type": "nested",
-                "include_in_root": true,
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "url": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "keywords": {
-              "type": "string"
-            },
-            "manufacturer": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "name": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "price": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "priceCurrency": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "provider": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "name": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "publisher": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "name": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "seller": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "description": {
-              "type": "string",
-              "fields": {
+          },
+          "description": {
+            "type": "string",
+            "fields": {
                    "english": {
                       "type": "string",
                       "analyzer": "english"
                    }
                 }
-            },
-            "memberOf": {
-            	"type": "nested",
+          },
+          "hasPost": {
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "author": {
+                "type": "nested",
                 "include_in_root": true,
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "memberOf": {
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "name": {
-                      "type": "string",
-                      "index": "not_analyzed"
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "identifier": {
+                    "type": "nested",
+                    "include_in_root": true,
+                    "properties": {
+                      "a": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                      },
+                      "hasType": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                      },
+                      "name": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                      }
                     }
+                  },
+                  "memberOf": {
+                    "properties": {
+                      "a": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                      },
+                      "memberOf": {
+                        "properties": {
+                          "a": {
+                            "type": "string",
+                            "index": "not_analyzed"
+                          },
+                          "name": {
+                            "type": "string",
+                            "index": "not_analyzed"
+                          }
+                        }
+                      },
+                      "startDate": {
+                        "type": "date",
+                        "format": "dateOptionalTime"
+                      }
+                    }
+                  },
+                  "name": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "uri": {
+                    "type": "string",
+                    "index": "not_analyzed"
                   }
-                },
-                "startDate": {
-                  "type": "date",
-                  "format": "dateOptionalTime"
+                }
+              },
+              "dateCreated": {
+                "type": "date",
+                "format": "dateOptionalTime"
+              },
+              "hasBodyPart": {
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "text": {
+                    "type": "string",
+                    "fields": {
+	                   "english": {
+	                      "type": "string",
+	                      "analyzer": "english"
+	                   }
+	                }
+                  }
+                }
+              },
+              "hasSignaturePart": {
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "text": {
+                    "type": "string",
+	                    "fields": {
+	                   "english": {
+	                      "type": "string",
+	                      "analyzer": "english"
+	                   }
+	                }
+                  }
+                }
+              },
+              "hasTitlePart": {
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "text": {
+                    "type": "string",
+	                    "fields": {
+	                   "english": {
+	                      "type": "string",
+	                      "analyzer": "english"
+	                   }
+	                }
+                  }
+                }
+              },
+              "identifier": {
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "hasType": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "name": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  }
+                }
+              },
+              "uri": {
+                "type": "string",
+                "index": "not_analyzed"
+              }
+            }
+          },
+          "hasTitlePart": {
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "text": {
+                "type": "string",
+                "fields": {
+                   "english": {
+                      "type": "string",
+                      "analyzer": "english"
+                   }
                 }
               }
             }
+          },
+          "identifier": {
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "hasType": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "name": {
+                "type": "string",
+                "index": "not_analyzed"
+              }
+            }
+          },
+          "inLanguage": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "itemOffered": {
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "category": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "image": {
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "url": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  }
+                }
+              },
+              "keywords": {
+                "type": "string",
+                "fields": {
+                   "english": {
+                      "type": "string",
+                      "analyzer": "english"
+                   }
+                }
+              },
+              "manufacturer": {
+                "type": "string",
+                "index": "not_analyzed"
+              }
+            }
+          },
+          "price": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "priceCurrency": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "provider": {
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "name": {
+                "type": "string",
+                "index": "not_analyzed"
+              }
+            }
+          },
+          "publisher": {
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "name": {
+                "type": "string",
+                "index": "not_analyzed"
+              }
+            }
+          },
+          "title": {
+            "type": "string",
+            "fields": {
+                   "english": {
+                      "type": "string",
+                      "analyzer": "english"
+                   }
+                }
+          },
+          "seller": {
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "description": {
+                "type": "string",
+                "fields": {
+                   "english": {
+                      "type": "string",
+                      "analyzer": "english"
+                   }
+                }
+              },
+              "memberOf": {
+                "type": "nested",
+                "include_in_root": true,
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "memberOf": {
+                    "type": "nested",
+                    "include_in_root": true,
+                    "properties": {
+                      "a": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                      },
+                      "name": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                      }
+                    }
+                  },
+                  "startDate": {
+                    "type": "date",
+                    "format": "dateOptionalTime"
+                  }
+                }
+              }
+            }
+          },
+          "uri": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "url": {
+            "type": "string",
+            "index": "not_analyzed"
           }
-        },
-        "uri": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "url": {
-          "type": "string",
-          "index": "not_analyzed"
         }
       }
-    }
-  },
-  "settings": {
+    },
+    "settings": {
     "index": {
       "number_of_shards": 40,
       "number_of_replicas": 1
@@ -546,4 +554,4 @@
       }
     }
   }
-}
+  }
