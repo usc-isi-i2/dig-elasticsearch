@@ -63,12 +63,7 @@
               },
               "description": {
                 "type": "string",
-                "fields": {
-                   "english": {
-                      "type": "string",
-                      "analyzer": "english"
-                   }
-                }
+                "index": "not_analyzed"
               },
               "memberOf": {
                 "properties": {
@@ -387,12 +382,7 @@
               },
               "description": {
                 "type": "string",
-                "fields": {
-                   "english": {
-                      "type": "string",
-                      "analyzer": "english"
-                   }
-                }
+                "index": "not_analyzed"
               },
               "memberOf": {
                 "type": "nested",
