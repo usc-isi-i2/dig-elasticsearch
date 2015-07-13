@@ -34,7 +34,7 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
 
             for i in range(len(page['hits']['hits'])):
                 #print page['hits']['hits'][i]
-                f.write(str(page['hits']['hits'][i]))
+                f.write(str(page['hits']['hits'][i]) + '\n')
             #print "scroll size: " + str(scroll_size)
             # Do something with the obtained page
     f.close()
