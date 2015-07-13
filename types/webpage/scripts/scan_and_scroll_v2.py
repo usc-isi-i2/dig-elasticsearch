@@ -2,6 +2,7 @@ __author__ = 'amandeep'
 
 from elasticsearch import Elasticsearch
 import argparse
+import codecs
 
 
 def scanandscroll(index, doctype, query, hostname="localhost", port=9200, username = None, password = None):
@@ -19,21 +20,24 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
     sid = page['_scroll_id']
     scroll_size = page['hits']['total']
     #print "Total hits:" + str(scroll_size)
-    # Start scrolling
-    while scroll_size > 0:
-        #print "Scrolling..."
-        page = es.scroll(scroll_id=sid, scroll='10m')
-        # Update the scroll ID
-        sid = page['_scroll_id']
-        # Get the number of results that we returned in the last scroll
-        scroll_size = len(page['hits']['hits'])
-        #print page['hits']['hits']
 
-        for i in range(len(page['hits']['hits'])):
-            print page['hits']['hits'][i]
-        #print "scroll size: " + str(scroll_size)
-        # Do something with the obtained page
+    with codecs.open("els_results.json", "w", "utf-8") as f:
+        # Start scrolling
+        while scroll_size > 0:
+            #print "Scrolling..."
+            page = es.scroll(scroll_id=sid, scroll='10m')
+            # Update the scroll ID
+            sid = page['_scroll_id']
+            # Get the number of results that we returned in the last scroll
+            scroll_size = len(page['hits']['hits'])
+            #print page['hits']['hits']
 
+            for i in range(len(page['hits']['hits'])):
+                #print page['hits']['hits'][i]
+                f.write(page['hits']['hits'][i])
+            #print "scroll size: " + str(scroll_size)
+            # Do something with the obtained page
+    f.close()
 
 
 if __name__ == '__main__':
