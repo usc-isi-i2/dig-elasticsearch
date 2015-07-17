@@ -39,7 +39,12 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
 
                         for i in range(len(page['hits']['hits'])):
                             #print page['hits']['hits'][i]
-                            f.write(page['hits']['hits'][i]['_source']['url'] + "\t" + str(page['hits']['hits'][i]) + '\n')
+
+                            url = page['hits']['hits'][i]['_source']['url']
+                            if isinstance(url,list):
+                                first_url = url[0]
+
+                            f.write(first_url + "\t" + str(page['hits']['hits'][i]) + '\n')
                     except Exception as e:
                         log.write(e.message + "\n")
                         pass
