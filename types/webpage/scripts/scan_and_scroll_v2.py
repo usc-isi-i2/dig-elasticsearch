@@ -24,23 +24,25 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
 
     with codecs.open("els_results.json", "w", "utf-8") as f:
         with codecs.open("scroll_id.txt","w","utf-8") as sf:
-            # Start scrolling
-            while scroll_size > 0:
-                try:
-                    #print "Scrolling..."
-                    page = es.scroll(scroll_id=sid, scroll='20m')
-                    # Update the scroll ID
-                    sid = page['_scroll_id']
-                    sf.write(str(sid) + '\n')
-                    # Get the number of results that we returned in the last scroll
-                    scroll_size = len(page['hits']['hits'])
-                    #print page['hits']['hits']
+            with codecs.open("els_scan.log", "w" ,"utf-8") as log:
+                # Start scrolling
+                while scroll_size > 0:
+                    try:
+                        #print "Scrolling..."
+                        page = es.scroll(scroll_id=sid, scroll='20m')
+                        # Update the scroll ID
+                        sid = page['_scroll_id']
+                        sf.write(str(sid) + '\n')
+                        # Get the number of results that we returned in the last scroll
+                        scroll_size = len(page['hits']['hits'])
+                        #print page['hits']['hits']
 
-                    for i in range(len(page['hits']['hits'])):
-                        #print page['hits']['hits'][i]
-                        f.write(page['hits']['hits'][i]['_source']['url'] + "\t" + str(page['hits']['hits'][i]) + '\n')
-                except Exception as e:
-                    pass
+                        for i in range(len(page['hits']['hits'])):
+                            #print page['hits']['hits'][i]
+                            f.write(page['hits']['hits'][i]['_source']['url'] + "\t" + str(page['hits']['hits'][i]) + '\n')
+                    except Exception as e:
+                        log.write(e.message + "\n")
+                        pass
 
             #print "scroll size: " + str(scroll_size)
             # Do something with the obtained page
