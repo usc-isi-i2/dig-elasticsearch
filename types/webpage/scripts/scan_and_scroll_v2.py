@@ -43,6 +43,8 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
                             url = page['hits']['hits'][i]['_source']['url']
                             if isinstance(url,list):
                                 first_url = url[0]
+                            else:
+                                first_url = url
 
                             f.write(first_url + "\t" + str(page['hits']['hits'][i]) + '\n')
                     except Exception as e:
