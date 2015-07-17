@@ -45,7 +45,7 @@ public class ESMapper extends Mapper<Writable,Text,Text,Text>{
 				
 				AutoDetectParser adp = new AutoDetectParser();
 				
-				ContentHandler handler = new BodyContentHandler();
+				ContentHandler handler = new BodyContentHandler(10*1024*1024);
 				
 				
 				
