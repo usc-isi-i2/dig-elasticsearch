@@ -48,6 +48,7 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
             # Do something with the obtained page
     f.close()
     sf.close()
+    log.close()
 
 
 
