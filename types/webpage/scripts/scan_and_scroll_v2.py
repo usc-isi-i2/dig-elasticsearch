@@ -1,8 +1,8 @@
-__author__ = 'amandeep'
 
 from elasticsearch import Elasticsearch
 import argparse
 import codecs
+
 
 
 def scanandscroll(index, doctype, query, hostname="localhost", port=9200, username = None, password = None):
@@ -11,33 +11,43 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
     #query = {"query": {"filtered": {"query": {"match_phrase": {"url": "http://ieeexplore.ieee.org"}},"filter": {"and": {"filters": [{ "term": {"team": "hyperion-gray"}}]}}}}}
 
     # Initialize the scroll
+
     if username and password:
         es = Elasticsearch(['https://' + username + ':' + password + '@' + hostname + ":" + str(port)],show_ssl_warnings=False)
     else:
         es = Elasticsearch(['https://' + hostname + ":" + str(port)],show_ssl_warnings=False)
 
-    page = es.search(index = index,doc_type = doctype,scroll = '10m',search_type = 'scan',size = 25,body = query)
+    page = es.search(index = index,doc_type = doctype,scroll = '20m',search_type = 'scan',size = 5,body = query)
     sid = page['_scroll_id']
     scroll_size = page['hits']['total']
     #print "Total hits:" + str(scroll_size)
 
     with codecs.open("els_results.json", "w", "utf-8") as f:
-        # Start scrolling
-        while scroll_size > 0:
-            #print "Scrolling..."
-            page = es.scroll(scroll_id=sid, scroll='10m')
-            # Update the scroll ID
-            sid = page['_scroll_id']
-            # Get the number of results that we returned in the last scroll
-            scroll_size = len(page['hits']['hits'])
-            #print page['hits']['hits']
+        with codecs.open("scroll_id.txt","w","utf-8") as sf:
+            # Start scrolling
+            while scroll_size > 0:
+                try:
+                    #print "Scrolling..."
+                    page = es.scroll(scroll_id=sid, scroll='20m')
+                    # Update the scroll ID
+                    sid = page['_scroll_id']
+                    sf.write(str(sid) + '\n')
+                    # Get the number of results that we returned in the last scroll
+                    scroll_size = len(page['hits']['hits'])
+                    #print page['hits']['hits']
 
-            for i in range(len(page['hits']['hits'])):
-                #print page['hits']['hits'][i]
-                f.write(str(page['hits']['hits'][i]) + '\n')
+                    for i in range(len(page['hits']['hits'])):
+                        #print page['hits']['hits'][i]
+                        f.write(str(page['hits']['hits'][i]) + '\n')
+                except Exception as e:
+                    pass
+       
             #print "scroll size: " + str(scroll_size)
             # Do something with the obtained page
     f.close()
+    sf.close()
+
+
 
 
 if __name__ == '__main__':
