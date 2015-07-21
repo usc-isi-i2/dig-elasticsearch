@@ -1,6 +1,6 @@
 {
     "mappings": {
-      "WebPage": {
+      "weapons": {
       	"_timestamp" : { "enabled" : true,"store" : true },
         "properties": {
           "@context": {
