@@ -2,7 +2,7 @@
 from elasticsearch import Elasticsearch
 import argparse
 import codecs
-
+import json
 
 
 def scanandscroll(index, doctype, query, hostname="localhost", port=9200, username = None, password = None):
@@ -46,7 +46,7 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
                             else:
                                 first_url = url
 
-                            f.write(first_url + "\t" + str(page['hits']['hits'][i]) + '\n')
+                            f.write(first_url + "\t" + json.dumps(page['hits']['hits'][i]) + '\n')
                     except Exception as e:
                         log.write(e.message + "\n")
                         pass
