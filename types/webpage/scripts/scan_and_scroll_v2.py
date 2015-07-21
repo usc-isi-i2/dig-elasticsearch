@@ -3,7 +3,8 @@ from elasticsearch import Elasticsearch
 import argparse
 import codecs
 import json
-
+from bs4 import BeautifulSoup
+import os
 
 def scanandscroll(index, doctype, query, hostname="localhost", port=9200, username = None, password = None):
 
@@ -40,13 +41,20 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
                         for i in range(len(page['hits']['hits'])):
                             #print page['hits']['hits'][i]
 
-                            url = page['hits']['hits'][i]['_source']['url']
+                            json_indexed = page['hits']['hits'][i]
+                            url = json_indexed['_source']['url']
                             if isinstance(url,list):
                                 first_url = url[0]
                             else:
                                 first_url = url
 
-                            f.write(first_url + "\t" + json.dumps(page['hits']['hits'][i]) + '\n')
+                            if 'raw_content' in json_indexed['_source']:
+                                soup = BeautifulSoup(json_indexed['_source']['raw_content'])
+                                bodyText = soup.get_text()
+                                text = os.linesep.join([s for s in bodyText.splitlines() if s])
+                                json_indexed['_source']['raw_text_bs'] = text
+
+                            f.write(first_url + "\t" + json.dumps(json_indexed) + '\n')
                     except Exception as e:
                         log.write(e.message + "\n")
                         pass
