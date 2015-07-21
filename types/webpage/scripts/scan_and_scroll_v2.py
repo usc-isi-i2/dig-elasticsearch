@@ -48,11 +48,12 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
                             else:
                                 first_url = url
 
-                            if 'raw_content' in json_indexed['_source']:
-                                soup = BeautifulSoup(json_indexed['_source']['raw_content'])
-                                bodyText = soup.get_text()
-                                text = os.linesep.join([s for s in bodyText.splitlines() if s])
-                                json_indexed['_source']['raw_text_bs'] = text
+                            if 'raw_text' not in json_indexed['_source']:
+                                if 'raw_content' in json_indexed['_source']:
+                                    soup = BeautifulSoup(json_indexed['_source']['raw_content'])
+                                    bodyText = soup.get_text()
+                                    text = os.linesep.join([s for s in bodyText.splitlines() if s])
+                                    json_indexed['_source']['raw_text'] = text
 
                             f.write(first_url + "\t" + json.dumps(json_indexed) + '\n')
                     except Exception as e:
