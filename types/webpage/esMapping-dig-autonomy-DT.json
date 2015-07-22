@@ -1,6 +1,10 @@
 {
   "mappings": {
     "article": {
+      "_timestamp": {
+        "enabled": true,
+        "store": true
+      },
       "properties": {
         "@context": {
           "type": "string",
@@ -111,6 +115,10 @@
       }
     },
     "author": {
+      "_timestamp": {
+        "enabled": true,
+        "store": true
+      },
       "properties": {
         "@context": {
           "type": "string",
