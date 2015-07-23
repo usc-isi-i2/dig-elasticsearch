@@ -30,7 +30,6 @@
               },
               "citation": {
                 "type": "nested",
-                "include_in_root": true,
                 "properties": {
                   "a": {
                     "type": "string",
@@ -38,7 +37,6 @@
                   },
                   "author": {
                     "type": "nested",
-                    "include_in_root": true,
                     "properties": {
                       "a": {
                         "type": "string",
