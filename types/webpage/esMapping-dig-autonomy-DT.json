@@ -1,231 +1,272 @@
 {
-  "mappings": {
-    "article": {
-      "_timestamp": {
-        "enabled": true,
-        "store": true
-      },
-      "properties": {
-        "@context": {
-          "type": "string",
-          "index": "no"
-        },
-        "a": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "author": {
-          "type": "nested",
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "email": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "isAuthorOf": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "name": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "alternateName": {
-              "type": "string"
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "citation": {
-          "type": "nested",
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "no"
-            },
-            "author": {
-              "type": "nested",
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "no"
-                },
-                "name": {
-                  "type": "string",
-                  "index": "no"
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "no"
+    "mappings": {
+      "author": {
+        "properties": {
+          "@context": {
+            "type": "string",
+            "index": "no"
+          },
+          "a": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "alternateName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "isAuthorOf": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "author": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "nested",
+                "include_in_root": true,
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "no"
+                  },
+                  "author": {
+                    "type": "nested",
+                    "include_in_root": true,
+                    "properties": {
+                      "a": {
+                        "type": "string",
+                        "index": "no"
+                      },
+                      "alternateName": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string",
+                        "index": "no"
+                      },
+                      "uri": {
+                        "type": "string",
+                        "index": "no"
+                      }
+                    }
+                  },
+                  "datePublished": {
+                    "type": "date",
+                    "index": "no",
+                    "format": "YYYY"
+                  },
+                  "title": {
+                    "type": "string",
+                    "index": "no"
+                  }
                 }
-              }
-            },
-            "datePublished": {
-              "type": "date",
-              "format": "YYYY-MM-DD HH:mmZ||YYYY-MM-DD||YYYY-MM||YYYY",
-              "index": "no"
-            },
-            "title": {
-              "type": "string",
-              "index": "no"
-            }
-          }
-        },
-        "name": {
-          "type": "string"
-        },
-        "sourceOrganization": {
-          "type": "nested",
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "location": {
-              "type": "nested",
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "name": {
-                  "type": "string"
+              },
+              "datePublished": {
+                "type": "string",
+                "format":"YYYY"
+              },
+              "keywords": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "sourceOrganization": {
+                "type": "nested",
+                "include_in_root": true,
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "location": {
+                    "type": "nested",
+                    "include_in_root": true,
+                    "properties": {
+                      "a": {
+                        "type": "string",
+                        "index": "not_analyzed"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "name": {
+                    "type": "string"
+                  }
                 }
+              },
+              "text": {
+                "type": "string",
+                "analyzer": "english"
+              },
+              "uri": {
+                "type": "string",
+                "index": "not_analyzed"
               }
-            },
-            "name": {
-              "type": "string"
             }
+          },
+          "name": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "uri": {
+            "type": "string",
+            "index": "not_analyzed"
           }
-        },
-        "text": {
-          "type": "string",
-          "analyzer": "english"
-        },
-        "uri": {
-          "type": "string",
-          "index": "not_analyzed"
         }
-      }
-    },
-    "author": {
-      "_timestamp": {
-        "enabled": true,
-        "store": true
       },
-      "properties": {
-        "@context": {
-          "type": "string",
-          "index": "no"
-        },
-        "a": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "email": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "isAuthorOf": {
-          "type": "nested",
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "author": {
-              "type": "string"
-            },
-            "citation": {
-              "type": "nested",
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "no"
-                },
-                "author": {
-                  "type": "nested",
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "no"
-                    },
-                    "name": {
-                      "type": "string",
-                      "index": "no"
-                    },
-                    "uri": {
-                      "type": "string",
-                      "index": "no"
-                    }
-                  }
-                },
-                "datePublished": {
-                  "type": "date",
-                  "format": "YYYY-MM-DD HH:mmZ||YYYY-MM-DD||YYYY-MM||YYYY",
-                  "index": "no"
-                },
-                "title": {
-                  "type": "string",
-                  "index": "no"
-                }
+      "article": {
+        "properties": {
+          "@context": {
+            "type": "string",
+            "index": "no"
+          },
+          "a": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "author": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "alternateName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "isAuthorOf": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "name": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "uri": {
+                "type": "string",
+                "index": "not_analyzed"
               }
-            },
-            "name": {
-              "type": "string"
-            },
-            "sourceOrganization": {
-              "type": "nested",
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "location": {
-                  "type": "nested",
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "name": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "name": {
-                  "type": "string"
-                }
-              }
-            },
-            "text": {
-              "type": "string",
-              "analyzer": "english"
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
             }
+          },
+          "citation": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "no"
+              },
+              "author": {
+                "type": "nested",
+                "include_in_root": true,
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "no"
+                  },
+                  "alternateName": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string",
+                    "index": "no"
+                  },
+                  "uri": {
+                    "type": "string",
+                    "index": "no"
+                  }
+                }
+              },
+              "datePublished": {
+                "type": "date",
+                "index": "no",
+                "format": "YYYY"
+              },
+              "isCitationOf": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string",
+                "index": "no"
+              },
+              "uri": {
+                "type": "string"
+              }
+            }
+          },
+          "datePublished": {
+            "type": "string",
+            "format": "YYYY"
+          },
+          "isCitationOf": {
+            "properties": {
+              "a": {
+                "type": "string"
+              },
+              "citation": {
+                "type": "string"
+              },
+              "uri": {
+                "type": "string"
+              }
+            }
+          },
+          "keywords": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "sourceOrganization": {
+            "type": "nested",
+            "include_in_root": true,
+            "properties": {
+              "a": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "location": {
+                "type": "nested",
+                "include_in_root": true,
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "text": {
+            "type": "string",
+            "analyzer": "english"
+          },
+          "uri": {
+            "type": "string",
+            "index": "not_analyzed"
           }
-        },
-        "name": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "alternateName": {
-          "type": "string"
-        },
-        "uri": {
-          "type": "string",
-          "index": "not_analyzed"
         }
       }
     }
-  }
 }
