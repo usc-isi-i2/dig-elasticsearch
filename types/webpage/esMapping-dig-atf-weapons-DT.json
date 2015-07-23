@@ -1130,5 +1130,14 @@
         }
       }
     }
+  },
+  "settings": {
+    "index": {
+      "number_of_replicas": "0",
+      "number_of_shards": "40",
+      "version": {
+        "created": "1060199"
+      }
+    }
   }
 }

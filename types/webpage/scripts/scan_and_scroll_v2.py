@@ -51,6 +51,8 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
                             if 'raw_text' not in json_indexed['_source']:
                                 if 'raw_content' in json_indexed['_source']:
                                     soup = BeautifulSoup(json_indexed['_source']['raw_content'])
+                                    for s in soup.findAll('script'):
+                                        s.extract()
                                     bodyText = soup.get_text()
                                     text = os.linesep.join([s for s in bodyText.splitlines() if s])
                                     json_indexed['_source']['raw_text'] = text
