@@ -6,7 +6,7 @@ import json
 from bs4 import BeautifulSoup
 import os
 
-def scanandscroll(index, doctype, query, hostname="localhost", port=9200, username = None, password = None,extracttext=True):
+def scanandscroll(index, doctype, query, hostname="localhost", port=9200, username = None, password = None,extracttext='True'):
 
     #query = {"query" : {"match_all" : {}}}
     #query = {"query": {"filtered": {"query": {"match_phrase": {"url": "http://ieeexplore.ieee.org"}},"filter": {"and": {"filters": [{ "term": {"team": "hyperion-gray"}}]}}}}}
@@ -48,7 +48,7 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
                             else:
                                 first_url = url
 
-                            if extracttext:
+                            if extracttext == 'True':
                                 if 'raw_text' not in json_indexed['_source']:
                                     if 'raw_content' in json_indexed['_source']:
                                         soup = BeautifulSoup(json_indexed['_source']['raw_content'])
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     argp.add_argument("-port",type=int, help="Elastic Search Server port,defaults to 9200",default=9200)
     argp.add_argument("-username", help = "username for Elasticsearch cluster", default = None)
     argp.add_argument("-password", help = "password for Elasticsearch cluster", default=None)
-    argp.add_argument("-extracttext", type=bool, help = "true if raw text should be extracted", default=True)
+    argp.add_argument("-extracttext", help = "true if raw text should be extracted", default=True)
     argp.add_argument("indexname",help="desired name of the index in ElasticSearch")
     argp.add_argument("doctype",help="type of the document to be indexed")
     argp.add_argument("query",help="query to the elasticsearch")
