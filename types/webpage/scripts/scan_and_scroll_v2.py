@@ -6,7 +6,7 @@ import json
 from bs4 import BeautifulSoup
 import os
 
-def scanandscroll(index, doctype, query, hostname="localhost", port=9200, username = None, password = None):
+def scanandscroll(index, doctype, query, hostname="localhost", port=9200, username = None, password = None,extracttext=True):
 
     #query = {"query" : {"match_all" : {}}}
     #query = {"query": {"filtered": {"query": {"match_phrase": {"url": "http://ieeexplore.ieee.org"}},"filter": {"and": {"filters": [{ "term": {"team": "hyperion-gray"}}]}}}}}
@@ -48,14 +48,15 @@ def scanandscroll(index, doctype, query, hostname="localhost", port=9200, userna
                             else:
                                 first_url = url
 
-                            if 'raw_text' not in json_indexed['_source']:
-                                if 'raw_content' in json_indexed['_source']:
-                                    soup = BeautifulSoup(json_indexed['_source']['raw_content'])
-                                    for s in soup.findAll('script'):
-                                        s.extract()
-                                    bodyText = soup.get_text()
-                                    text = os.linesep.join([s for s in bodyText.splitlines() if s])
-                                    json_indexed['_source']['raw_text'] = text
+                            if extracttext:
+                                if 'raw_text' not in json_indexed['_source']:
+                                    if 'raw_content' in json_indexed['_source']:
+                                        soup = BeautifulSoup(json_indexed['_source']['raw_content'])
+                                        for s in soup.findAll('script'):
+                                            s.extract()
+                                        bodyText = soup.get_text()
+                                        text = os.linesep.join([s for s in bodyText.splitlines() if s])
+                                        json_indexed['_source']['raw_text'] = text
 
                             f.write(first_url + "\t" + json.dumps(json_indexed) + '\n')
                     except Exception as e:
@@ -78,14 +79,15 @@ if __name__ == '__main__':
     argp.add_argument("-port",type=int, help="Elastic Search Server port,defaults to 9200",default=9200)
     argp.add_argument("-username", help = "username for Elasticsearch cluster", default = None)
     argp.add_argument("-password", help = "password for Elasticsearch cluster", default=None)
+    argp.add_argument("-extracttext", type=bool, help = "true if raw text should be extracted", default=True)
     argp.add_argument("indexname",help="desired name of the index in ElasticSearch")
     argp.add_argument("doctype",help="type of the document to be indexed")
     argp.add_argument("query",help="query to the elasticsearch")
     arguments = argp.parse_args()
 
     if arguments.hostname and arguments.port:
-        scanandscroll(arguments.indexname, arguments.doctype, arguments.query, arguments.hostname, arguments.port, arguments.username, arguments.password)
+        scanandscroll(arguments.indexname, arguments.doctype, arguments.query, arguments.hostname, arguments.port, arguments.username, arguments.password,arguments.extracttext)
     else:
-        scanandscroll(arguments.indexname, arguments.doctype, arguments.query, arguments.username, arguments.password)
+        scanandscroll(arguments.indexname, arguments.doctype, arguments.query, arguments.username, arguments.password,arguments.extracttext)
 
     #print "Thats all folks!"
