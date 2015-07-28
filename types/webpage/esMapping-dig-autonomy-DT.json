@@ -163,7 +163,7 @@
           },
           "citation": {
             "type": "nested",
-            "include_in_root": true,
+            "index": "no",
             "properties": {
               "a": {
                 "type": "string",
@@ -171,7 +171,6 @@
               },
               "author": {
                 "type": "nested",
-                "include_in_root": true,
                 "properties": {
                   "a": {
                     "type": "string",
@@ -212,6 +211,7 @@
             "format": "YYYY"
           },
           "isCitationOf": {
+            "index": "no",
             "properties": {
               "a": {
                 "type": "string"
