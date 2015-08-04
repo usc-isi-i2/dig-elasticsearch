@@ -25,6 +25,11 @@
 			<name>HDP Releases</name>
 			<url>http://repo.hortonworks.com/content/repositories/releases/</url>
 		 </repository>
+		  <repository>
+		   <id>sonatype</id>
+		   <name>Sonatype Groups</name>
+		   <url>https://oss.sonatype.org/content/groups/public/</url>
+		 </repository>
 	
 		
  </repositories> 
@@ -84,6 +89,12 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>io.searchbox</groupId>
+		  <artifactId>jest</artifactId>
+		  <version>0.1.6</version>
 		</dependency>
 		
   </dependencies>

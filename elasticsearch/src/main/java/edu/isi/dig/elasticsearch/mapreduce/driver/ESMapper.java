@@ -26,10 +26,22 @@ public class ESMapper extends Mapper<Writable,Text,Text,Text>{
 	@Override
 	public void map(Writable key,Text value, Context context) throws IOException, InterruptedException
 	{
-		String contents = value.toString();
+		JSONObject jObj = extractTika(value.toString());
+		
+		if (jObj.containsKey("_id")) 
+		{
+			reusableKey.set(jObj.getString("_id"));
+			context.write(reusableKey, new Text(jObj.toString()));
+		}
+		else
+		{
+			context.write(null, new Text(jObj.toString()));
+		}
+	}
+	
+	private JSONObject extractTika(String contents){
+		
 		JSONObject jObj = (JSONObject)JSONSerializer.toJSON(contents);
-		
-		
 		
 		if(jObj.containsKey("_source"))
 		{
@@ -87,24 +99,17 @@ public class ESMapper extends Mapper<Writable,Text,Text,Text>{
 				} catch (TikaException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				
 			}
-		}
-		
-		if (jObj.containsKey("_id")) 
-		{
-			reusableKey.set(jObj.getString("_id"));
-			context.write(reusableKey, new Text(jObj.toString()));
-		}
-		else
-		{
-			context.write(null, new Text(jObj.toString()));
-		}
-		
-		
 			
 		}
+		return jObj;
+		
+	}
 	
 
 }
