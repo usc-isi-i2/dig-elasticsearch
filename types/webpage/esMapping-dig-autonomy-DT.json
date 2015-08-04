@@ -1,6 +1,6 @@
 {
     "mappings": {
-      "author": {
+      "authors": {
         "properties": {
           "@context": {
             "type": "string",
