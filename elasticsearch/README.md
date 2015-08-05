@@ -2,7 +2,8 @@ To run ScanAndScroll
 
 1. git clone https://github.com/usc-isi-i2/dig-elasticsearch.git
 2. cd dig-elasticsearch/elasticsearch
-3. Use the command below to run ScanAndScroll
+3. mvn clean install
+4. Use the command below to run ScanAndScroll
 ```
 mvn exec:java -Dexec.mainClass="edu.isi.dig.elasticsearch.ScanAndScroll" -Dexec.args="--esprotocol https/http --esindex INDEXNAME --esdoctype DOCTYPE --esusername USERNAME --espassword PASSWORD --esport PORT --eshostname HOSTNAME --esquery \"{\"query\": {\"match_all\": {}}}\" --outputfile /tmp/test.json"
 ```
