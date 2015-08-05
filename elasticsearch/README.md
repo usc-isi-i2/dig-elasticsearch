@@ -5,7 +5,7 @@ To run ScanAndScroll
 3. ```mvn clean install```
 4. Use the command below to run ScanAndScroll
 ```
-mvn exec:java -Dexec.mainClass="edu.isi.dig.elasticsearch.ScanAndScroll" -Dexec.args="--esprotocol https/http --esindex INDEXNAME --esdoctype DOCTYPE --esusername USERNAME --espassword PASSWORD --esport PORT --eshostname HOSTNAME --esquery \"{\"query\": {\"match_all\": {}}}\" --outputfile /tmp/test.json"
+mvn exec:java -Dexec.mainClass="edu.isi.dig.elasticsearch.ScanAndScroll" -Dexec.args="--esprotocol https/http --esindex INDEXNAME --esdoctype DOCTYPE --esusername USERNAME --espassword PASSWORD --esport PORT --eshostname HOSTNAME --esquery PATH_TO_FILE_WITH_QUERY --outputfile /tmp/test.json"
 ```
 The following options are available with the api
 ```
@@ -17,7 +17,7 @@ usage: ScanAndScroll
  -espassword,--espassword <arg>   elasticsearch password
  -esport,--esport <arg>           elasticsearch port
  -esprotocol,--esprotocol <arg>   http or https
- -esquery,--esquery <arg>         elasticsearch query
+ -esquery,--esquery <arg>         elasticsearch query file
  -esusername,--esusername <arg>   elasticsearch username
  -outputfile,--outputfile <arg>   output file path
  -pagesize,--pagesize <arg>       number of documents per shard to get at one time
