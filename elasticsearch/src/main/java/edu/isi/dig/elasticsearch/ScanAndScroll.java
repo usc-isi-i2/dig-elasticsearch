@@ -1,7 +1,10 @@
 package edu.isi.dig.elasticsearch;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -44,7 +47,7 @@ public class ScanAndScroll {
 	private PrintWriter writer;
 	
 	
-	public static void main(String args[]){
+	public static void main(String args[]) throws IOException{
 		Options options = createCommandLineOptions();
 		CommandLine cl = parse(args, options, ScanAndScroll.class.getSimpleName());
 		if(cl == null)
@@ -59,6 +62,7 @@ public class ScanAndScroll {
 		String esUserName;
 		String esPassword;
 		int pageSize;
+		String esQueryFile=null;
 		String esQuery;
 		int docLimit;
 		
@@ -101,9 +105,21 @@ public class ScanAndScroll {
 		}
 		
 		if(cl.hasOption("esquery")){
-			esQuery = (String) cl.getOptionValue("esquery");
-		}else{
+			esQueryFile = (String) cl.getOptionValue("esquery");
+		}
+		
+		if(esQueryFile == null){
 			esQuery = "{\"query\" : {\"match_all\" : {}}}"; //get everything
+		}else{
+			BufferedReader brQuery = new BufferedReader(new FileReader(new File(esQueryFile)));
+			String line = null;
+			StringBuilder sbQuery = new StringBuilder();
+			while((line = brQuery.readLine()) != null){
+				sbQuery.append(line.trim());
+			}
+			esQuery = sbQuery.toString();
+			brQuery.close();
+			
 		}
 		
 		if(cl.hasOption("doclimit")){
@@ -114,6 +130,8 @@ public class ScanAndScroll {
 		String esIndex = (String) cl.getOptionValue("esindex");
 		String esDocType = (String) cl.getOptionValue("esdoctype");
 		String outPutFilePath = (String) cl.getOptionValue("outputfile");
+		
+		
 		
 		
 		String url = esProtocol + "://" + esHostName + ":" + esPort;
@@ -140,7 +158,7 @@ public class ScanAndScroll {
 		options.addOption(new Option("espassword", "espassword",true, "elasticsearch password"));
 		options.addOption(new Option("esport", "esport",true, "elasticsearch port"));
 		options.addOption(new Option("eshostname", "eshostname",true, "elasticsearch hostname"));
-		options.addOption(new Option("esquery","esquery",true,"elasticsearch query"));
+		options.addOption(new Option("esquery","esquery",true,"elasticsearch query file"));
 		options.addOption(new Option("pagesize", "pagesize", true,"number of documents per shard to get at one time"));
 		options.addOption(new Option("outputfile","outputfile",true,"output file path"));
 		options.addOption(new Option("doclimit","doclimit",true, "number of documents retrieved, -1 to get trillion"));
@@ -275,11 +293,12 @@ private JSONObject extractTika(String contents){
 									 .setParameter(Parameters.SIZE, pageSize)
 									 .setParameter(Parameters.SCROLL, SCROLL)
 									 .build();
-		//System.out.println(query + "$$$$" + pageSize + "$$$$" + docType + "$$$$" + index);
+		System.out.println(query + "$$$$");
 		
 		try {
 
             JestResult searchResult = client.execute(search);
+            //System.out.println(searchResult.getJsonString());
             String scrollId = searchResult.getJsonObject().get("_scroll_id").getAsString();
 
             int currentResultSize = 0;
@@ -293,6 +312,7 @@ private JSONObject extractTika(String contents){
 
                 JestResult scrollResult = client.execute(scrollRequest);
                 scrollId = scrollResult.getJsonObject().get("_scroll_id").getAsString();
+                
                 JSONObject jObj =  (JSONObject) JSONSerializer.toJSON(scrollResult.getJsonString());
                 
                 JSONArray jArrayHits = jObj.getJSONObject("hits").getJSONArray("hits");
