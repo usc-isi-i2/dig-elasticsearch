@@ -1,5 +1,6 @@
 package edu.isi.dig.elasticsearch;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,8 +27,13 @@ import org.apache.commons.cli.Options;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.tika.language.LanguageIdentifier;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.sax.BodyContentHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.ContentHandler;
 
 
 public class ScanAndScroll {
@@ -54,6 +60,7 @@ public class ScanAndScroll {
 		String esPassword;
 		int pageSize;
 		String esQuery;
+		int docLimit;
 		
 		
 		
@@ -98,7 +105,12 @@ public class ScanAndScroll {
 		}else{
 			esQuery = "{\"query\" : {\"match_all\" : {}}}"; //get everything
 		}
-
+		
+		if(cl.hasOption("doclimit")){
+			docLimit = Integer.parseInt(cl.getOptionValue("doclimit"));
+		}else{
+			docLimit = 100; //limit the scroller to get only 100 documents out of the potential trillions
+		}
 		String esIndex = (String) cl.getOptionValue("esindex");
 		String esDocType = (String) cl.getOptionValue("esdoctype");
 		String outPutFilePath = (String) cl.getOptionValue("outputfile");
@@ -109,7 +121,7 @@ public class ScanAndScroll {
 		ScanAndScroll sas;
 		try {
 			sas = new ScanAndScroll(url, esUserName, esPassword,outPutFilePath);
-			sas.executeQuery(esQuery, pageSize, esIndex, esDocType);
+			sas.executeQuery(esQuery, pageSize, esIndex, esDocType,docLimit);
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			LOG.error("Error executing query:" + e);
 		}
@@ -131,6 +143,7 @@ public class ScanAndScroll {
 		options.addOption(new Option("esquery","esquery",true,"elasticsearch query"));
 		options.addOption(new Option("pagesize", "pagesize", true,"number of documents per shard to get at one time"));
 		options.addOption(new Option("outputfile","outputfile",true,"output file path"));
+		options.addOption(new Option("doclimit","doclimit",true, "number of documents retrieved, -1 to get trillion"));
 
 		return options;
 	}
@@ -168,7 +181,7 @@ public class ScanAndScroll {
 		{
 			LOG.error(e.getMessage());
 		}
-		
+		System.out.println(url);
 		HttpClientConfig.Builder httpClientBuilder =  new HttpClientConfig.Builder(url)
 																.sslSocketFactory(sslsf)
 																.readTimeout(30000)
@@ -188,7 +201,72 @@ public class ScanAndScroll {
 	}
 	
 	
-	public void executeQuery(String query, int pageSize,String index, String docType){
+private JSONObject extractTika(String contents){
+		
+		JSONObject jObj = (JSONObject)JSONSerializer.toJSON(contents);
+		
+		if(jObj.containsKey("_source"))
+		{
+			JSONObject jObjSource = jObj.getJSONObject("_source");
+			
+			if(jObjSource.containsKey("raw_content"))
+			{
+				String rawHtml = jObjSource.getString("raw_content");
+				
+				ByteArrayInputStream bIs = new ByteArrayInputStream(rawHtml.getBytes());
+				
+				Metadata metadata = new Metadata();
+				
+				AutoDetectParser adp = new AutoDetectParser();
+				
+				ContentHandler handler = new BodyContentHandler(10*1024*1024);
+				
+				
+				
+				try {
+					adp.parse(bIs, handler, metadata);
+					
+					String[] metadataNames = metadata.names();
+					
+					
+					JSONObject jObjMetadata = new JSONObject();
+					
+					for(String metadataName:metadataNames)
+					{
+						String[] values = metadata.getValues(metadataName);
+						
+						JSONArray jArray = new JSONArray();
+						for(String mValue: values)
+						{
+							jArray.add(mValue);
+						}
+						
+						jObjMetadata.accumulate(metadataName, jArray);
+						
+					}
+					
+					//remove empty lines from the text
+					String rawTextAdjusted = handler.toString().replaceAll("(?m)^[ \t]*\r?\n", "");
+					
+					//detect language
+					LanguageIdentifier li = new LanguageIdentifier(rawTextAdjusted);
+					
+					jObjSource.accumulate("tikametadata", jObjMetadata);
+					jObjSource.accumulate("raw_text", rawTextAdjusted);
+					jObjSource.accumulate("rawtextdetectedlanguage", li.getLanguage());
+					
+				} catch (Exception e) {
+					LOG.error("Error:",e);;
+				}
+				
+			}
+			
+		}
+		return jObj;
+}
+	
+	
+	public void executeQuery(String query, int pageSize,String index, String docType,int docLimit){
 		
 		Search search = new Search.Builder(query)
 									 .addIndex(index)
@@ -197,6 +275,7 @@ public class ScanAndScroll {
 									 .setParameter(Parameters.SIZE, pageSize)
 									 .setParameter(Parameters.SCROLL, SCROLL)
 									 .build();
+		//System.out.println(query + "$$$$" + pageSize + "$$$$" + docType + "$$$$" + index);
 		
 		try {
 
@@ -204,7 +283,8 @@ public class ScanAndScroll {
             String scrollId = searchResult.getJsonObject().get("_scroll_id").getAsString();
 
             int currentResultSize = 0;
-            int currentPage = 1;
+            int numDocs = 0;
+            JSONArray jArrayResult = new JSONArray();
             do {
 
                 SearchScroll scrollRequest = new SearchScroll.Builder(scrollId, SCROLL)
@@ -213,28 +293,27 @@ public class ScanAndScroll {
 
                 JestResult scrollResult = client.execute(scrollRequest);
                 scrollId = scrollResult.getJsonObject().get("_scroll_id").getAsString();
-                
-                JSONObject jObj =  (JSONObject) JSONSerializer.toJSON(scrollResult.toString());
+                JSONObject jObj =  (JSONObject) JSONSerializer.toJSON(scrollResult.getJsonString());
                 
                 JSONArray jArrayHits = jObj.getJSONObject("hits").getJSONArray("hits");
                 
                 for(int i=0;i<jArrayHits.size();i++){
                 	
-                	writer.println(jArrayHits.getString(i));
+                	jArrayResult.add(extractTika(jArrayHits.getString(i)).toString());
                 }
 
                 // Note: Current result size will be Page Size * number of shards
                 currentResultSize = jArrayHits.size();
-                currentPage++;
-
+                numDocs+=currentResultSize;
+                if(numDocs != -1 && numDocs <= docLimit){
+                	break;
+                }
             } while (currentResultSize != 0);
             
-            
-            writer.close();
-
+            writer.println(jArrayResult.toString());
+    		writer.close();
         } catch (IOException e) {
             LOG.error("Error retrieving from Elasticsearch", e);
         }
 	}
-
 }
