@@ -354,5 +354,7 @@ private JSONObject extractTika(String contents){
 				writer.println(jArray.getJSONObject(i).getJSONObject("_source").getString("url").trim() + "\t" + jArray.getString(i));
 			}
 		}
+		
+		writer.close();
 	}
 }
