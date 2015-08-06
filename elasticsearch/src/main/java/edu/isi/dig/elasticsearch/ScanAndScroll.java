@@ -311,7 +311,7 @@ private JSONObject extractTika(String contents){
 
             int currentResultSize = 0;
             int numDocs = 0;
-            JSONArray jArrayResult = new JSONArray();
+            
             do {
 
                 SearchScroll scrollRequest = new SearchScroll.Builder(scrollId, SCROLL)
@@ -325,11 +325,13 @@ private JSONObject extractTika(String contents){
                 
                 JSONArray jArrayHits = jObj.getJSONObject("hits").getJSONArray("hits");
                 
+                JSONArray jArrayResult = new JSONArray();
+                
                 for(int i=0;i<jArrayHits.size();i++){
                 	
                 	jArrayResult.add(extractTika(jArrayHits.getString(i)).toString());
                 }
-
+                writeToFile(jArrayResult);
                 // Note: Current result size will be Page Size * number of shards
                 currentResultSize = jArrayHits.size();
                 numDocs+=currentResultSize;
@@ -338,7 +340,7 @@ private JSONObject extractTika(String contents){
                 }
             } while (currentResultSize != 0);
             
-            writeToFile(jArrayResult);
+           
            
         } catch (IOException e) {
             LOG.error("Error retrieving from Elasticsearch", e);
@@ -347,12 +349,16 @@ private JSONObject extractTika(String contents){
 	
 	private void writeToFile(JSONArray jArray){
 		
+		try{
 		if(outputType == 0){
 			 writer.println(jArray.toString());
 		}else if(outputType == 1){
 			for(int i=0;i<jArray.size();i++){
 				writer.println(jArray.getJSONObject(i).getJSONObject("_source").getString("url").trim() + "\t" + jArray.getString(i));
 			}
+		}
+		}catch(Exception e){
+			System.out.println(e.getMessage());
 		}
 		
 		writer.close();
