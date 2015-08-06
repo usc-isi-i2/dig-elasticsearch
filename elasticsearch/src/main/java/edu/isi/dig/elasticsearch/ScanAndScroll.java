@@ -314,9 +314,10 @@ private JSONObject extractTika(String contents){
 
             int currentResultSize = 0;
             int numDocs = 0;
-            JSONArray jArrayResult = new JSONArray();
+            
             do {
-
+            	JSONArray jArrayResult = new JSONArray();
+            	
                 SearchScroll scrollRequest = new SearchScroll.Builder(scrollId, SCROLL)
                                                     .setParameter(Parameters.SIZE, pageSize)
                                                     .build();
