@@ -332,7 +332,7 @@ private JSONObject extractTika(String contents){
                 	
                 	jArrayResult.add(extractTika(jArrayHits.getString(i)).toString());
                 }
-
+                writeToFile(jArrayResult);
                 // Note: Current result size will be Page Size * number of shards
                 currentResultSize = jArrayHits.size();
                 numDocs+=currentResultSize;
@@ -341,7 +341,6 @@ private JSONObject extractTika(String contents){
                 }
             } while (currentResultSize != 0);
             
-            writeToFile(jArrayResult);
            
         } catch (IOException e) {
             LOG.error("Error retrieving from Elasticsearch", e);
