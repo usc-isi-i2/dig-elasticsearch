@@ -45,6 +45,7 @@ public class ScanAndScroll {
 	private final JestClient client;
 	private final static String SCROLL = "5m";
 	private PrintWriter writer;
+	int outputType=0;
 	
 	
 	public static void main(String args[]) throws IOException{
@@ -65,8 +66,13 @@ public class ScanAndScroll {
 		String esQueryFile=null;
 		String esQuery;
 		int docLimit;
+		int outputtype;
 		
-		
+		if(cl.hasOption("outputtype")){
+			outputtype = Integer.parseInt(cl.getOptionValue("outputtype"));
+		}else{
+			outputtype = 0; //create json array by default
+		}
 		
 		if (cl.hasOption("eshostname")){
 			esHostName = (String) cl.getOptionValue("eshostname");
@@ -138,7 +144,7 @@ public class ScanAndScroll {
 		
 		ScanAndScroll sas;
 		try {
-			sas = new ScanAndScroll(url, esUserName, esPassword,outPutFilePath);
+			sas = new ScanAndScroll(url, esUserName, esPassword,outPutFilePath,outputtype);
 			sas.executeQuery(esQuery, pageSize, esIndex, esDocType,docLimit);
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			LOG.error("Error executing query:" + e);
@@ -162,6 +168,7 @@ public class ScanAndScroll {
 		options.addOption(new Option("pagesize", "pagesize", true,"number of documents per shard to get at one time"));
 		options.addOption(new Option("outputfile","outputfile",true,"output file path"));
 		options.addOption(new Option("doclimit","doclimit",true, "number of documents retrieved, -1 to get trillion"));
+		options.addOption(new Option("outputtype","outputtype",true,"0 for json array, 1 for json lines"));
 
 		return options;
 	}
@@ -189,7 +196,7 @@ public class ScanAndScroll {
 	}
 	
 	
-	public ScanAndScroll(String url,String username, String password,String outputFilePath) throws FileNotFoundException, UnsupportedEncodingException{
+	public ScanAndScroll(String url,String username, String password,String outputFilePath,int outputType) throws FileNotFoundException, UnsupportedEncodingException{
 		SSLContextBuilder builder = new SSLContextBuilder();
 		SSLConnectionSocketFactory sslsf=null;
 		try {
@@ -216,6 +223,7 @@ public class ScanAndScroll {
 		this.client = jcf.getObject();
 		
 		this.writer = new PrintWriter(outputFilePath, "UTF-8");
+		this.outputType = outputType;
 	}
 	
 	
@@ -330,10 +338,21 @@ private JSONObject extractTika(String contents){
                 }
             } while (currentResultSize != 0);
             
-            writer.println(jArrayResult.toString());
-    		writer.close();
+            writeToFile(jArrayResult);
+           
         } catch (IOException e) {
             LOG.error("Error retrieving from Elasticsearch", e);
         }
+	}
+	
+	private void writeToFile(JSONArray jArray){
+		
+		if(outputType == 0){
+			 writer.println(jArray.toString());
+		}else if(outputType == 1){
+			for(int i=0;i<jArray.size();i++){
+				writer.println(jArray.getJSONObject(i).getJSONObject("_source").getString("url").trim() + "\t" + jArray.getString(i));
+			}
+		}
 	}
 }
