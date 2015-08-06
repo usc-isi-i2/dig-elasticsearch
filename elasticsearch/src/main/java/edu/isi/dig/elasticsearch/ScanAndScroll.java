@@ -1,10 +1,12 @@
 package edu.isi.dig.elasticsearch;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -44,8 +46,8 @@ public class ScanAndScroll {
 	private static Logger LOG = LoggerFactory.getLogger(ScanAndScroll.class);
 	private final JestClient client;
 	private final static String SCROLL = "5m";
-	private PrintWriter writer;
-	int outputType=0;
+	private int outputType=0;
+	private String outputFile;
 	
 	
 	public static void main(String args[]) throws IOException{
@@ -144,7 +146,7 @@ public class ScanAndScroll {
 		
 		ScanAndScroll sas;
 		try {
-			sas = new ScanAndScroll(url, esUserName, esPassword,outPutFilePath,outputtype);
+			sas = new ScanAndScroll(url, esUserName, esPassword,outPutFilePath,outputtype,outPutFilePath);
 			sas.executeQuery(esQuery, pageSize, esIndex, esDocType,docLimit);
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			LOG.error("Error executing query:" + e);
@@ -196,7 +198,7 @@ public class ScanAndScroll {
 	}
 	
 	
-	public ScanAndScroll(String url,String username, String password,String outputFilePath,int outputType) throws FileNotFoundException, UnsupportedEncodingException{
+	public ScanAndScroll(String url,String username, String password,String outputFilePath,int outputType,String outputFile) throws FileNotFoundException, UnsupportedEncodingException{
 		SSLContextBuilder builder = new SSLContextBuilder();
 		SSLConnectionSocketFactory sslsf=null;
 		try {
@@ -222,8 +224,9 @@ public class ScanAndScroll {
 		
 		this.client = jcf.getObject();
 		
-		this.writer = new PrintWriter(outputFilePath, "UTF-8");
+		
 		this.outputType = outputType;
+		this.outputFile = outputFile;
 	}
 	
 	
@@ -311,7 +314,7 @@ private JSONObject extractTika(String contents){
 
             int currentResultSize = 0;
             int numDocs = 0;
-            
+            JSONArray jArrayResult = new JSONArray();
             do {
 
                 SearchScroll scrollRequest = new SearchScroll.Builder(scrollId, SCROLL)
@@ -325,13 +328,11 @@ private JSONObject extractTika(String contents){
                 
                 JSONArray jArrayHits = jObj.getJSONObject("hits").getJSONArray("hits");
                 
-                JSONArray jArrayResult = new JSONArray();
-                
                 for(int i=0;i<jArrayHits.size();i++){
                 	
                 	jArrayResult.add(extractTika(jArrayHits.getString(i)).toString());
                 }
-                writeToFile(jArrayResult);
+
                 // Note: Current result size will be Page Size * number of shards
                 currentResultSize = jArrayHits.size();
                 numDocs+=currentResultSize;
@@ -340,7 +341,7 @@ private JSONObject extractTika(String contents){
                 }
             } while (currentResultSize != 0);
             
-           
+            writeToFile(jArrayResult);
            
         } catch (IOException e) {
             LOG.error("Error retrieving from Elasticsearch", e);
@@ -350,17 +351,22 @@ private JSONObject extractTika(String contents){
 	private void writeToFile(JSONArray jArray){
 		
 		try{
-		if(outputType == 0){
-			 writer.println(jArray.toString());
-		}else if(outputType == 1){
-			for(int i=0;i<jArray.size();i++){
-				writer.println(jArray.getJSONObject(i).getJSONObject("_source").getString("url").trim() + "\t" + jArray.getString(i));
+			
+			FileWriter fw = new FileWriter(outputFile, true);
+			BufferedWriter writer = new BufferedWriter(fw);
+			if(outputType == 0){
+				 writer.write(jArray.toString());
+			}else if(outputType == 1){
+				for(int i=0;i<jArray.size();i++){
+					writer.write(jArray.getJSONObject(i).getJSONObject("_source").getString("url").trim() + "\t" + jArray.getString(i));
+					writer.newLine();
+				}
 			}
-		}
+			writer.close();
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
 		
-		writer.close();
+		
 	}
 }
