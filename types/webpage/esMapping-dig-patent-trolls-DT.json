@@ -23,7 +23,12 @@
             },
             "name": {
               "type": "string",
-              "index": "not_analyzed"
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
             },
             "uri": {
               "type": "string",
@@ -56,12 +61,20 @@
                 "addressRegion": {
                   "type": "string",
                   "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string"
                 }
               }
             },
             "name": {
               "type": "string",
-              "index": "not_analyzed"
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
             },
             "uri": {
               "type": "string",
@@ -97,9 +110,65 @@
                 }
               }
             },
+            "assignee": {
+              "type": "nested",
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "address": {
+                  "type": "nested",
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "addressCountry": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "addressLocality": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "addressRegion": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "uri": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
             "name": {
               "type": "string",
-              "index": "not_analyzed"
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "startDate": {
+              "type": "date",
+              "format": "dateOptionalTime"
             },
             "uri": {
               "type": "string",
@@ -163,7 +232,12 @@
             },
             "name": {
               "type": "string",
-              "index": "not_analyzed"
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
             },
             "uri": {
               "type": "string",
@@ -206,7 +280,12 @@
         },
         "name": {
           "type": "string",
-          "index": "not_analyzed"
+          "fields": {
+            "raw": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
         },
         "sourceOrganization": {
           "type": "nested",
@@ -238,7 +317,12 @@
             },
             "name": {
               "type": "string",
-              "index": "not_analyzed"
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
             },
             "uri": {
               "type": "string",
@@ -253,8 +337,11 @@
       }
     },
     "legalAction": {
-      "_parent":{
-        "type":"patents"
+      "_parent": {
+        "type": "patents"
+      },
+      "_routing": {
+        "required": true
       },
       "properties": {
         "a": {
@@ -304,7 +391,12 @@
             },
             "name": {
               "type": "string",
-              "index": "not_analyzed"
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
             }
           }
         },
@@ -326,7 +418,12 @@
         },
         "name": {
           "type": "string",
-          "index": "not_analyzed"
+          "fields": {
+            "raw": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
         },
         "startTime": {
           "type": "date",
@@ -337,16 +434,120 @@
           "index": "not_analyzed"
         }
       }
-    }
-  },
-  "settings": {
-    "index": {
-      "creation_date": "1438183204715",
-      "uuid": "9ReexHzlSgu0E-SXzuqj_g",
-      "number_of_replicas": "1",
-      "number_of_shards": "40",
-      "version": {
-        "created": "1070099"
+    },
+    "organization": {
+      "type": "nested",
+      "properties": {
+        "@context": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "a": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "alternateName": {
+          "type": "string"
+        },
+        "legalName": {
+          "type": "string"
+        },
+        "operatingPermit": {
+          "type": "nested",
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "schema:audience": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "schema:issuedBy": {
+              "type": "nested",
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "schema:valueName": {
+                  "type": "string"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "schema:status": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "schema:validFrom": {
+              "type": "date",
+              "format": "dateOptionalTime"
+            },
+            "schema:validIn": {
+              "type": "nested",
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "identifier": {
+                  "type": "nested",
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "hasType": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "name": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "schema:providesService": {
+          "type": "nested",
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "provider": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "schema:serviceType": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "schema:subtype": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "uri": {
+          "type": "string",
+          "index": "not_analyzed"
+        }
       }
     }
   }
