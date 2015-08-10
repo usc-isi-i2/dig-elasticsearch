@@ -5,3 +5,5 @@ elasticsearch/.settings/org.eclipse.core.resources.prefs
 elasticsearch/.settings/org.eclipse.jdt.core.prefs
 elasticsearch/.settings/org.eclipse.m2e.core.prefs
 .DS_Store
+
+elasticsearch/target
