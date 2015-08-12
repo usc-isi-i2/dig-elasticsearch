@@ -459,18 +459,18 @@
               "type": "string",
               "index": "not_analyzed"
             },
-            "schema:audience": {
+            "audience": {
               "type": "string",
               "index": "not_analyzed"
             },
-            "schema:issuedBy": {
+            "issuedBy": {
               "type": "nested",
               "properties": {
                 "a": {
                   "type": "string",
                   "index": "not_analyzed"
                 },
-                "schema:valueName": {
+                "valueName": {
                   "type": "string"
                 },
                 "uri": {
@@ -479,15 +479,15 @@
                 }
               }
             },
-            "schema:status": {
+            "status": {
               "type": "string",
               "index": "not_analyzed"
             },
-            "schema:validFrom": {
+            "validFrom": {
               "type": "date",
               "format": "dateOptionalTime"
             },
-            "schema:validIn": {
+            "validIn": {
               "type": "nested",
               "properties": {
                 "a": {
@@ -523,7 +523,7 @@
             }
           }
         },
-        "schema:providesService": {
+        "providesService": {
           "type": "nested",
           "properties": {
             "a": {
@@ -534,13 +534,13 @@
               "type": "string",
               "index": "not_analyzed"
             },
-            "schema:serviceType": {
+            "serviceType": {
               "type": "string",
               "index": "not_analyzed"
             }
           }
         },
-        "schema:subtype": {
+        "subtype": {
           "type": "string",
           "index": "not_analyzed"
         },
