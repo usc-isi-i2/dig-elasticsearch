@@ -337,7 +337,8 @@ private JSONObject extractTika(String contents){
                 // Note: Current result size will be Page Size * number of shards
                 currentResultSize = jArrayHits.size();
                 numDocs+=currentResultSize;
-                if(numDocs != -1 && numDocs <= docLimit){
+                System.out.println("num docs:" + String.valueOf(numDocs));
+                if(docLimit != -1 && numDocs >= docLimit){
                 	break;
                 }
             } while (currentResultSize != 0);
