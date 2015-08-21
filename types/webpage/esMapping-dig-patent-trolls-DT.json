@@ -427,10 +427,22 @@
             }
           }
         },
-        "uri": {
-          "type": "string",
-          "index": "not_analyzed"
-        }
+          "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+          },
+	  "yield": {
+	      "type": "double"
+	  },
+	  "yieldByLegalAction": {
+	      "type": "double"
+	  },
+	  "yieldByPlaintiff": {
+              "type": "double"
+          },
+	  "urgency": {
+              "type": "double"
+          }
       }
     },
     "organization": {
