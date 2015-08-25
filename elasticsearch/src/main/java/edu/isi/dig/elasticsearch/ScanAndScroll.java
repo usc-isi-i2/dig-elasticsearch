@@ -8,8 +8,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
@@ -29,9 +36,10 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLContextBuilder;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.TrustStrategy;
 import org.apache.tika.language.LanguageIdentifier;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -216,7 +224,28 @@ public class ScanAndScroll {
 	
 	
 	public ScanAndScroll(String url,String username, String password,String outputFilePath,int outputType,String outputFile,int runTika) throws FileNotFoundException, UnsupportedEncodingException{
-		SSLContextBuilder builder = new SSLContextBuilder();
+		
+		SSLContext sslContext;
+        try {
+            sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
+                public boolean isTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                    return true;
+                }
+            }).build();
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException e) {
+            throw new IllegalStateException(e);
+        }
+
+        // Skip hostname checks
+        HostnameVerifier hostnameVerifier = NoopHostnameVerifier.INSTANCE;
+        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext, hostnameVerifier);
+
+        HttpClientConfig.Builder httpClientBuilder = new HttpClientConfig.Builder(url.toString())
+                                                    .sslSocketFactory(sslSocketFactory)
+                                                    .readTimeout(30000) // Milliseconds
+                                                    .multiThreaded(false);
+
+		/*SSLContextBuilder builder = new SSLContextBuilder();
 		SSLConnectionSocketFactory sslsf=null;
 		try {
 			builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
@@ -224,12 +253,12 @@ public class ScanAndScroll {
 		} catch(Exception e)
 		{
 			LOG.error(e.getMessage());
-		}
+		}*/
 		System.out.println(url);
-		HttpClientConfig.Builder httpClientBuilder =  new HttpClientConfig.Builder(url)
-																.sslSocketFactory(sslsf)
-																.readTimeout(30000)
-																.multiThreaded(false);
+		//HttpClientConfig.Builder httpClientBuilder =  new HttpClientConfig.Builder(url)
+		//														.sslSocketFactory(sslsf)
+		//														.readTimeout(30000)
+		//														.multiThreaded(false);
 		
 		if(username.trim() != "" && password.trim() != ""){
 			httpClientBuilder.defaultCredentials(username, password);
