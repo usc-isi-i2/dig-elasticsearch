@@ -48,6 +48,7 @@ public class ScanAndScroll {
 	private final static String SCROLL = "5m";
 	private int outputType=0;
 	private String outputFile;
+	private int runTika;
 	
 	
 	public static void main(String args[]) throws IOException{
@@ -58,7 +59,7 @@ public class ScanAndScroll {
 			return;
 		}
 		
-		
+		String esUrl;
 		String esHostName ;
 		String esPort;
 		String esProtocol;
@@ -69,6 +70,14 @@ public class ScanAndScroll {
 		String esQuery;
 		int docLimit;
 		int outputtype;
+		int runtika;
+		
+		
+		if(cl.hasOption("runtika")){
+			runtika = Integer.parseInt(cl.getOptionValue("runtika"));
+		}else{
+			runtika = 1; // run tika by default
+		}
 		
 		if(cl.hasOption("outputtype")){
 			outputtype = Integer.parseInt(cl.getOptionValue("outputtype"));
@@ -76,24 +85,30 @@ public class ScanAndScroll {
 			outputtype = 0; //create json array by default
 		}
 		
-		if (cl.hasOption("eshostname")){
-			esHostName = (String) cl.getOptionValue("eshostname");
-		}else{
-			esHostName = "localhost";
+		if(cl.hasOption("esurl")){
+			esUrl = (String) cl.getOptionValue("esurl");
+		}else {
+			if (cl.hasOption("eshostname")){
+				esHostName = (String) cl.getOptionValue("eshostname");
+			}else{
+				esHostName = "localhost";
+			}
+			
+			if(cl.hasOption("esport")){
+				esPort = (String) cl.getOptionValue("esport");
+			}else{
+				esPort = "9200";
+			}
+			
+			if(cl.hasOption("esprotocol")){
+				esProtocol = (String) cl.getOptionValue("esprotocol");
+			}else{
+				esProtocol = "http";
+			}
+			
+			esUrl = esProtocol + "://" + esHostName + ":" + esPort;
 		}
 		
-		if(cl.hasOption("esport")){
-			esPort = (String) cl.getOptionValue("esport");
-		}else{
-			esPort = "9200";
-		}
-		
-		if(cl.hasOption("esprotocol")){
-			esProtocol = (String) cl.getOptionValue("esprotocol");
-		}else{
-			esProtocol = "http";
-		}
-
 		if(cl.hasOption("esusername")){
 			esUserName = (String) cl.getOptionValue("esusername");
 		}else{
@@ -142,11 +157,11 @@ public class ScanAndScroll {
 		
 		
 		
-		String url = esProtocol + "://" + esHostName + ":" + esPort;
+		
 		
 		ScanAndScroll sas;
 		try {
-			sas = new ScanAndScroll(url, esUserName, esPassword,outPutFilePath,outputtype,outPutFilePath);
+			sas = new ScanAndScroll(esUrl, esUserName, esPassword,outPutFilePath,outputtype,outPutFilePath,runtika);
 			sas.executeQuery(esQuery, pageSize, esIndex, esDocType,docLimit);
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			LOG.error("Error executing query:" + e);
@@ -171,6 +186,8 @@ public class ScanAndScroll {
 		options.addOption(new Option("outputfile","outputfile",true,"output file path"));
 		options.addOption(new Option("doclimit","doclimit",true, "number of documents retrieved, -1 to get trillion"));
 		options.addOption(new Option("outputtype","outputtype",true,"0 for json array, 1 for json lines"));
+		options.addOption(new Option("runtika","runtika",true,"0 for no, 1 for yes"));
+		options.addOption(new Option("esurl","esurl",true,"url for the es server, should be used instead of esprotocol, esport,esusername,espassword and eshostname"));
 
 		return options;
 	}
@@ -198,7 +215,7 @@ public class ScanAndScroll {
 	}
 	
 	
-	public ScanAndScroll(String url,String username, String password,String outputFilePath,int outputType,String outputFile) throws FileNotFoundException, UnsupportedEncodingException{
+	public ScanAndScroll(String url,String username, String password,String outputFilePath,int outputType,String outputFile,int runTika) throws FileNotFoundException, UnsupportedEncodingException{
 		SSLContextBuilder builder = new SSLContextBuilder();
 		SSLConnectionSocketFactory sslsf=null;
 		try {
@@ -227,6 +244,7 @@ public class ScanAndScroll {
 		
 		this.outputType = outputType;
 		this.outputFile = outputFile;
+		this.runTika = runTika;
 	}
 	
 	
@@ -306,6 +324,15 @@ private JSONObject extractTika(String contents){
 									 .build();
 		System.out.println(query + "$$$$");
 		
+		boolean runTikaExtractor = true;
+		
+		if(this.runTika == 0){
+			runTikaExtractor = false;
+		}
+		else if(this.runTika == 1) {
+			runTikaExtractor= true;
+		}
+		
 		try {
 
             JestResult searchResult = client.execute(search);
@@ -331,7 +358,11 @@ private JSONObject extractTika(String contents){
                 
                 for(int i=0;i<jArrayHits.size();i++){
                 	
-                	jArrayResult.add(extractTika(jArrayHits.getString(i)).toString());
+                	if(runTikaExtractor){
+                		jArrayResult.add(extractTika(jArrayHits.getString(i)).toString());
+                	}else{
+                		jArrayResult.add(jArrayHits.getString(i).toString());
+                	}
                 }
                 writeToFile(jArrayResult);
                 // Note: Current result size will be Page Size * number of shards
