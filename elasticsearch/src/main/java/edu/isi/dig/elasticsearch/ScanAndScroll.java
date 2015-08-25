@@ -195,7 +195,7 @@ public class ScanAndScroll {
 		options.addOption(new Option("doclimit","doclimit",true, "number of documents retrieved, -1 to get trillion"));
 		options.addOption(new Option("outputtype","outputtype",true,"0 for json array, 1 for json lines"));
 		options.addOption(new Option("runtika","runtika",true,"0 for no, 1 for yes"));
-		options.addOption(new Option("esurl","esurl",true,"url for the es server, should be used instead of esprotocol, esport,esusername,espassword and eshostname"));
+		options.addOption(new Option("esurl","esurl",true,"url for the es server, should be used instead of esprotocol, esport and eshostname"));
 
 		return options;
 	}
