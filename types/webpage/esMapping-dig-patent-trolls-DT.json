@@ -72,6 +72,74 @@
                 }
               }
             },
+            "cause": {
+              "type": "nested",
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "defendant": {
+              "type": "nested",
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "defendantCount": {
+              "type": "long"
+            },
+            "plaintiff": {
+              "type": "nested",
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "plaintiffCount": {
+              "type": "long"
+            },
             "mainEntityOfPage": {
               "type": "nested",
               "properties": {
@@ -342,6 +410,73 @@
             }
           }
         },
+        "currentAssignee": {
+          "type": "nested",
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "assignee": {
+              "type": "nested",
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "address": {
+                  "type": "nested",
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "addressCountry": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "addressLocality": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "addressRegion": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "postalCode": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "streetAddress": {
+                      "type": "string"
+                    },
+                    "uri": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "startDate": {
+              "type": "date",
+              "format": "dateOptionalTime"
+            }
+          }
+        },
         "datePublished": {
           "type": "date",
           "format": "dateOptionalTime"
@@ -374,6 +509,16 @@
               "index": "not_analyzed"
             }
           }
+        },
+        "legalActionCount": {
+          "type": "long"
+        },
+        "legalActionDates": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "legalActionLatency": {
+          "type": "double"
         },
         "name": {
           "type": "string",
@@ -427,22 +572,22 @@
             }
           }
         },
-          "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-          },
-	  "yield": {
-	      "type": "double"
-	  },
-	  "yieldByLegalAction": {
-	      "type": "double"
-	  },
-	  "yieldByPlaintiff": {
-              "type": "double"
-          },
-	  "urgency": {
-              "type": "double"
-          }
+        "uri": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "yield": {
+          "type": "double"
+        },
+        "yieldByLegalAction": {
+          "type": "double"
+        },
+        "yieldByPlaintiff": {
+          "type": "double"
+        },
+        "urgency": {
+          "type": "double"
+        }
       }
     },
     "organization": {
@@ -546,6 +691,91 @@
             "serviceType": {
               "type": "string",
               "index": "not_analyzed"
+            }
+          }
+        },
+        "trolls": {
+          "type": "nested",
+          "properties": {
+            "events": {
+              "type": "nested",
+              "properties": {
+                "date": {
+                  "type": "date",
+                  "format": "dateOptionalTime"
+                },
+                "identifier": {
+                  "type": "nested",
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "hasType": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "name": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "legalActionDate": {
+                  "type": "date",
+                  "format": "dateOptionalTime"
+                },
+                "legalActionLatency": {
+                  "type": "double"
+                },
+                "minLegalActionLatency": {
+                  "type": "double"
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "trollScore": {
+                  "type": "double"
+                },
+                "urgency": {
+                  "type": "long"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "yield": {
+                  "type": "long"
+                },
+                "yieldByLegalAction": {
+                  "type": "double"
+                },
+                "yieldByPlaintiff": {
+                  "type": "double"
+                }
+              }
+            },
+            "name": {
+              "type": "string",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "plaintiffUri": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "trollScore": {
+              "type": "double"
             }
           }
         },
