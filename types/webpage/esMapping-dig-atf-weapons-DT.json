@@ -1252,6 +1252,10 @@
           "type": "string",
           "index": "not_analyzed"
         },
+        "text": {
+            "type": "string",
+            "index": "no"
+        },
         "url": {
           "type": "string",
           "index": "not_analyzed"

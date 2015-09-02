@@ -57,6 +57,7 @@ public class ScanAndScroll {
 	private int outputType=0;
 	private String outputFile;
 	private int runTika;
+	private String htmlField;
 	
 	
 	public static void main(String args[]) throws IOException{
@@ -79,7 +80,13 @@ public class ScanAndScroll {
 		int docLimit;
 		int outputtype;
 		int runtika;
+		String htmlField;
 		
+		if(cl.hasOption("htmlfield")){
+			htmlField = (String) cl.getOptionValue("htmlfield");
+		}else{
+			htmlField = "raw_content"; //this is where it is from CDR by default
+		}
 		
 		if(cl.hasOption("runtika")){
 			runtika = Integer.parseInt(cl.getOptionValue("runtika"));
@@ -169,7 +176,7 @@ public class ScanAndScroll {
 		
 		ScanAndScroll sas;
 		try {
-			sas = new ScanAndScroll(esUrl, esUserName, esPassword,outPutFilePath,outputtype,outPutFilePath,runtika);
+			sas = new ScanAndScroll(esUrl, esUserName, esPassword,outPutFilePath,outputtype,outPutFilePath,runtika,htmlField);
 			sas.executeQuery(esQuery, pageSize, esIndex, esDocType,docLimit);
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			LOG.error("Error executing query:" + e);
@@ -196,6 +203,7 @@ public class ScanAndScroll {
 		options.addOption(new Option("outputtype","outputtype",true,"0 for json array, 1 for json lines"));
 		options.addOption(new Option("runtika","runtika",true,"0 for no, 1 for yes"));
 		options.addOption(new Option("esurl","esurl",true,"url for the es server, should be used instead of esprotocol, esport and eshostname"));
+		options.addOption(new Option("htmlfield","htmlfield",true,"name of the html field in json which contains raw html"));
 
 		return options;
 	}
@@ -223,7 +231,7 @@ public class ScanAndScroll {
 	}
 	
 	
-	public ScanAndScroll(String url,String username, String password,String outputFilePath,int outputType,String outputFile,int runTika) throws FileNotFoundException, UnsupportedEncodingException{
+	public ScanAndScroll(String url,String username, String password,String outputFilePath,int outputType,String outputFile,int runTika,String htmlField) throws FileNotFoundException, UnsupportedEncodingException{
 		
 		SSLContext sslContext;
         try {
@@ -245,20 +253,8 @@ public class ScanAndScroll {
                                                     .readTimeout(30000) // Milliseconds
                                                     .multiThreaded(false);
 
-		/*SSLContextBuilder builder = new SSLContextBuilder();
-		SSLConnectionSocketFactory sslsf=null;
-		try {
-			builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
-			sslsf = new SSLConnectionSocketFactory(builder.build());
-		} catch(Exception e)
-		{
-			LOG.error(e.getMessage());
-		}*/
+		
 		System.out.println(url);
-		//HttpClientConfig.Builder httpClientBuilder =  new HttpClientConfig.Builder(url)
-		//														.sslSocketFactory(sslsf)
-		//														.readTimeout(30000)
-		//														.multiThreaded(false);
 		
 		if(username.trim() != "" && password.trim() != ""){
 			httpClientBuilder.defaultCredentials(username, password);
@@ -274,6 +270,7 @@ public class ScanAndScroll {
 		this.outputType = outputType;
 		this.outputFile = outputFile;
 		this.runTika = runTika;
+		this.htmlField = htmlField;
 	}
 	
 	
@@ -285,9 +282,9 @@ private JSONObject extractTika(String contents){
 		{
 			JSONObject jObjSource = jObj.getJSONObject("_source");
 			
-			if(jObjSource.containsKey("raw_content"))
+			if(jObjSource.containsKey(htmlField))
 			{
-				String rawHtml = jObjSource.getString("raw_content");
+				String rawHtml = jObjSource.getString(htmlField);
 				
 				ByteArrayInputStream bIs = new ByteArrayInputStream(rawHtml.getBytes());
 				
