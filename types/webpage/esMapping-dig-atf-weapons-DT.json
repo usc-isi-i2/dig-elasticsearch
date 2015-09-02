@@ -14,6 +14,44 @@
           "type": "string",
           "index": "not_analyzed"
         },
+        "about": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "hasPhrase": {
+               "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "name": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "aggregateRating": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "ratingValue": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
         "author": {
           "type": "nested",
           "include_in_root": true,
@@ -177,7 +215,19 @@
                   "type": "string",
                   "index": "not_analyzed"
                 },
+                "addressCountry": {
+                  "type": "string"
+                },
+                "addressLocality": {
+                  "type": "string"
+                },
+                "addressRegion": {
+                  "type": "string"
+                },
                 "name": {
+                  "type": "string"
+                },
+                "postalCode": {
                   "type": "string"
                 }
               }
@@ -270,6 +320,32 @@
             }
           }
         },
+        "distinctivePhrases": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "hasPhrase": {
+               "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "name": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
         "geonames_address": {
           "type": "nested",
           "properties": {
@@ -356,8 +432,8 @@
               }
             },
             "geo": {
-              "type" : "geo_point",
-              "lat_lon" : true
+              "type": "geo_point",
+              "lat_lon": true
             },
             "hasIdentifier": {
               "type": "nested",
@@ -934,6 +1010,16 @@
               "type": "string",
               "index": "not_analyzed"
             },
+            "identifier": {
+              "properties": {
+                "a": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            },
             "image": {
               "type": "nested",
               "include_in_root": true,
@@ -948,6 +1034,9 @@
                 }
               }
             },
+            "itemCondition": {
+              "type": "string"
+            },
             "keywords": {
               "type": "string",
               "fields": {
@@ -961,10 +1050,30 @@
               "type": "string",
               "index": "not_analyzed"
             },
-            "itemCondition": {
-              "type": "string"
+            "memberOf": {
+              "properties": {
+                "a": {
+                  "type": "string"
+                },
+                "memberOf": {
+                  "properties": {
+                    "a": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "uri": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
             },
             "model": {
+              "type": "string"
+            },
+            "name": {
               "type": "string"
             },
             "offers": {
@@ -1070,6 +1179,23 @@
           "type": "string",
           "index": "not_analyzed"
         },
+        "priceSpecification": {
+          "type": "nested",
+          "include_in_root": true,
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "price": {
+              "type": "long"
+            },
+            "priceCurrency": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
         "provider": {
           "type": "nested",
           "include_in_root": true,
@@ -1102,26 +1228,32 @@
             }
           }
         },
-        "priceSpecification": {
-          "type": "nested",
-          "include_in_root": true,
+        "availabilityEnds": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "eligibleRegion": {
           "properties": {
             "a": {
-              "type": "string",
-              "index": "not_analyzed"
+              "type": "string"
             },
-            "price": {
-              "type": "long"
+            "address": {
+              "properties": {
+                "a": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
             },
-            "priceCurrency": {
-              "type": "string",
-              "index": "not_analyzed"
+            "name": {
+              "type": "string"
+            },
+            "uri": {
+              "type": "string"
             }
           }
-        },
-        "sku": {
-          "type": "string",
-          "index": "not_analyzed"
         },
         "seller": {
           "type": "nested",
@@ -1130,6 +1262,61 @@
             "a": {
               "type": "string",
               "index": "not_analyzed"
+            },
+            "contactPoint": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "identifier": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "hasType": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "name": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "telephone": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "name": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string"
+                }
+              }
             },
             "description": {
               "type": "string",
@@ -1184,60 +1371,19 @@
                 }
               }
             },
-            "contactPoint": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "identifier": {
-                  "type": "nested",
-                  "include_in_root": true,
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "hasType": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "name": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "name": {
-                  "type": "string",
-                  "fields": {
-                    "raw": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "telephone": {
-                  "type": "nested",
-                  "include_in_root": true,
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "name": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                }
-              }
-            },
             "uri": {
               "type": "string",
               "index": "not_analyzed"
             }
           }
+        },
+        "sku": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "text": {
+          "type": "string",
+          "index": "no"
         },
         "title": {
           "type": "string",
@@ -1251,10 +1397,6 @@
         "uri": {
           "type": "string",
           "index": "not_analyzed"
-        },
-        "text": {
-            "type": "string",
-            "index": "no"
         },
         "url": {
           "type": "string",
