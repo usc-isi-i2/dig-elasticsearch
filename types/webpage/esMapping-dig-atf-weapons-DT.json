@@ -21,7 +21,7 @@
               "index": "not_analyzed"
             },
             "hasPhrase": {
-               "type": "nested",
+              "type": "nested",
               "include_in_root": true,
               "properties": {
                 "a": {
@@ -195,6 +195,10 @@
             }
           }
         },
+        "availabilityEnds": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
         "availabilityStarts": {
           "type": "date",
           "format": "dateOptionalTime"
@@ -327,7 +331,7 @@
               "index": "not_analyzed"
             },
             "hasPhrase": {
-               "type": "nested",
+              "type": "nested",
               "include_in_root": true,
               "properties": {
                 "a": {
@@ -343,6 +347,29 @@
             "name": {
               "type": "string",
               "index": "not_analyzed"
+            }
+          }
+        },
+        "eligibleRegion": {
+          "properties": {
+            "a": {
+              "type": "string"
+            },
+            "address": {
+              "properties": {
+                "a": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            },
+            "name": {
+              "type": "string"
+            },
+            "uri": {
+              "type": "string"
             }
           }
         },
@@ -484,6 +511,100 @@
             },
             "text": {
               "type": "string"
+            }
+          }
+        },
+        "hasFirearmsPhrase": {
+          "properties": {
+            "a": {
+              "type": "string"
+            },
+            "hasPhrase": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "name": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "hasGangPhrase": {
+          "properties": {
+            "a": {
+              "type": "string"
+            },
+            "hasPhrase": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "name": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "hasNFAPhrase": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "hasPhrase": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "name": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "hasNonEnglishPhrase": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "hasPhrase": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "name": {
+              "type": "string",
+              "index": "not_analyzed"
             }
           }
         },
@@ -725,6 +846,26 @@
               "index": "not_analyzed"
             },
             "text": {
+              "type": "string"
+            }
+          }
+        },
+        "hasTechnologyPhrase": {
+          "properties": {
+            "a": {
+              "type": "string"
+            },
+            "hasPhrase": {
+              "properties": {
+                "a": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            },
+            "name": {
               "type": "string"
             }
           }
@@ -1228,11 +1369,11 @@
             }
           }
         },
-        "availabilityEnds": {
+        "schema:availabilityEnds": {
           "type": "date",
           "format": "dateOptionalTime"
         },
-        "eligibleRegion": {
+        "schema:eligibleRegion": {
           "properties": {
             "a": {
               "type": "string"
@@ -1408,10 +1549,7 @@
   "settings": {
     "index": {
       "number_of_replicas": "1",
-      "number_of_shards": "40",
-      "version": {
-        "created": "1060199"
-      }
+      "number_of_shards": "40"
     }
   }
 }
