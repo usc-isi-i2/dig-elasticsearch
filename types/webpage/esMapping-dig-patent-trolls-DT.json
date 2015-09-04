@@ -323,6 +323,7 @@
                 },
                 "name": {
                   "type": "string",
+                  "boost" : 5.0,
                   "include_in_all": true,
                   "fields": {
                     "raw": {
@@ -475,6 +476,7 @@
                 },
                 "name": {
                   "type": "string",
+                  "boost" : 10.0,
                   "fields": {
                     "raw": {
                       "type": "string",
@@ -629,6 +631,7 @@
         },
         "legalName": {
           "include_in_all": true,
+          "boost" : 10.0,
           "type": "string"
         },
         "operatingPermit": {
