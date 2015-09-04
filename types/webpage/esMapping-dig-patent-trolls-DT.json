@@ -617,7 +617,7 @@
     },
     "organization": {
       "_boost": {
-        "name": "patentsAcquiredCount",
+        "name": "legalActionsAsPlaintiffCount",
         "null_value": 1.0
       },
       "properties": {
@@ -635,7 +635,7 @@
         },
         "legalName": {
           "include_in_all": true,
-          "boost": 10.0,
+          "boost": 1000.0,
           "type": "string"
         },
         "operatingPermit": {
