@@ -30,3 +30,10 @@ usage: ScanAndScroll
 
 ```
 The default number of documents retrieved is 100, get more by specifying the parameter "doclimit", set it to -1 to get every document in the index
+
+** javax.net.ssl.SSLProtocolException: handshake alert: unrecognized_name
+Sometimes, when Java 1.7 communicates via HTTPS with webservers, that configured with multiple hostnames, it can throw the following error: javax.net.ssl.SSLProtocolException: handshake alert: unrecognized_name.
+
+In this case, the solution can be either to fix the configuration of web server, or set jsse.enableSNIExtension into false by adding to following line to the start options of the server.
+
+-Djsse.enableSNIExtension=false
