@@ -44,9 +44,21 @@ public class BulkLoadSequenceFile {
 		String bulksize = (String)cl.getOptionValue("bulksize");
 		String port = (String)cl.getOptionValue("port");
 		String protocol = (String)cl.getOptionValue("protocol");
-		String username = (String)cl.getOptionValue("username");
-		String password = (String)cl.getOptionValue("password");
-
+		
+		String username = null;
+		if(cl.hasOption("username")){
+			 username = (String)cl.getOptionValue("username");
+		}else{
+			username = "";
+		}
+		
+		String password=null;
+		if(cl.hasOption("password")){
+			password = (String)cl.getOptionValue("password");
+		}else{
+			password="";
+		}
+		
 		
 
 		SSLContextBuilder builder = new SSLContextBuilder();
@@ -169,6 +181,7 @@ public class BulkLoadSequenceFile {
 			}
 
 		} catch (Exception e) {
+			
 			return cl;
 		}
 		return cl;
