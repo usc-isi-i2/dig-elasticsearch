@@ -29,8 +29,8 @@ dig-elasticsearch
    b. Type ```python loadDataElasticSearch.py -h```. This will provide help for the script as below
    ```
    usage: loadDataElasticSearch.py [-h] [-hostname HOSTNAME] [-port PORT]
-                                   [-mappingFilePath MAPPINGFILEPATH] dataFileType
-                                filepath indexname doctype
+                                   [-mappingFilePath MAPPINGFILEPATH] 
+                                filepath indexname doctype dataFileType
 
    positional arguments:
       filepath            json file to be loaded in ElasticSearch
