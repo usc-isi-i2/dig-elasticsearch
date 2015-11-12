@@ -16,11 +16,11 @@ def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port
         print "Connecting to " + hostname + " at port:" + str(port) 
        # es = Elasticsearch([{'host': hostname, 'port': port}])
 
-        if username != "" and password != "":
+        if username is not None and password is not None:
             es = Elasticsearch([protocol + '://' + username + ':' + password + '@'+hostname + ":" + str(port)],show_ssl_warnings=False)
         else:
             es = Elasticsearch([protocol + '://'+hostname + ":" + str(port)],show_ssl_warnings=False)
-        
+        print 'here'
         if mappingFilePath:
             with open(mappingFilePath) as m:
                 mapping = m.read()
@@ -41,6 +41,7 @@ def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port
                     if line.strip() != "":
                         jsonurlobj = json.loads(line.strip())
                         objkey = jsonurlobj['uri']
+			print objkey
                         res = es.index(index=index,doc_type=doctype,body=line)
                         print "indexing id: " + res["_id"] + " for uri: " + objkey
     except Exception, e:
