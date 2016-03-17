@@ -107,6 +107,7 @@ public class BulkLoadSequenceFile {
 			sb.append(bulkFormat);
 			sb.append(System.getProperty("line.separator"));
 			sb.append(val.toString());
+			System.out.println("got val:" + val.toString());
 			sb.append(System.getProperty("line.separator"));
 			counter++;
 			if (counter % Integer.parseInt(bulksize) == 0) {
