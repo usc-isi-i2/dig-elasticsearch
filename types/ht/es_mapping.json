@@ -1,5 +1,35 @@
 {
   "mappings": {
+    "Clusters-phone-timeseries": {
+      "properties": {
+        "a": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "member": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "token_string": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "uri": {
+          "type": "string",
+          "index": "not_analyzed"
+        }
+      }
+    },
     "Clusters-desc-signature": {
       "properties": {
         "a": {
@@ -60,7 +90,7 @@
         }
       }
     },
-    "email": {
+    "Email": {
       "_source": {
         "includes": [
           "owner.makesOffer.mainEntityOfPage.description",
@@ -406,7 +436,7 @@
         }
       }
     },
-    "adultservice": {
+    "AdultService": {
       "_source": {
         "includes": [
           "offers.mainEntityOfPage.description",
@@ -757,7 +787,7 @@
         }
       }
     },
-    "webpage": {
+    "WebPage": {
       "_source": {
         "includes": [
           "dateCreated",
@@ -1130,7 +1160,7 @@
         }
       }
     },
-    "offer": {
+    "Offer": {
       "_source": {
         "includes": [
           "mainEntityOfPage.description",
@@ -1484,7 +1514,7 @@
         }
       }
     },
-    "seller": {
+    "Seller": {
       "_source": {
         "includes": [
           "makesOffer.mainEntityOfPage.description",
@@ -1834,7 +1864,7 @@
         }
       }
     },
-    "phone": {
+    "Phone": {
       "_source": {
         "includes": [
           "owner.makesOffer.mainEntityOfPage.description",
