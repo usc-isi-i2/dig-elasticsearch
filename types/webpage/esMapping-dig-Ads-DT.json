@@ -1,2192 +1,2183 @@
 {
-      "mappings": {
-         "WebPage": {
-             "_timestamp" : { "enabled" : true,"store" : true },
-            "properties": {
-               "@context": {
+  "mappings": {
+    "WebPage": {
+      "_timestamp": {
+        "enabled": true
+      },
+      "properties": {
+        "@context": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "a": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "body_uri": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "clean_body": {
+          "type": "string",
+          "fields": {
+            "english": {
+              "type": "string",
+              "analyzer": "english"
+            }
+          }
+        },
+        "clean_title": {
+          "type": "string",
+          "fields": {
+            "english": {
+              "type": "string",
+              "analyzer": "english"
+            }
+          }
+        },
+        "dateCreated": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "dateModified": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "dateCrawled": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "dateMostLikelyCreated": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "gentime": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "hasBodyPart": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "text": {
+              "type": "string",
+              "fields": {
+                "english": {
+                  "type": "string",
+                  "analyzer": "english"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "hasFeatureCollection": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "creditcardaccepted_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
                   "type": "string",
                   "index": "not_analyzed"
-               },
-               "a": {
+                },
+                "creditcardaccepted": {
                   "type": "string",
                   "index": "not_analyzed"
-               },
-               "body_uri": {
+                },
+                "featureName": {
                   "type": "string",
                   "index": "not_analyzed"
-               },
-               "clean_body": {
-                  "type": "string",
-                  "fields": {
-                     "english": {
-                        "type": "string",
-                        "analyzer": "english"
-                     }
-                  }
-               },
-               "clean_title": {
-                  "type": "string",
-                  "fields": {
-                     "english": {
-                        "type": "string",
-                        "analyzer": "english"
-                     }
-                  }
-               },
-               "dateCreated": {
-                  "type": "date",
-                  "format": "dateOptionalTime"
-               },
-               "dateModified": {
-                  "type": "date",
-                  "format": "dateOptionalTime"
-               },
-               "dateCrawled": {
-                  "type": "date",
-                  "format": "dateOptionalTime"
-               },
-               "dateMostLikelyCreated": {
-                  "type": "date",
-                  "format": "dateOptionalTime"
-               },
-               "gentime": {
+                },
+                "featureValue": {
                   "type": "string",
                   "index": "not_analyzed"
-               },
-
-               "hasBodyPart": {
-                  "properties": {
-                     "a": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     },
-                     "text": {
-                        "type": "string",
-                        "fields": {
-                           "english": {
-                              "type": "string",
-                              "analyzer": "english"
-                           }
-                        }
-                     },
-                     "uri": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     }
-                  }
-               },
-               "hasFeatureCollection": {
-                  "properties": {
-                     "a": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     },
-                     "creditcardaccepted_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "creditcardaccepted": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                       "provider_name_feature": {
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "provider_name": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "emailaddress_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "emailaddress": {
-                              "type": "string",
-                              "index": "not_analyzed",
-                              "fields": {
-                                "partial": {
-                                  "type": "string",
-                                  "analyzer": "partial_email_analyzer"
-                                },
-                                "exact": {
-                                  "type": "string",
-                                  "analyzer": "exact_email_analyzer"
-                                }
-                              }
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_age_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "long"
-                           },
-                           "person_age": {
-                              "type": "long"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_alias_feature ": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_alias": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_build_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_build": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_bustbandsize_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_bustbandsize": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_cupsizeus_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_cupsizeus": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_ethnicity_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_ethnicity": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_eyecolor_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_eyecolor": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_gender_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_gender": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_grooming_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_grooming": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_haircolor_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_haircolor": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_hairlength_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_hairlength": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_hairtype_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_hairtype": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_height_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_height": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_hipstype_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_hipstype": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_implantspresent_feature ": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_implantspresent": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_incalloutcall_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_incalloutcall": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_name_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string"
-                           },
-                           "person_name": {
-                              "type": "string"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_piercings_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_piercings": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_tattoocount_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_tattoocount": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_travel_feature ": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_travel": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_username_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string"
-                           },
-                           "person_username": {
-                              "type": "string"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_waistsize_feature ": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_waistsize": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "person_weight_feature ": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "person_weight": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "author_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string"
-                           },
-                           "author": {
-                              "type": "string"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureObject": {
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "person_name": {
-                                    "type": "string"
-                                 },
-                                 "uri": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              },
-                              "uri": {
-                                 "type": "string",
-                                 "index": "not_analyzed"
-                              }
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "phonenumber_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureObject": {
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "label": {
-                                    "type": "string"
-                                 },
-                                 "location": {
-                                    "properties": {
-                                       "@context": {
-                                          "type": "string",
-                                          "index": "not_analyzed"
-                                       },
-                                       "a": {
-                                          "type": "string",
-                                          "index": "not_analyzed"
-                                       },
-                                       "address": {
-                                          "properties": {
-                                             "a": {
-                                                "type": "string",
-                                                "index": "not_analyzed"
-                                             },
-                                             "addressLocality": {
-                                                "type": "string",
-                                                "index": "not_analyzed"
-                                             },
-                                             "addressRegion": {
-                                                "type": "string",
-                                                "index": "not_analyzed"
-                                             },
-                                             "uri": {
-                                                "type": "string",
-                                                "index": "not_analyzed"
-                                             }
-                                          }
-                                       },
-                                       "geo": {
-                                          "properties": {
-                                             "a": {
-                                                "type": "string",
-                                                "index": "not_analyzed"
-                                             },
-                                             "latitude": {
-                                                "type": "string"
-                                             },
-                                             "longitude": {
-                                                "type": "string"
-                                             },
-                                             "uri": {
-                                                "type": "string",
-                                                "index": "not_analyzed"
-                                             }
-                                          }
-                                       },
-                                       "label": {
-                                          "type": "string",
-                                          "index": "not_analyzed"
-                                       },
-                                       "uri": {
-                                          "type": "string",
-                                          "index": "not_analyzed"
-                                       }
-                                    }
-                                 },
-                                 "uri": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           },
-                           "featureValue": {
-                              "type": "string"
-                              
-                           },
-                           "phonenumber": {
-                              "type": "string",
-                              "fields": {
-                                "partial": {
-                                  "type": "string",
-                                  "analyzer": "partial_phone_analyzer"
-                                },
-                                "exact": {
-                                  "type": "string",
-                                  "analyzer": "exact_phone_analyzer"
-                                }
-                             }
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "place_postalAddress_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureObject": {
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "addressCountry": {
-                                    "properties": {
-                                       "a": {
-                                          "type": "string",
-                                          "index": "not_analyzed"
-                                       },
-                                       "label": {
-                                          "type": "string",
-                                          "index": "not_analyzed"
-                                       },
-                                       "uri": {
-                                          "type": "string",
-                                          "index": "not_analyzed"
-                                       }
-                                    }
-                                 },
-                                 "addressLocality": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "addressRegion": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "label": {
-                                    "type": "string"
-                                 },
-                                 "uri": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           },
-                           "featureValue": {
-                              "type": "string"
-                           },
-                           "place_postalAddress": {
-                              "type": "string"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "place_zipcode_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "place_zipcode": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "postalAddress_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureObject": {
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "addressCountry": {
-                                    "properties": {
-                                       "a": {
-                                          "type": "string",
-                                          "index": "not_analyzed"
-                                       },
-                                       "label": {
-                                          "type": "string"
-                                       },
-                                       "uri": {
-                                          "type": "string",
-                                          "index": "not_analyzed"
-                                       }
-                                    }
-                                 },
-                                 "addressLocality": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "addressRegion": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "uri": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           },
-                           "featureValue": {
-                              "type": "string"
-                           },
-                           "postalAddress": {
-                              "type": "string"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "rate_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "rate": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "similar_images_feature": {
-                        "properties": {
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "similarimageurl": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureObject":{
-                              "properties":{
-                                 "imageObjectUriRanks":{
-                                       "properties":{
-                                          "imageObjectUri":{
-                                             "type":"string",
-                                             "index":"not_analyzed"
-                                          },
-                                          "imageRank":{
-                                          "type":"long"
-                                          }
-                                       }
-                                    },
-                                    "imageObjectUris": {
-                                       "type": "string",
-                                       "index":"not_analyzed"
-                                 }
-                              }    
-                           }
-                        }
-                     },
-                     "text_title_clean_feature": {
-                        "properties": {
-                           "a": {
-                              "type": "string"
-                           },
-                           "featureName": {
-                              "type": "string"
-                           },
-                           "featureValue": {
-                              "type": "string"
-                           },
-                           "text_title_clean": {
-                              "type": "string"
-                           },
-                           "wasDerivedFrom": {
-                              "properties": {
-                                 "a": {
-                                    "type": "string"
-                                 },
-                                 "uri": {
-                                    "type": "string"
-                                 }
-                              }
-                           },
-                           "wasGeneratedBy": {
-                              "properties": {
-                                 "a": {
-                                    "type": "string"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string"
-                                 }
-                              }
-                           }
-                        }
-                     },
-                     "uri": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     },
-                     "website_feature": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureName": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "featureValue": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "uri": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasDerivedFrom": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "wasGeneratedBy": {
-                              "type": "nested",
-                              "include_in_root": true,
-                              "properties": {
-                                 "a": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "databaseId": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 },
-                                 "endedAtTime": {
-                                    "type": "date",
-                                    "format": "dateOptionalTime"
-                                 },
-                                 "wasAttributedTo": {
-                                    "type": "string",
-                                    "index": "not_analyzed"
-                                 }
-                              }
-                           },
-                           "website": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           }
-                        }
-                     }
-                  }
-               },
-               "hasImagePart": {
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
                   "type": "nested",
                   "include_in_root": true,
                   "properties": {
-                     "a": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     },
-                     "cacheUrl": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     },
-                     "snapshotUri": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     },
-                     "uri": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     },
-                     "url": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     },
-                     "wasGeneratedBy": {
-                        "type": "nested",
-                        "include_in_root": true,
-                        "properties": {
-                           "a": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "databaseId": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           },
-                           "endedAtTime": {
-                              "type": "date",
-                              "format": "dateOptionalTime"
-                           },
-                           "wasAttributedTo": {
-                              "type": "string",
-                              "index": "not_analyzed"
-                           }
-                        }
-                     }
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
                   }
-               },
-               "hasTitlePart": {
-                  "properties": {
-                     "a": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     },
-                     "text": {
-                        "type": "string",
-                        "fields": {
-                           "english": {
-                              "type": "string",
-                              "analyzer": "english"
-                           }
-                        }
-                     },
-                     "uri": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     }
-                  }
-               },
-               "hasAbstractPart": {
-                  "properties": {
-                     "a": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     },
-                     "text": {
-                        "type": "string",
-                        "fields": {
-                           "english": {
-                              "type": "string",
-                              "analyzer": "english"
-                           }
-                        }
-                     },
-                     "uri": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     }
-                  }
-               },
-               "provider": {
-                  "properties": {
-                     "@context": {
-                        "type": "string",
-                        "index":"not_analyzed"
-                     },
-                     "a": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     },
-                     "databaseId": {
-                        "type": "string",
-                        "index":"not_analyzed"
-                     },
-                     "legalName": {
-                        "type": "string",
-                        "index":"not_analyzed"
-                     },
-                     "uri": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                     }
-                  }
-               },
-               "snapshotUri": {
+                }
+              }
+            },
+            "provider_name_feature": {
+              "properties": {
+                "a": {
                   "type": "string",
                   "index": "not_analyzed"
-               },
-               "title_uri": {
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "provider_name": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    }
+                  }
+                }
+              }
+            },
+            "emailaddress_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "emailaddress": {
+                  "type": "string",
+                  "index": "not_analyzed",
+                  "fields": {
+                    "partial": {
+                      "type": "string",
+                      "analyzer": "partial_email_analyzer"
+                    },
+                    "exact": {
+                      "type": "string",
+                      "analyzer": "exact_email_analyzer"
+                    }
+                  }
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_age_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "long"
+                },
+                "person_age": {
+                  "type": "long"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_alias_feature ": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_alias": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_build_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_build": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_bustbandsize_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_bustbandsize": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_cupsizeus_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_cupsizeus": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_ethnicity_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_ethnicity": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_eyecolor_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_eyecolor": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_gender_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_gender": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_grooming_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_grooming": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_haircolor_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_haircolor": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_hairlength_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_hairlength": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_hairtype_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_hairtype": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_height_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_height": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_hipstype_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_hipstype": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_implantspresent_feature ": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_implantspresent": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_incalloutcall_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_incalloutcall": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_name_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
                   "type": "string"
-               },
-               "uri": {
+                },
+                "person_name": {
+                  "type": "string"
+                },
+                "uri": {
                   "type": "string",
                   "index": "not_analyzed"
-               },
-               "url": {
+                },
+                "wasDerivedFrom": {
                   "type": "string",
                   "index": "not_analyzed"
-               }
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_piercings_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_piercings": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_tattoocount_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_tattoocount": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_travel_feature ": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_travel": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_username_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string"
+                },
+                "person_username": {
+                  "type": "string"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_waistsize_feature ": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_waistsize": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "person_weight_feature ": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "person_weight": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "author_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string"
+                },
+                "author": {
+                  "type": "string"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureObject": {
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "person_name": {
+                      "type": "string"
+                    },
+                    "uri": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "phonenumber_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureObject": {
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "location": {
+                      "properties": {
+                        "@context": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        },
+                        "a": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        },
+                        "address": {
+                          "properties": {
+                            "a": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                            },
+                            "addressLocality": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                            },
+                            "addressRegion": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                            },
+                            "uri": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                            }
+                          }
+                        },
+                        "geo": {
+                          "properties": {
+                            "a": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                            },
+                            "latitude": {
+                              "type": "string"
+                            },
+                            "longitude": {
+                              "type": "string"
+                            },
+                            "uri": {
+                              "type": "string",
+                              "index": "not_analyzed"
+                            }
+                          }
+                        },
+                        "label": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        },
+                        "uri": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        }
+                      }
+                    },
+                    "uri": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "featureValue": {
+                  "type": "string"
+                },
+                "phonenumber": {
+                  "type": "string",
+                  "fields": {
+                    "partial": {
+                      "type": "string",
+                      "analyzer": "partial_phone_analyzer"
+                    },
+                    "exact": {
+                      "type": "string",
+                      "analyzer": "exact_phone_analyzer"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "place_postalAddress_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureObject": {
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "addressCountry": {
+                      "properties": {
+                        "a": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        },
+                        "label": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        },
+                        "uri": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        }
+                      }
+                    },
+                    "addressLocality": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "addressRegion": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "uri": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "featureValue": {
+                  "type": "string"
+                },
+                "place_postalAddress": {
+                  "type": "string"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "place_zipcode_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "place_zipcode": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "postalAddress_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureObject": {
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "addressCountry": {
+                      "properties": {
+                        "a": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "uri": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        }
+                      }
+                    },
+                    "addressLocality": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "addressRegion": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "uri": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "featureValue": {
+                  "type": "string"
+                },
+                "postalAddress": {
+                  "type": "string"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "rate_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "rate": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "similar_images_feature": {
+              "properties": {
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "similarimageurl": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureObject": {
+                  "properties": {
+                    "imageObjectUriRanks": {
+                      "properties": {
+                        "imageObjectUri": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        },
+                        "imageRank": {
+                          "type": "long"
+                        }
+                      }
+                    },
+                    "imageObjectUris": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "text_title_clean_feature": {
+              "properties": {
+                "a": {
+                  "type": "string"
+                },
+                "featureName": {
+                  "type": "string"
+                },
+                "featureValue": {
+                  "type": "string"
+                },
+                "text_title_clean": {
+                  "type": "string"
+                },
+                "wasDerivedFrom": {
+                  "properties": {
+                    "a": {
+                      "type": "string"
+                    },
+                    "uri": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "wasGeneratedBy": {
+                  "properties": {
+                    "a": {
+                      "type": "string"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "website_feature": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureName": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "featureValue": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasDerivedFrom": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "wasGeneratedBy": {
+                  "type": "nested",
+                  "include_in_root": true,
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "databaseId": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "endedAtTime": {
+                      "type": "date",
+                      "format": "dateOptionalTime"
+                    },
+                    "wasAttributedTo": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "website": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
             }
-         }
+          }
+        },
+        "hasImagePart": {
+          "type": "nested",
+          "include_in_root": true,
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "cacheUrl": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "snapshotUri": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "url": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "wasGeneratedBy": {
+              "type": "nested",
+              "include_in_root": true,
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "databaseId": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "endedAtTime": {
+                  "type": "date",
+                  "format": "dateOptionalTime"
+                },
+                "wasAttributedTo": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            }
+          }
+        },
+        "hasTitlePart": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "text": {
+              "type": "string",
+              "fields": {
+                "english": {
+                  "type": "string",
+                  "analyzer": "english"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "hasAbstractPart": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "text": {
+              "type": "string",
+              "fields": {
+                "english": {
+                  "type": "string",
+                  "analyzer": "english"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "provider": {
+          "properties": {
+            "@context": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "databaseId": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "legalName": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "snapshotUri": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "title_uri": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "url": {
+          "type": "string",
+          "index": "not_analyzed"
+        }
       }
-   ,
-   "settings": {
-
-      "index":{
-
-         "number_of_shards" : 40,
-            "number_of_replicas" : 0
-
-         },
-
-      "analysis": {
-      
+    }
+  },
+  "settings": {
+    "index": {
+      "number_of_shards": 40,
+      "number_of_replicas": 0,
+      "mapping.nested_fields.limit":100
+    },
+    "analysis": {
       "analyzer": {
         "my_folding": {
           "tokenizer": "standard",
@@ -2228,10 +2219,6 @@
         "partial_email_analyzer": {
           "tokenizer": "uax_url_email",
           "filter": [
-            "email_splitting_filter",
-            "lowercase"
-          ],
-         "filter": [
             "ngram_5_8"
           ]
         },
@@ -2304,5 +2291,4 @@
       }
     }
   }
-}
 }

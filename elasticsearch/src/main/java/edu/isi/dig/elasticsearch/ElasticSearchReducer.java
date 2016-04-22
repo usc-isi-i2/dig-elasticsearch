@@ -1,16 +1,17 @@
 package edu.isi.dig.elasticsearch;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.util.Iterator;
 
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
+//import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -35,12 +36,15 @@ public class ElasticSearchReducer extends Reducer<Text, Text, NullWritable, Null
 		} catch(Exception e) {
 			batchSize = 1000;
 		}
-		Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", clusterName).build();
+
+		//Settings settings = Settings.settingsBuilder().put("cluster.name", clusterName).build();
 		type = context.getConfiguration().get("elasticsearch.type");
 		indices = context.getConfiguration().get("elasticsearch.index").split(",");
-		client = new TransportClient(settings);
+		client = TransportClient.builder().build();
+		//client = TransportClient.builder().settings(settings).build();
+		
 		for (String hostName : hostNames) {
-			((TransportClient) client).addTransportAddress(new InetSocketTransportAddress(hostName, portNumber));
+			((TransportClient) client).addTransportAddress(new InetSocketTransportAddress(new InetSocketAddress(hostName, portNumber)));
 		}
 		bulkRequest = client.prepareBulk();
 	}
@@ -48,6 +52,7 @@ public class ElasticSearchReducer extends Reducer<Text, Text, NullWritable, Null
 	@Override
 	public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
 		Iterator<Text> itr = values.iterator();
+		BulkResponse br = null;
 		while (itr.hasNext()) {
 			try {
 				String tmp = itr.next().toString();
@@ -64,7 +69,11 @@ public class ElasticSearchReducer extends Reducer<Text, Text, NullWritable, Null
 				}
 				count++;
 				if (count == batchSize) {
-					bulkRequest.execute().actionGet();
+					//bulkRequest.execute().actionGet();
+					br = bulkRequest.get();
+					if(br.hasFailures()){
+						LOG.error(br.buildFailureMessage());
+					}
 					bulkRequest = client.prepareBulk();
 					count = 0;
 				}
@@ -80,7 +89,11 @@ public class ElasticSearchReducer extends Reducer<Text, Text, NullWritable, Null
 	@Override
 	public void cleanup(Context context) {
 		try {
-			bulkRequest.execute().actionGet();
+			//bulkRequest.execute().actionGet();
+			BulkResponse br = bulkRequest.get();
+			if(br.hasFailures()){
+				LOG.error(br.buildFailureMessage());
+			}
 		} catch(Exception e) {
 			LOG.error("something is wrong", e);
 		}

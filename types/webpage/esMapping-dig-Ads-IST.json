@@ -2173,8 +2173,9 @@
   },
   "settings": {
     "index": {
-      "number_of_shards": 16,
-      "number_of_replicas": 1
+      "number_of_shards": 20,
+      "number_of_replicas": 1,
+      "mapping.nested_fields.limit":100
     },
     "analysis": {
       "analyzer": {
