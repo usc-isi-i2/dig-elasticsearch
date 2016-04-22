@@ -90,7 +90,7 @@
         }
       }
     },
-    "Email": {
+    "email": {
       "_source": {
         "includes": [
           "owner.makesOffer.mainEntityOfPage.description",
@@ -436,7 +436,7 @@
         }
       }
     },
-    "AdultService": {
+    "adultservice": {
       "_source": {
         "includes": [
           "offers.mainEntityOfPage.description",
@@ -787,7 +787,7 @@
         }
       }
     },
-    "WebPage": {
+    "webpage": {
       "_source": {
         "includes": [
           "dateCreated",
@@ -1160,7 +1160,7 @@
         }
       }
     },
-    "Offer": {
+    "offer": {
       "_source": {
         "includes": [
           "mainEntityOfPage.description",
@@ -1514,7 +1514,7 @@
         }
       }
     },
-    "Seller": {
+    "seller": {
       "_source": {
         "includes": [
           "makesOffer.mainEntityOfPage.description",
@@ -1864,7 +1864,7 @@
         }
       }
     },
-    "Phone": {
+    "phone": {
       "_source": {
         "includes": [
           "owner.makesOffer.mainEntityOfPage.description",
