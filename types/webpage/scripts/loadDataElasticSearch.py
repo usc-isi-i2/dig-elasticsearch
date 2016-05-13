@@ -20,7 +20,6 @@ def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port
             es = Elasticsearch([protocol + '://' + username + ':' + password + '@'+hostname + ":" + str(port)],show_ssl_warnings=False)
         else:
             es = Elasticsearch([protocol + '://'+hostname + ":" + str(port)],show_ssl_warnings=False)
-        print 'here'
         if mappingFilePath:
             with open(mappingFilePath) as m:
                 mapping = m.read()
@@ -41,12 +40,12 @@ def loadDatainES(filename, index, doctype,dataFileType,hostname="localhost",port
                     if line.strip() != "":
                         jsonurlobj = json.loads(line.strip())
                         objkey = jsonurlobj['uri']
-			print objkey
-                        res = es.index(index=index,doc_type=doctype,body=line)
-                        print "indexing id: " + res["_id"] + " for uri: " + objkey
+                        print objkey
+                        res = es.index(index=index,doc_type=doctype,body=line,id=objkey)
+                        #print "indexing id: " + res["_id"] + " for uri: " + objkey
     except Exception, e:
+        print e
         print >> stderr.write('ERROR: %s\n' % str(e))
-	pass
         
 
 
