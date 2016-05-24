@@ -900,6 +900,9 @@
               "type": "string",
               "index": "not_analyzed"
             },
+            "name": {
+              "type": "string"
+            },
             "uri": {
               "type": "string",
               "index": "not_analyzed"
@@ -947,6 +950,9 @@
             "a": {
               "type": "string",
               "index": "not_analyzed"
+            },
+            "name": {
+              "type": "string"
             },
             "uri": {
               "type": "string",
