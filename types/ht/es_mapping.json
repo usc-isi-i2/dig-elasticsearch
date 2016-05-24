@@ -1,5 +1,554 @@
 {
   "mappings": {
+    "email": {
+      "properties": {
+        "a": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "name": {
+          "type": "string",
+          "fields": {
+            "raw": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "owner": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "clusterMethod": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "email": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "makesOffer": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "itemOffered": {
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "uri": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "mainEntityOfPage": {
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "uri": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "telephone": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "uri": {
+          "type": "string",
+          "index": "not_analyzed"
+        }
+      }
+    },
+    "phone": {
+      "properties": {
+        "a": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "name": {
+          "type": "string",
+          "fields": {
+            "raw": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "owner": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "clusterMethod": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "makesOffer": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "uri": {
+          "type": "string",
+          "index": "not_analyzed"
+        }
+      }
+    },
+    "offer": {
+      "properties": {
+        "a": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "availableAtOrFrom": {
+          "properties": {
+            "address": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "addressCountry": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "addressLocality": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "addressRegion": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "geo": {
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "latitude": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "longitude": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "key": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "itemOffered": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "age": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "ethnicity": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "height": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "name": {
+              "type": "string",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "weight": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "mainEntityOfPage": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "dateCreated": {
+              "type": "date",
+              "format": "dateOptionalTime"
+            },
+            "description": {
+              "type": "string"
+            },
+            "mentions": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "name": {
+              "type": "string",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "publisher": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "url": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "priceSpecification": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "billingIncrement": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "name": {
+              "type": "string",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "price": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "unitCode": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "seller": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "clusterMethod": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "email": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "telephone": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "name": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "title": {
+          "type": "string",
+          "fields": {
+            "raw": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "uri": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "validFrom": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        }
+      }
+    },
+    "image": {
+      "properties": {
+        "a": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "identifier": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "isImagePartOf": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "mainEntity": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "itemOffered": {
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "uri": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "seller": {
+                  "properties": {
+                    "a": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "clusterMethod": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    },
+                    "email": {
+                      "properties": {
+                        "a": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        },
+                        "uri": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        }
+                      }
+                    },
+                    "telephone": {
+                      "properties": {
+                        "a": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        },
+                        "uri": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        }
+                      }
+                    },
+                    "uri": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "similarImageId": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "similarImageId": {
+              "type": "string"
+            },
+            "similarityScore": {
+              "type": "string"
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "uri": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "url": {
+          "type": "string",
+          "index": "not_analyzed"
+        }
+      }
+    },
     "webpage": {
       "properties": {
         "a": {
@@ -266,6 +815,100 @@
         }
       }
     },
+    "seller": {
+      "properties": {
+        "a": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "clusterMethod": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "email": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "name": {
+              "type": "string",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "makesOffer": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "itemOffered": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "mainEntityOfPage": {
+              "properties": {
+                "a": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                },
+                "uri": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "telephone": {
+          "properties": {
+            "a": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "name": {
+              "type": "string",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "uri": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "uri": {
+          "type": "string",
+          "index": "not_analyzed"
+        }
+      }
+    },
     "adultservice": {
       "properties": {
         "a": {
@@ -327,10 +970,6 @@
                       "type": "string",
                       "index": "not_analyzed"
                     },
-                    "uri": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
                     "name": {
                       "type": "string",
                       "fields": {
@@ -339,6 +978,10 @@
                           "index": "not_analyzed"
                         }
                       }
+                    },
+                    "uri": {
+                      "type": "string",
+                      "index": "not_analyzed"
                     }
                   }
                 },
@@ -348,10 +991,6 @@
                       "type": "string",
                       "index": "not_analyzed"
                     },
-                    "uri": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
                     "name": {
                       "type": "string",
                       "fields": {
@@ -360,6 +999,10 @@
                           "index": "not_analyzed"
                         }
                       }
+                    },
+                    "uri": {
+                      "type": "string",
+                      "index": "not_analyzed"
                     }
                   }
                 },
@@ -384,634 +1027,94 @@
           "index": "not_analyzed"
         }
       }
+    }
+  },
+  "settings": {
+    "index": {
+      "number_of_replicas": "0",
+      "number_of_shards": "5"
     },
-    "email": {
-      "properties": {
-        "a": {
-          "type": "string",
-          "index": "not_analyzed"
+    "analysis": {
+      "analyzer": {
+        "partial_phone_analyzer": {
+          "tokenizer": "keyword",
+          "char_filter": [
+            "digits_only"
+          ],
+          "filter": [
+            "ngram_3_10"
+          ]
         },
-        "name": {
-          "type": "string",
-          "fields": {
-            "raw": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
+        "exact_phone_analyzer": {
+          "tokenizer": "keyword",
+          "char_filter": [
+            "digits_only"
+          ]
         },
-        "owner": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "clusterMethod": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "email": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "name": {
-                  "type": "string",
-                  "fields": {
-                    "raw": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "makesOffer": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "itemOffered": {
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "uri": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "mainEntityOfPage": {
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "uri": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "telephone": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "name": {
-                  "type": "string",
-                  "fields": {
-                    "raw": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
+        "exact_email_analyzer": {
+          "tokenizer": "uax_url_email",
+          "filter": [
+            "email_splitting_filter_keep_original",
+            "lowercase",
+            "unique"
+          ]
         },
-        "uri": {
-          "type": "string",
-          "index": "not_analyzed"
+        "partial_email_analyzer": {
+          "tokenizer": "uax_url_email",
+          "filter": [
+            "ngram_5_8"
+          ]
         }
-      }
-    },
-    "image": {
-      "properties": {
-        "a": {
-          "type": "string",
-          "index": "not_analyzed"
+      },
+      "filter": {
+        "filter_stemmer": {
+          "type": "porter_stem",
+          "language": "English"
         },
-        "identifier": {
-          "type": "string",
-          "index": "not_analyzed"
+        "shingle_filter_2_4": {
+          "type": "shingle",
+          "min_shingle_size": 2,
+          "max_shingle_size": 4,
+          "output_unigrams": false
         },
-        "isImagePartOf": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "mainEntity": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "itemOffered": {
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "uri": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "seller": {
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "clusterMethod": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "email": {
-                      "properties": {
-                        "a": {
-                          "type": "string",
-                          "index": "not_analyzed"
-                        },
-                        "uri": {
-                          "type": "string",
-                          "index": "not_analyzed"
-                        }
-                      }
-                    },
-                    "telephone": {
-                      "properties": {
-                        "a": {
-                          "type": "string",
-                          "index": "not_analyzed"
-                        },
-                        "uri": {
-                          "type": "string",
-                          "index": "not_analyzed"
-                        }
-                      }
-                    },
-                    "uri": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
+        "shingle_filter_4": {
+          "type": "shingle",
+          "min_shingle_size": 4,
+          "max_shingle_size": 4,
+          "output_unigrams": false
         },
-        "similarImageId": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "similarImageId": {
-              "type": "string"
-            },
-            "similarityScore": {
-              "type": "string"
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
+        "email_splitting_filter_keep_original": {
+          "type": "pattern_capture",
+          "preserve_original": 1,
+          "patterns": [
+            "(.+)@",
+            "@(.+)"
+          ]
         },
-        "uri": {
-          "type": "string",
-          "index": "not_analyzed"
+        "email_splitting_filter": {
+          "type": "pattern_capture",
+          "preserve_original": 0,
+          "patterns": [
+            "(.+)@",
+            "@(.+)"
+          ]
         },
-        "url": {
-          "type": "string",
-          "index": "not_analyzed"
+        "ngram_3_10": {
+          "type": "nGram",
+          "min_gram": 3,
+          "max_gram": 10
+        },
+        "ngram_5_8": {
+          "type": "nGram",
+          "min_gram": 5,
+          "max_gram": 8
         }
-      }
-    },
-    "offer": {
-      "properties": {
-        "a": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "availableAtOrFrom": {
-          "properties": {
-            "address": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "addressCountry": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "addressLocality": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "addressRegion": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "geo": {
-                  "properties": {
-                    "a": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "latitude": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    },
-                    "longitude": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "key": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "name": {
-                  "type": "string",
-                  "fields": {
-                    "raw": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "itemOffered": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "age": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "ethnicity": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "height": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "name": {
-              "type": "string",
-              "fields": {
-                "raw": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "weight": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "mainEntityOfPage": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "dateCreated": {
-              "type": "date",
-              "format": "dateOptionalTime"
-            },
-            "description": {
-              "type": "string"
-            },
-            "mentions": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string",
-              "fields": {
-                "raw": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "publisher": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "name": {
-                  "type": "string",
-                  "fields": {
-                    "raw": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "url": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "priceSpecification": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "billingIncrement": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "name": {
-              "type": "string",
-              "fields": {
-                "raw": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "price": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "unitCode": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "seller": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "clusterMethod": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "email": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "name": {
-                  "type": "string",
-                  "fields": {
-                    "raw": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "telephone": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "name": {
-                  "type": "string",
-                  "fields": {
-                    "raw": {
-                      "type": "string",
-                      "index": "not_analyzed"
-                    }
-                  }
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "title": {
-          "type": "string",
-          "fields": {
-            "raw": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "uri": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "validFrom": {
-          "type": "date",
-          "format": "dateOptionalTime"
-        }
-      }
-    },
-    "seller": {
-      "properties": {
-        "a": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "clusterMethod": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "email": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "name": {
-              "type": "string"
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "makesOffer": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "itemOffered": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "mainEntityOfPage": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "telephone": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "name": {
-              "type": "string"
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "uri": {
-          "type": "string",
-          "index": "not_analyzed"
-        }
-      }
-    },
-    "phone": {
-      "properties": {
-        "a": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "name": {
-          "type": "string",
-          "fields": {
-            "raw": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "owner": {
-          "properties": {
-            "a": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "clusterMethod": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "makesOffer": {
-              "properties": {
-                "a": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                },
-                "uri": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
-            },
-            "uri": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
-        },
-        "uri": {
-          "type": "string",
-          "index": "not_analyzed"
+      },
+      "char_filter": {
+        "digits_only": {
+          "type": "pattern_replace",
+          "pattern": "(\\D)",
+          "replacement": ""
         }
       }
     }
