@@ -12,6 +12,8 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
@@ -81,76 +83,82 @@ public class BulkLoadSequenceFile {
 		}
 		String bulkFormat = null;
 
-		SequenceFile.Reader reader = new SequenceFile.Reader(new Configuration(), SequenceFile.Reader.file(new Path(filePath)));
-		Writable key = (Writable) Class.forName(reader.getKeyClass().getCanonicalName()).newInstance();
-		Text val = new Text();
-		StringBuilder sb = new StringBuilder();
-		long counter = 0;
-		while (reader.next(key, val)) {	
-			JSONObject jObj = new JSONObject(val.toString());
-			
-			String id = null;
-			
-			if(jObj.has("uri"))
-			{
-				id = jObj.getString("uri");
-			}
-			
-			if(id != null)
-			{
-				bulkFormat = "{\"index\":{\"_index\":\"" + index+ "\",\"_type\":\""+ type +"\",\"_id\":\""+id+"\"}}";
-			}
-			else
-			{
-				bulkFormat = "{\"index\":{\"_index\":\"" + index+ "\",\"_type\":\""+ type +"\"}}";
-			}
-			sb.append(bulkFormat);
-			sb.append(System.getProperty("line.separator"));
-			sb.append(val.toString());
-			//System.out.println("got val:" + val.toString());
-			sb.append(System.getProperty("line.separator"));
-			counter++;
-			if (counter % Integer.parseInt(bulksize) == 0) {
-				int i = 0;
-				Exception ex = null;
-				while (i < retry) {
-					try {
-						StringEntity entity = new StringEntity(sb.toString(),"UTF-8");
-						entity.setContentType("application/json");
-						httpPost.setEntity(entity);
-						httpClient.execute(httpPost);
-						httpClient.close();
-						Thread.sleep(Integer.parseInt(sleep));
-						//System.out.println(counter + " processed");
-						break;
-					}catch(Exception e) {
-						ex = e;
-						i++;
-					}
-				}
-				if (i > 0) {
-					System.out.println("Exception occurred!");
-					ex.printStackTrace();
-					break;
-				}
-				httpClient = null;
-
-				if(protocol.equalsIgnoreCase("https"))
-					httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
-				else if(protocol.equalsIgnoreCase("http"))
-					httpClient = HttpClients.createDefault();
-
-				httpPost = new HttpPost(protocol + "://" + hostname + ":" + port + "/" + index + "/_bulk");
-				sb = new StringBuilder();
+		Configuration conf = new Configuration();
+		FileSystem fs = FileSystem.get(new Configuration());
+		Path path = new Path(filePath);
+		for(FileStatus s: fs.listStatus(path)) {
+			SequenceFile.Reader reader = new SequenceFile.Reader(new Configuration(), 
+					SequenceFile.Reader.file(s.getPath()));
+			Writable key = (Writable) Class.forName(reader.getKeyClass().getCanonicalName()).newInstance();
+			Text val = new Text();
+			StringBuilder sb = new StringBuilder();
+			long counter = 0;
+			while (reader.next(key, val)) {	
+				JSONObject jObj = new JSONObject(val.toString());
 				
+				String id = null;
+				
+				if(jObj.has("uri"))
+				{
+					id = jObj.getString("uri");
+				}
+				
+				if(id != null)
+				{
+					bulkFormat = "{\"index\":{\"_index\":\"" + index+ "\",\"_type\":\""+ type +"\",\"_id\":\""+id+"\"}}";
+				}
+				else
+				{
+					bulkFormat = "{\"index\":{\"_index\":\"" + index+ "\",\"_type\":\""+ type +"\"}}";
+				}
+				sb.append(bulkFormat);
+				sb.append(System.getProperty("line.separator"));
+				sb.append(val.toString());
+				//System.out.println("got val:" + val.toString());
+				sb.append(System.getProperty("line.separator"));
+				counter++;
+				if (counter % Integer.parseInt(bulksize) == 0) {
+					int i = 0;
+					Exception ex = null;
+					while (i < retry) {
+						try {
+							StringEntity entity = new StringEntity(sb.toString(),"UTF-8");
+							entity.setContentType("application/json");
+							httpPost.setEntity(entity);
+							httpClient.execute(httpPost);
+							httpClient.close();
+							Thread.sleep(Integer.parseInt(sleep));
+							//System.out.println(counter + " processed");
+							break;
+						}catch(Exception e) {
+							ex = e;
+							i++;
+						}
+					}
+					if (i > 0) {
+						System.out.println("Exception occurred!");
+						ex.printStackTrace();
+						break;
+					}
+					httpClient = null;
+	
+					if(protocol.equalsIgnoreCase("https"))
+						httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+					else if(protocol.equalsIgnoreCase("http"))
+						httpClient = HttpClients.createDefault();
+	
+					httpPost = new HttpPost(protocol + "://" + hostname + ":" + port + "/" + index + "/_bulk");
+					sb = new StringBuilder();
+					
+				}
 			}
+			StringEntity entity = new StringEntity(sb.toString(),"UTF-8");
+			entity.setContentType("application/json");
+			httpPost.setEntity(entity);
+			httpClient.execute(httpPost);
+			httpClient.close();
+			reader.close();
 		}
-		StringEntity entity = new StringEntity(sb.toString(),"UTF-8");
-		entity.setContentType("application/json");
-		httpPost.setEntity(entity);
-		httpClient.execute(httpPost);
-		httpClient.close();
-		reader.close();
 	}
 
 	private static Options createCommandLineOptions() {
